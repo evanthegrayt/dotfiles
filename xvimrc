@@ -1,0 +1,3 @@
+# vi: set syntax=sh :
+lang='ruby'
+env=true

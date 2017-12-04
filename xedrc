@@ -1,0 +1,4 @@
+#!/usr/local/bin/bash
+
+PATH=$PATH:~/workflow/selection-CLUs/ruby:~/workflow/selection-CLUs/bash
+

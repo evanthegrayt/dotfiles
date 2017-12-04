@@ -1,0 +1,73 @@
+# vi: set syntax=sh :
+# This file is shared between zshrc and bashrc. Only put
+# options that both languages can use in this file.
+
+echo '
+     ___                         ___           ___
+    /  /\          ___          /  /\         /  /\
+   /  /::\        /  /\        /  /::\       /  /::|
+  /  /:/\:\      /  /:/       /  /:/\:\     /  /:|:|
+ /  /::\ \:\    /  /:/       /  /::\ \:\   /  /:/|:|__
+/__/:/\:\ \:\  /__/:/  ___  /__/:/\:\_\:\ /__/:/ |:| /\
+\  \:\ \:\_\/  |  |:| /  /\ \__\/  \:\/:/ \__\/  |:|/:/
+ \  \:\ \:\    |  |:|/  /:/      \__\::/      |  |:/:/
+  \  \:\_\/    |__|:|__/:/       /  /:/       |__|::/
+   \  \:\       \__\::::/       /__/:/        /__/:/
+    \__\/           ~~~~        \__\/         \__\/
+'
+
+# Custom environmental variables
+export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
+export USER_VIM_DIR="$HOME/.vim"
+
+# Source configuration files
+MY_CONFIG_FILES=(
+$USER_DOTFILE_DIR/aliases.sh
+$USER_DOTFILE_DIR/colors.sh
+$HOME/.rvm/scripts/rvm
+)
+
+for file in ${MY_CONFIG_FILES[@]}; do
+    if [[ -f "$file" ]]; then
+        source "$file"
+    else
+        echo "[$file] does not exist! (Error from shellrc file)"
+    fi
+done
+unset file
+
+# Environmental variables
+export CLICOLOR=1
+export LSCOLORS="ExGxcxcxcxexexcxcxexex"
+export LESS="-JmQNi --RAW-CONTROL-CHARS"
+export PAGER="less"  # in "view" (vim)
+export MANPAGER="/usr/bin/less"
+export MANPATH=$HOME/scripts/man:$MANPATH
+export GREP_OPTIONS="-i --color=tty"
+export GREP_COLOR='07;38;5;74'
+export LANG=en_US.UTF-8
+export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
+export GIT_EDITOR='vim'
+export SIMPLE_BACKUP_SUFFIX=".sav"
+export EDITOR="/bin/vi -x"
+export FCEDIT="/usr/local/bin/vim"
+export VISUAL="/usr/local/bin/vim"
+export TERM=xterm-256color-italic
+export IRC_CLIENT='irssi'
+export TODO="t"
+export SCM_CHECK=true
+export PATH=$PATH:\
+.:\
+/usr/local/bin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin:\
+/opt/X11/bin:\
+$HOME/bin:\
+$HOME/bin/ruby:\
+$HOME/scripts/bin
+
+# Options
+unset MAILCHECK
+
