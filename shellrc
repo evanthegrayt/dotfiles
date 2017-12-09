@@ -25,6 +25,7 @@ MY_CONFIG_FILES=(
 $USER_DOTFILE_DIR/aliases.sh
 $USER_DOTFILE_DIR/colors.sh
 $HOME/.rvm/scripts/rvm
+$HOME/.slack_config
 )
 
 for file in ${MY_CONFIG_FILES[@]}; do

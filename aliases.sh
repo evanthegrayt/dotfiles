@@ -5,8 +5,9 @@ alias ls='ls -G'
 
 alias vbrc="vim $USER_DOTFILE_DIR/bashrc"
 alias vzrc="vim $USER_DOTFILE_DIR/zshrc"
-alias vvrc="vim $USER_VIM_DIR/vimrc"
+alias vsrc="vim $USER_DOTFILE_DIR/shellrc"
 alias val="vim $USER_DOTFILE_DIR/aliases.sh"
+alias vvrc="vim $USER_VIM_DIR/vimrc"
 
 alias diff='colordiff'
 alias less='less -m -N -g -i -J --underline-special --SILENT'

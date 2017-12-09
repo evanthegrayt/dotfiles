@@ -32,3 +32,4 @@ alias a               'asdf -u'
 alias o               'loffice'
 alias v               'vim'
 alias lsd             'ls -d */'
+
