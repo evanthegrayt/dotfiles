@@ -1,4 +1,5 @@
 # ruby 1.8.7 compatible
+# vi: set filetype=ruby :
 require 'rubygems'
 require 'irb/completion'
 
