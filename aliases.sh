@@ -15,7 +15,8 @@ alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
 alias path='printf ${PATH//:/\\n};echo'
-alias xed="$HOME/scripts/bin/exed"
+alias exed="$HOME/workflow/exed/bin/exed"
+alias mkex="$HOME/workflow/mkex/bin/mkex"
 
 alias vup="cd $HOME/workflow/vagrant-ique && vagrant up"
 alias vssh="cd $HOME/workflow/vagrant-ique && vagrant ssh"
