@@ -131,10 +131,6 @@ bind w
 bind ^w windowlist -b
 bind 'w' windowlist -b
 
-#bind ^b screen -t batman ssh -X erg@batman
-#bind ^c screen -t chick ssh -X erg@chick
-#bind ^t screen -t local 
-#bind ^f screen -t spiderman ssh -X erg@spiderman
 bind m resize 6
 bind M resize 45
 bind = resize =

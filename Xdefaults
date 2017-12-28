@@ -1,0 +1,455 @@
+! vi: set syntax=xdefaults:
+xfterm4*font:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+xfterm4*boldfont:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+
+!------------------------------------
+! xterm settings
+!------------------------------------
+Xterm*saveLines:32767
+XTerm*charClass: 33:48,36-38:48,43-47:48,58:48,61:48,63-64:48,126:48
+!XTerm*faceName: Dejavu Sans Mono:size=11
+xterm*faceName: Bitstream Vera Sans Mono::size=10
+XTerm*boldFont: Dejavu Sans Mono:style=Bold:size=10
+!XTerm*font:-misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2
+!XTerm*font:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+!xterm*Font: -adobe-courier-bold-r-normal--12-*
+!xterm*faceName: Bitstream Vera Sans Mono:style=Bold
+!XTerm*boldFont:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+xterm*cursorColor: green
+XTerm*colorMode: true
+XTerm*pointerColor: blue
+XTerm*pointerColor2: yellow
+XTerm*borderWidth: 5
+XTerm*internalBorder: 3
+XTerm*utf8: 2
+XTerm*scrollBar: false
+xterm*visualBell: false
+xterm*background:Black
+xterm*foreground:White
+
+!-------------------------------------------------------
+! xterm very nice - use vim colo: understated
+!-------------------------------------------------------
+!black
+xterm*color0:#333333
+xterm*color8:#686868
+!red
+xterm*color1:#CA5E5E
+xterm*color9:#FF595D
+!green
+xterm*color2:#ABCB8D
+xterm*color10:#AFD78A
+!yellow
+xterm*color3:#C48D62
+xterm*color11:#E0A765
+!blue
+!xterm*color4:#8CA0B0
+!xterm*color12:#3D6A82
+!XTerm*color4: #6D85BA
+!XTerm*color12: #73A5FF
+!XTerm*color4: #336699
+!XTerm*color12: #99caf5
+xterm*color4:LightSlateBlue
+xterm*color12:LightSlateBlue
+!magenta
+xterm*color5:#CC98E0
+xterm*color13:#E1A2DC
+!cyan
+xterm*color6:#44CACF
+xterm*color14:#6CBFC4
+!white
+xterm*color7:#E7E6DD
+!xterm*color15:#F0EFE7
+xterm*color15:#ffffff
+
+
+!------------------------------------
+! xterm colors - cEterm
+!------------------------------------
+!xterm*color0: #000000
+!xterm*color1: #9e1828
+!xterm*color2: #9e1828
+!xterm*color3: #968a38
+!xterm*color4: #414171
+!xterm*color5: #963c59
+!xterm*color6: #418179
+!xterm*color7: gray
+!xterm*color8: gray40
+!xterm*color9: #cf6171
+!xterm*color10: #c5f779
+!xterm*color11: #fff796
+!xterm*color12: #4186be
+!xterm*color13: #cf9ebe
+!xterm*color14: #71bebe
+!xterm*color15: white
+!------------------------------------
+! xterm colors - soft
+!------------------------------------
+!XTerm*background:  #000000
+!XTerm*foreground:  #7f7f7f
+!XTerm*color0:      #000000
+!XTerm*color1:      #9e1828
+!XTerm*color2:      #aece92
+!XTerm*color3:      #968a38
+!XTerm*color4:      #414171
+!XTerm*color5:      #963c59
+!XTerm*color6:      #418179
+!XTerm*color7:      #bebebe
+!XTerm*color8:      #666666
+!XTerm*color9:      #cf6171
+!XTerm*color10:     #c5f779
+!XTerm*color11:     #fff796
+!XTerm*color12:     #4186be
+!XTerm*color13:     #cf9ebe
+!XTerm*color14:     #71bebe
+!XTerm*color15:     #ffffff
+
+!------------------------------------
+! xterm colors - good
+!------------------------------------
+!XTerm*color0: #000000
+!XTerm*color1: #b21818
+!XTerm*color2: #18b218
+!XTerm*color3: #BE5F00
+!XTerm*color4: #6D85BA
+!XTerm*color5: #b218b2
+!XTerm*color6: #18b2b2
+!XTerm*color7: #b2b2b2
+!XTerm*color8: #686868
+!XTerm*color9: #FF5454
+!XTerm*color10: #54FF54
+!XTerm*color11: #FFFF54
+!XTerm*color12: #73A5FF
+!XTerm*color13: #FF54FF
+!XTerm*color14: #54FFFF
+!XTerm*color15: #FFFFFF
+
+
+!------------------------------------
+! xterm colors - gregf - soft
+!------------------------------------
+!XTerm*color0: #000000
+!XTerm*color8: #6a6a6a
+!XTerm*color2: #A4BD6B
+!XTerm*color10: #AFD78A
+!XTerm*color4: #336699
+!XTerm*color12: #99caf5
+!XTerm*color5: #baabcc
+!XTerm*color13: #c1b3d1
+!XTerm*color6: #44CACF
+!XTerm*color14: #6CBFC4
+!XTerm*color7: #E7E6DD
+!XTerm*color15: #F0EFE7
+!XTerm*color1: #CA5E5E
+!XTerm*color9: #FF595D
+!XTerm*color3: #C48D62
+!XTerm*color11: #E0A765
+
+!------------------------------------
+! xterm colors - good almost default
+!------------------------------------
+!XTerm*color0: #000000
+!XTerm*color1: #b21818
+!XTerm*color2: #18b218
+!XTerm*color3: #BE5F00
+!XTerm*color4: #6D85BA
+!XTerm*color5: #b218b2
+!XTerm*color6: #18b2b2
+!XTerm*color7: #b2b2b2
+!XTerm*color8: #686868
+!XTerm*color9: #FF5454
+!XTerm*color10: #54FF54
+!XTerm*color11: #FFFF54
+!XTerm*color12: #73A5FF
+!XTerm*color13: #FF54FF
+!XTerm*color14: #54FFFF
+!XTerm*color15: #FFFFFF
+
+!------------------------------------
+! aterm settings
+!------------------------------------
+Aterm*saveLines:32767
+Aterm*scrollBar: false
+Aterm*loginShell: true
+Aterm*tintingType: true
+Aterm*tinting: #a07040
+aterm*cursorColor: yellow
+aterm*background:Black
+aterm*foreground:White
+
+!--good but small, but crisp
+!aterm*font: -b&h-lucidatypewriter-medium-r-normal-*-12-120-*-*-m-*-iso8859-1
+!aterm*font: -b&h-lucidatypewriter-medium-r-normal-*-14-140-*-*-m-*-iso8859-1
+!aterm*font:-b&h-lucidatypewriter-medium-r-normal-*-*-100-*-*-m-*-iso8859-1
+!aterm*font:-b&h-lucidatypewriter-medium*-*-140-*-*-m-*-iso8859-1
+aterm*font: -b&h-lucidatypewriter-medium-r-normal-sans-17-120-100-100-m-100-iso8859-1
+
+!--good but small
+!aterm*font: -monotype-andale mono-medium-r-normal--12-120-75-75-m-80-koi8-ru"
+!Aterm*font: -monotype-andale mono-medium-r-normal--0-0-0-0-m-0-iso8859-1
+!Aterm*font: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+!ATerm*font:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+!Aterm*font: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+!
+!aterm*boldFont: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+!Aterm*geometry: 120x40
+!Aterm*transpscrollbar:true
+
+!--best all around misc-fixed
+!aterm*font: -misc-fixed-medium-*-*-*-15-140-75-75-c-90-iso8859-1
+!aterm*font:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+!aterm*boldFont:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
+
+
+!------------------------------------------
+! aterm colors like urxvt - use with vim
+! colorscheme understated
+!------------------------------------------
+aterm*color0:#333333
+aterm*color8:#686868
+aterm*color1:#CA5E5E
+aterm*color9:#FF595D
+aterm*color2:#ABCB8D
+aterm*color10:#AFD78A
+aterm*color3:#C48D62
+aterm*color11:#E0A765
+aterm*color4:LightSlateBlue
+aterm*color12:LightSlateBlue
+aterm*color5:#CC98E0
+aterm*color13:#E1A2DC
+aterm*color6:#44CACF
+aterm*color14:#6CBFC4
+aterm*color7:#E7E6DD
+aterm*color15:#F0EFE7
+
+!------------------------------------------
+! aterm colors midnight blue bg
+!------------------------------------------
+!aterm*foreground: white
+!aterm*background: #1d2b3a
+!Aterm*transparent: false
+!aterm*shading: 50
+!aterm*color0: #000000
+!aterm*color1: #d92c30
+!aterm*color2: #aece91
+!aterm*color3: #e7e18c
+!aterm*color4: #7a7ab0
+!aterm*color5: #963c59
+!aterm*color6: #418179
+!aterm*color7: gray
+!aterm*color8: gray40
+!aterm*color9: #ef8171
+!aterm*color10: #e4ff51
+!aterm*color12: #69b6f7
+!aterm.color13: #ef9ebe
+!aterm*color14: #71bebe
+!aterm*color15: white
+
+
+!------------------------------------
+! cEterm colors
+!------------------------------------
+!Aterm*color0: #000000
+!Aterm*color1: #9e1828
+!Aterm*color2: #9e1828
+!Aterm*color3: #968a38
+!Aterm*color4: #414171
+!Aterm*color5: #963c59
+!Aterm*color6: #418179
+!Aterm*color7: gray
+!Aterm*color8: gray40
+!Aterm*color9: #cf6171
+!Aterm*color10: #c5f779
+!Aterm*color11: #fff796
+!Aterm*color12: #4186be
+!Aterm*color13: #cf9ebe
+!Aterm*color14: #71bebe
+!Aterm*color15: white
+
+!------------------------------------------
+! aterm black with moderate colors & grey fg
+! very nice
+!------------------------------------------
+!aterm*background:  #000000
+!aterm*foreground:  grey65
+!aterm*color0:      #000000
+!aterm*color1:      #9e1828
+!aterm*color2:      #aece92
+!aterm*color3:      #968a38
+!aterm*color4:      #414171
+!aterm*color5:      #963c59
+!aterm*color6:      #418179
+!aterm*color7:      #bebebe
+!aterm*color8:      #666666
+!aterm*color9:      #cf6171
+!aterm*color10:     #c5f779
+!aterm*color11:     #fff796
+!aterm*color12:     #4186be
+!aterm*color13:     #cf9ebe
+!aterm*color14:     #71bebe
+!aterm*color15:     #ffffff
+
+
+!------------------------------------------
+! aterm black bg
+!------------------------------------------
+!aterm*background:Black
+!aterm*foreground:White
+!aterm*color0:Black
+!aterm*color8:Black
+!aterm*color1:Orange
+!aterm*color9:Orange
+!aterm*color2:PaleGreen
+!aterm*color10:PaleGreen
+!aterm*color3:Yellow
+!aterm*color11:Yellow
+!aterm*color4:LightSlateBlue
+!aterm*color12:LightSlateBlue
+!aterm*color5:Plum
+!aterm*color13:Plum
+!aterm*color6:LightSkyBlue
+!aterm*color14:LightSkyBlue
+!aterm*color7:White
+!aterm*color15:White
+
+
+
+
+!-------------------------------------------------------
+! aterm very nice - use vim colo: understated
+!-------------------------------------------------------
+!aterm*color0:#333333
+!aterm*color8:#686868
+!aterm*color1:#CA5E5E
+!aterm*color9:#FF595D
+!aterm*color2:#ABCB8D
+!aterm*color10:#AFD78A
+!aterm*color3:#C48D62
+!aterm*color11:#E0A765
+!aterm*color4:LightSlateBlue
+!aterm*color12:LightSlateBlue
+!aterm*color5:#CC98E0
+!aterm*color13:#E1A2DC
+!aterm*color6:#44CACF
+!aterm*color14:#6CBFC4
+!aterm*color7:#E7E6DD
+!aterm*color15:#F0EFE7
+
+!------------------------------------
+! global urxvt settings
+!------------------------------------
+URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=11
+!Urxvt*boldFont: xft:Bitstream Vera Sans Mono:size=12:style=Bold
+!URxvt*font: xft:Monospace:pixelsize=13
+!urxvt*termName:xterm-color
+urxvt*termName:rxvt
+urxvt*saveLines:32767
+urxvt*colorMode: true
+urxvt*scrollBar: false
+
+!------------------------------------
+! white urxvt settings
+!------------------------------------
+!urxvt*background:white
+!urxvt*foreground:black
+!urxvt*cursorColor:blue
+
+
+!------------------------------------
+! black urxvt settings
+!------------------------------------
+urxvt*cursorColor: yellow
+urxvt*background:Black
+urxvt*foreground:White
+
+!-------------------------------------------------------
+! urxvt very nice - use vim colo: understated
+!-------------------------------------------------------
+!black
+urxvt*color0:#333333
+urxvt*color8:#686868
+urxvt*color1:#CA5E5E
+urxvt*color9:#FF595D
+urxvt*color2:#ABCB8D
+urxvt*color10:#AFD78A
+urxvt*color3:#C48D62
+urxvt*color11:#E0A765
+urxvt*color4:LightSlateBlue
+urxvt*color12:LightSlateBlue
+urxvt*color5:#CC98E0
+urxvt*color13:#E1A2DC
+urxvt*color6:#44CACF
+urxvt*color14:#6CBFC4
+urxvt*color7:#E7E6DD
+urxvt*color15:#F0EFE7
+
+!------------------------------------------
+! urxvt colors midnight blue bg
+!------------------------------------------
+!urxvt*foreground: white
+!urxvt*background: #1d2b3a
+!urxvt*transparent: false
+!urxvt*shading: 50
+!urxvt*color0: #000000
+!urxvt*color1: #d92c30
+!urxvt*color2: #aece91
+!urxvt*color3: #e7e18c
+!urxvt*color4: #7a7ab0
+!urxvt*color5: #963c59
+!urxvt*color6: #418179
+!urxvt*color7: gray
+!urxvt*color8: gray40
+!urxvt*color9: #ef8171
+!urxvt*color10: #e4ff51
+!urxvt*color12: #69b6f7
+!urxvt.color13: #ef9ebe
+!urxvt*color14: #71bebe
+!urxvt*color15: white
+
+!-------------------------------------------------------
+! urxvt white bg - use almost-default vim colorscheme
+!-------------------------------------------------------
+!urxvt*color0:#000000
+!urxvt*color1:#af0000
+!urxvt*color2:#00af00
+!urxvt*color3:#afaf00
+!urxvt*color4:#0000af
+!urxvt*color5:#af00af
+!urxvt*color6:#00afaf
+!urxvt*color7:#9a9a9a
+!urxvt*color8:#5f5f5f
+!urxvt*color9:#d70000
+!urxvt*color10:#00AA00
+!urxvt*color11:#d7d700
+!urxvt*color12:#0000d7
+!urxvt*color13:#d700d7
+!urxvt*color14:#00d7d7
+!urxvt*color15:#d7d7d7
+
+!urxvt*color0:      #121212
+!urxvt*color8:      #474747
+!urxvt*color1:      #803232
+!urxvt*color9:      #982B2B
+!urxvt*color2:      #5B762F
+!urxvt*color10:     #89B83F
+!urxvt*color3:      #AA9943
+!urxvt*color11:     #EFEF60
+!urxvt*color4:      #324C80
+!urxvt*color12:     #2B4F98
+!urxvt*color5:      #5F5A90
+!urxvt*color13:     #826AB1
+!urxvt*color6:      #92B19E
+!urxvt*color14:     #A1CDCD
+!urxvt*color7:      #FFFFFF
+!urxvt*color15:     #DEDEDE
+
+
+
+ratmen.align: left
+ratmen.background: black
+ratmen.foreground: white
+ratmen.font: -schumacher-clean-medium-r-normal--10-*-*-*-*-*-*-*
+ratmen.mouse: false
+ratmen.scrollOffset: 5
+ratmen.unfocusExit: false
+

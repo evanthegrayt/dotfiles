@@ -40,13 +40,11 @@ unset file
 # Environmental variables
 export CLICOLOR=1
 export LSCOLORS="ExGxcxcxcxexexcxcxexex"
-export LESS="-JmQNi --RAW-CONTROL-CHARS"
-export PAGER="less"  # in "view" (vim)
-export MANPAGER="/usr/bin/less"
 export MANPATH=$HOME/scripts/man:$MANPATH
 export GREP_OPTIONS="-i --color=tty"
 export GREP_COLOR='07;38;5;74'
 export LANG=en_US.UTF-8
+export LESS="-JmNirU"
 export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
 export GIT_EDITOR='vim'
 export SIMPLE_BACKUP_SUFFIX=".sav"

@@ -1,4 +1,4 @@
-# OH MY ZSH OPTIONS
+# zshrc
 # ENVIRONMENTAL VARIABLES
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="erg"
@@ -53,4 +53,6 @@ zsh-syntax-highlighting
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# vi: set syntax=zsh :
 
