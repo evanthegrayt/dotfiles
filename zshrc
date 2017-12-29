@@ -54,5 +54,10 @@ zsh-syntax-highlighting
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
+if [[ -n $ZSH ]]; then
+    bindkey -M emacs '^N' history-substring-search-down
+    bindkey -M emacs '^P' history-substring-search-up
+fi
+
 # vi: set syntax=zsh :
 
