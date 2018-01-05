@@ -40,17 +40,17 @@ unset file
 # Environmental variables
 export CLICOLOR=1
 export LSCOLORS="ExGxcxcxcxexexcxcxexex"
+export EDITOR="/bin/vi -x"
+export VISUAL="/usr/local/bin/vim"
+export FCEDIT=$VISUAL
 export MANPATH=$HOME/scripts/man:$MANPATH
 export GREP_OPTIONS="-i --color=tty"
 export GREP_COLOR='07;38;5;74'
 export LANG=en_US.UTF-8
 export LESS="-JmNirU"
 export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
-export GIT_EDITOR='vim'
+export GIT_EDITOR=$VISUAL
 export SIMPLE_BACKUP_SUFFIX=".sav"
-export EDITOR="/bin/vi -x"
-export FCEDIT="/usr/local/bin/vim"
-export VISUAL="/usr/local/bin/vim"
 export TERM=xterm-256color-italic
 export IRC_CLIENT='irssi'
 export TODO="t"

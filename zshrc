@@ -1,7 +1,7 @@
 # zshrc
 # ENVIRONMENTAL VARIABLES
 export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="erg"
+export ZSH_THEME="evanthegrayt_top_heavy"
 export DISABLE_AUTO_UPDATE="true"
 export ENABLE_CORRECTION="true"
 export COMPLETION_WAITING_DOTS="true"
@@ -40,6 +40,8 @@ history-substring-search
 zsh-autosuggestions
 zsh-syntax-highlighting
 )
+
+fpath=(~/bin/lib/zsh $fpath)
 
 # Source ZSH files and shellrc
 () {
