@@ -64,5 +64,3 @@ $HOME/scripts/bin
 
 unset MAILCHECK file
 
-export USER_DOTFILE_DIR=/Users/erg/workflow/dotfiles
-
