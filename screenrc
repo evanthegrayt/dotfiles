@@ -6,7 +6,7 @@
 # password ODSJQf.4IJN7E    # "1234"
 
 # no annoying audible bell, please
-vbell on
+vbell off
 
 # detach on hangup
 autodetach on

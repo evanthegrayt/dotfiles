@@ -1,6 +1,7 @@
 # bashrc
+export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
 
-source $HOME/workflow/dotfiles/shellrc
+source $USER_DOTFILE_DIR/shellrc
 
 Color="$RBLUE"
 Color2="$BBLACK"
@@ -18,4 +19,6 @@ export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend
 
 export BASH_IT="$HOME/.bash_it"
+
+bind -x '"\C-l": clear'
 

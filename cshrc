@@ -4,6 +4,7 @@
 #  Description:   This customizes your C-shell
 #       Author:   erg
 #
+# vi: set syntax=csh:
 #==============================================================
 # Set prompt to have the following form: [user][workingdir]-$
 #==============================================================

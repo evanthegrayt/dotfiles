@@ -1,4 +1,4 @@
-# vi: set syntax=sh :
+# vi: set syntax=sh:
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
@@ -20,22 +20,17 @@ echo '
 export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
 export USER_VIM_DIR="$HOME/.vim"
 
-# Source configuration files
 MY_CONFIG_FILES=(
 $USER_DOTFILE_DIR/aliases.sh
 $USER_DOTFILE_DIR/colors.sh
 $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
+$HOME/.shellrc.local
 )
 
 for file in ${MY_CONFIG_FILES[@]}; do
-    if [[ -f "$file" ]]; then
-        source "$file"
-    else
-        echo "[$file] does not exist! (Error from shellrc file)"
-    fi
+    source "$file" || echo "shellrc: could not source file [$file]"
 done
-unset file
 
 # Environmental variables
 export CLICOLOR=1
@@ -67,6 +62,7 @@ $HOME/bin:\
 $HOME/bin/ruby:\
 $HOME/scripts/bin
 
-# Options
-unset MAILCHECK
+unset MAILCHECK file
+
+export USER_DOTFILE_DIR=/Users/erg/workflow/dotfiles
 

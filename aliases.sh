@@ -1,6 +1,8 @@
 # Aliases for bash/zsh
 # vi: set syntax=sh :
 
+OS="$( uname -s )"
+
 alias lrt='ls -lArth'
 
 alias vbrc="vim $USER_DOTFILE_DIR/bashrc"
@@ -14,7 +16,6 @@ alias untar='tar -zxvf'
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
-alias path='printf ${PATH//:/\\n};echo'
 alias exed="$HOME/workflow/exed/bin/exed"
 alias mkex="$HOME/workflow/mkex/bin/mkex"
 
@@ -26,24 +27,26 @@ if which ag > /dev/null; then
     alias ag="ag --color-line-number='07;01;38;5;131' --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-if [[ "$( uname -s )" == 'Darwin' ]]; then
+if [[ "$OS" == 'Darwin' ]]; then
     alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
     alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+    alias ls='ls -G'
+elif [[ "$OS" == 'Linux' ]]; then
+    alias ls='ls --color=auto'
 fi
 
 if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
     alias    zzmv='noglob zmv -W'
     alias -s out='vim'
     alias -s txt='vim'
-    alias ls='ls -G'
 
-    if [[ "$( uname -s )" == 'Darwin' ]]; then
+    if [[ "$OS" == 'Darwin' ]]; then
         alias -s xls='open -a LibreOffice'
         alias -s xlsx='open -a LibreOffice'
         alias -s ods='open -a LibreOffice'
         alias -s odt='open -a LibreOffice'
     fi
-else
-    alias ls='ls --color=auto'
 fi
+
+unset OS
 
