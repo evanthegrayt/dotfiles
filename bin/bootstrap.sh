@@ -8,7 +8,7 @@ print_help() {
     echo '-h prints this help'
 }
 
-override=false
+force=false
 
 while getopts 'o' opts; do
     case $opts in
