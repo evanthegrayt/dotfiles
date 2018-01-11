@@ -57,7 +57,8 @@ zshrc
 )
 
 if $dotfiles; then
-    install_path="$( cd $( dirname ${0%/*} )/../ && pwd )"
+    install_path="$( cd $( dirname $0 )/../ && pwd )"
+    echo $install_path
 
     for file in ${files[@]}; do
         if $force; then
@@ -75,7 +76,7 @@ if $dotfiles; then
         fi
     done
 
-    echo "export USER_DOTFILE_DIR=$install_path" >> $(dirname ${0%/*})/../shellrc
+    echo "export USER_DOTFILE_DIR=$install_path" >> $( dirname $0 )/../shellrc
 fi
 
 if $zsh; then
