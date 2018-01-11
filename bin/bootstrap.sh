@@ -4,19 +4,27 @@ readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 
 print_help() {
     echo "$USAGE"
-    echo '-f to force overwrite of all current dotfiles'
-    echo '-h prints this help'
+    echo '  -f: Install dotfiles'
+    echo '  -v: Install vimfiles'
+    echo '  -z: Install oh-my-zsh'
+    echo '  -F: Force overwrite of all current dotfiles'
+    echo '  -h: Prints this help'
+
+    exit
 }
 
 force=false
 vim=false
 zsh=false
 
+if [[ $# == 0 ]]; then echo $USAGE; exit; fi
+
 while getopts 'fvzhu' opts; do
     case $opts in
-        f) force=true ;;
+        f) dotfiles=true ;;
         v) vim=true ;;
         z) zsh=true ;;
+        F) force=true ;;
         h) print_help ;;
         u)
             echo $USAGE
@@ -48,25 +56,27 @@ zlogin
 zshrc
 )
 
-install_path="$( cd $( dirname ${0%/*} )/../ && pwd )"
+if $dotfiles; then
+    install_path="$( cd $( dirname ${0%/*} )/../ && pwd )"
 
-for file in ${files[@]}; do
-    if $force; then
-        if [[ -e $HOME/.$file ]]; then
-            echo "Force set to 'true' and $HOME/.$file exists. Removing..."
-            rm -f $HOME/.$file
-        fi
-        ln -s $install_path/$file $HOME/.$file
-    else
-        if [[ -e $HOME/.$file ]]; then
-            echo "$HOME/.$file already exists. Run with '-f' to force"
-        else
+    for file in ${files[@]}; do
+        if $force; then
+            if [[ -e $HOME/.$file ]]; then
+                echo "Force set to 'true' and $HOME/.$file exists. Removing..."
+                rm -f $HOME/.$file
+            fi
             ln -s $install_path/$file $HOME/.$file
+        else
+            if [[ -e $HOME/.$file ]]; then
+                echo "$HOME/.$file already exists. Run with '-f' to force"
+            else
+                ln -s $install_path/$file $HOME/.$file
+            fi
         fi
-    fi
-done
+    done
 
-echo "export USER_DOTFILE_DIR=$install_path" >> ${0%/*}/../shellrc
+    echo "export USER_DOTFILE_DIR=$install_path" >> $(dirname ${0%/*})/../shellrc
+fi
 
 if $zsh; then
     if [[ ! -d ~/.oh-my-zsh ]]; then
