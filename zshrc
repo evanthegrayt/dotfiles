@@ -1,7 +1,6 @@
 # zshrc
+
 export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="evanthegrayt_top_heavy"
 export DISABLE_AUTO_UPDATE="true"
 export ENABLE_CORRECTION="true"
 export COMPLETION_WAITING_DOTS="true"
@@ -26,19 +25,21 @@ zsh-autosuggestions
 zsh-syntax-highlighting
 )
 
+if [[ -d "$HOME/.oh-my-zsh" ]]; then
+    export ZSH="$HOME/.oh-my-zsh"
+    export ZSH_THEME="evanthegrayt_top_heavy"
+    bindkey -M emacs '^N' history-substring-search-down
+    bindkey -M emacs '^P' history-substring-search-up
+fi
+
 fpath=(~/bin/lib/zsh $fpath)
 
 # Source ZSH files and shellrc
 () {
     local file
-    for file { source "$file" || echo "zshrc: could not source file [$file]" }
+    for file { [[ -f $file ]] && source "$file" }
 } $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $USER_DOTFILE_DIR/shellrc
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
-if [[ -d $ZSH ]]; then
-    bindkey -M emacs '^N' history-substring-search-down
-    bindkey -M emacs '^P' history-substring-search-up
-fi
 
