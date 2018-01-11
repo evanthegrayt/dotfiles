@@ -12,7 +12,7 @@ force=false
 vim=false
 zsh=false
 
-while getopts 'ohu' opts; do
+while getopts 'fvzhu' opts; do
     case $opts in
         f) force=true ;;
         v) vim=true ;;
