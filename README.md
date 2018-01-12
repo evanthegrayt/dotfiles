@@ -8,11 +8,18 @@ you're looking to get weird, you can clone the entire repo. Once cloned, `cd`
 into the repository and run the bootstrap script.
 
 ```sh
-bash bin/bootstrap.sh
+bash bin/bootstrap.sh -f
 ```
 
 By default, the bootstrap script won't overwrite currently-existing files. To
-overwrite all existing files, run with `-f`
+overwrite all existing files, run with `-F`
+
+Other options for the bootstrap script include
+
+```
+-v: Also set up vim directory, including plugins
+-z: Also set up oh-my-zsh
+```
 
 ```sh
 bash bin/bootstrap.sh -f
