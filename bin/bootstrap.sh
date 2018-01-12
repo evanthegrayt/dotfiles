@@ -44,6 +44,13 @@ while getopts 'rfbvzhu' opts; do
 done
 
 files=(
+bash_profile
+bash_logout
+zlogin
+zlogout
+zshrc
+profile
+colordiffrc
 LESS_TERMCAP
 Xdefaults
 Xmodmap
@@ -58,8 +65,7 @@ irbrc
 pryrc
 screenrc
 xterm-256color-italic.terminfo
-zlogin
-zshrc
+taskrc
 )
 
 if $dotfiles; then
