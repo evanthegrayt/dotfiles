@@ -6,24 +6,30 @@ print_help() {
     echo "$USAGE"
     echo '  -f: Install dotfiles'
     echo '  -v: Install vimfiles'
-    echo '  -z: Install oh-my-zsh'
+    echo '  -z: Change shell to zsh and install oh-my-zsh'
+    echo '  -b: Change shell to zsh and Install bash-it'
     echo '  -F: Force overwrite of all current dotfiles'
     echo '  -h: Prints this help'
 
     exit
 }
 
-force=false
+dotfiles=false
 vim=false
 zsh=false
+bash=false
+force=false
+rvm=false
 
-if [[ $# == 0 ]]; then echo $USAGE; exit; fi
+if [[ $# == 0 ]]; then echo "$USAGE"; exit; fi
 
-while getopts 'fvzhu' opts; do
+while getopts 'rfbvzhu' opts; do
     case $opts in
         f) dotfiles=true ;;
         v) vim=true ;;
         z) zsh=true ;;
+        b) bash=true ;;
+        r) rvm=true ;;
         F) force=true ;;
         h) print_help ;;
         u)
@@ -84,16 +90,44 @@ if $dotfiles; then
 fi
 
 if $zsh; then
-    if [[ ! -d ~/.oh-my-zsh ]]; then
-        git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-        rm -rf ~/.oh-my-zsh/custom
-        git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
-            ~/.oh-my-zsh/custom
+    zsh="$( grep 'zsh$' /etc/shells 2>/dev/null|head -1 )"
+    if [[ -x "$zsh" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
+        if ! grep "^$LOGNAME:.*zsh" /etc/passwd >/dev/null; then
+            echo "Changing login shell to zsh."
+            chsh -s "$zsh"
+        fi
+        if [[ ! -d ~/.oh-my-zsh ]]; then
+            git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+            rm -rf ~/.oh-my-zsh/custom
+            git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
+                ~/.oh-my-zsh/custom
+        fi
+    else
+        echo "Cannot change shell to zsh; zsh executable not found."
+    fi
+fi
+
+if $bash; then
+    bash="$( grep 'bash$' /etc/shells 2>/dev/null|head -1 )"
+    if [[ -x "$bash" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
+        if ! grep "^$LOGNAME:.*zsh" /etc/passwd >/dev/null; then
+            echo "Changing login shell to bash."
+            chsh -s "$bash"
+        fi
+        if [[ ! -d ~/.bash_it ]]; then
+            git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
+        fi
+    else
+        echo "Cannot change shell to bash; bash executable not found."
     fi
 fi
 
 if $vim; then
     [[ -d ~/.vim ]] && rm -rf ~/.vim
     git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
+fi
+
+if $rvm; then
+    echo "Installing rvm"
 fi
 

@@ -40,6 +40,3 @@ fpath=(~/bin/lib/zsh $fpath)
     for file { [[ -f $file ]] && source "$file" }
 } $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $USER_DOTFILE_DIR/shellrc
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-

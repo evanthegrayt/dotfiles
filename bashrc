@@ -25,7 +25,7 @@ export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend
 
-export BASH_IT="$HOME/.bash_it"
+[[ -d $HOME/.bash_it ]] && export BASH_IT="$HOME/.bash_it"
 
 bind -x '"\C-l": clear'
 

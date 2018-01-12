@@ -1,23 +1,32 @@
 #.inputrc
-#-- This makes auto-completion ignore case
+# Resources:
+#>  http://brettterpstra.com/2015/07/09/shell-tricks-inputrc-binding-fun/
+#>  http://www.gnu.org/software/bash/manual/bashref.html#Command-Line-Editing
+# This makes auto-completion ignore case
 set completion-ignore-case on
-#-- This makes the editing mode vi instead of emacs
-#set editing-mode vi
-#-- History, start tying, hit up, and it will find commands starting with that letter.
+# This makes the editing mode vi instead of emacs
+# set editing-mode vi
+# History. Start tying, hit up, and only previous commands starting with
+# input will be populated
 "\C-p":history-search-backward
 "\C-n":history-search-forward
 "\e[A":history-search-backward
 "\e[B":history-search-forward
 
+# Clear screen
+"\C-l":clear-screen
+
 #-- this maps the up and down arrow to searching
 $if mode=vi
+    $if Bash
+        "\C-w": unix-filename-rubout
+    $endif
     "\C-b":backward-char
     "\C-f":forward-char
     "\C-a":vi-insert-beg
     "\C-e":vi-append-eol
     "\C-d":vi-delete
     "\C-k":kill-line
-    "\C-l":clear-screen
     "\C-j":'\033'
 $endif
 
