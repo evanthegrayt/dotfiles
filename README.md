@@ -19,10 +19,7 @@ Other options for the bootstrap script include
 ```
 -v: Also set up vim directory, including plugins
 -z: Also set up oh-my-zsh
-```
-
-```sh
-bash bin/bootstrap.sh -f
+-F: Replace current dotfiles if they already exist
 ```
 
 Obviously, this is set up for my workflow, so don't be surprised when stuff
