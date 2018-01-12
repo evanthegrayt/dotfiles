@@ -23,7 +23,7 @@ rvm=false
 
 if [[ $# == 0 ]]; then echo "$USAGE"; exit; fi
 
-while getopts 'rfbvzhu' opts; do
+while getopts 'fvzbrFhu' opts; do
     case $opts in
         f) dotfiles=true ;;
         v) vim=true ;;
