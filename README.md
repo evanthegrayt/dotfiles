@@ -1,5 +1,5 @@
 # dotfiles
-My dotfiles. Here be dragons.
+My dotfiles, plus a bootstrap script. Here be dragons.
 
 ### Installation
 I doubt you'd want to use my exact config, so I'd recommend just copying the

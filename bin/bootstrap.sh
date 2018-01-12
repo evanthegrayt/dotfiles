@@ -7,8 +7,9 @@ print_help() {
     echo '  -f: Install dotfiles'
     echo '  -v: Install vimfiles'
     echo '  -z: Change shell to zsh and install oh-my-zsh'
-    echo '  -b: Change shell to zsh and Install bash-it'
+    echo '  -b: Change shell to bash and Install bash-it'
     echo '  -F: Force overwrite of all current dotfiles'
+    echo '  -B: Same as "-f", but save with ".bak" extensions'
     echo '  -h: Prints this help'
 
     exit
@@ -19,19 +20,21 @@ vim=false
 zsh=false
 bash=false
 force=false
+backup=false
 rvm=false
 
-if [[ $# == 0 ]]; then echo "$USAGE"; exit; fi
+if (( $# == 0 )); then echo "$USAGE"; exit 1; fi
 
-while getopts 'fvzbrFhu' opts; do
+while getopts 'fvzbrFBhu' opts; do
     case $opts in
-        f) dotfiles=true ;;
-        v) vim=true ;;
-        z) zsh=true ;;
-        b) bash=true ;;
-        r) rvm=true ;;
-        F) force=true ;;
-        h) print_help ;;
+        f)  dotfiles=true ;;
+        v)  vim=true      ;;
+        z)  zsh=true      ;;
+        b)  bash=true     ;;
+        r)  rvm=true      ;;
+        F)  force=true    ;;
+        B)  backup=true   ;;
+        h)  print_help    ;;
         u)
             echo $USAGE
             exit 0
@@ -70,13 +73,17 @@ taskrc
 
 if $dotfiles; then
     install_path="$( cd $( dirname $0 )/../ && pwd )"
-    echo $install_path
 
     for file in ${files[@]}; do
-        if $force; then
+        if $force || $backup; then
             if [[ -e $HOME/.$file ]]; then
-                echo "Force set to 'true' and $HOME/.$file exists. Removing..."
-                rm -f $HOME/.$file
+                if $backup; then
+                    echo "$HOME/.$file exists. Backing up..."
+                    mv $HOME/.$file{,.bak}
+                elif $force; then
+                    echo "$HOME/.$file exists. Removing..."
+                    rm -f $HOME/.$file
+                fi
             fi
             ln -s $install_path/$file $HOME/.$file
         else
