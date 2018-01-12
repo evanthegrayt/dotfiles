@@ -23,7 +23,7 @@ alias vup="cd $HOME/workflow/vagrant-ique && vagrant up"
 alias vssh="cd $HOME/workflow/vagrant-ique && vagrant ssh"
 alias vhalt="cd $HOME/workflow/vagrant-ique && vagrant halt"
 
-if which ag > /dev/null; then
+if which ag &> /dev/null; then
     alias ag="ag --color-line-number='07;01;38;5;131' --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 

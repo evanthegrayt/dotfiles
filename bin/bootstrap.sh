@@ -77,6 +77,10 @@ if $dotfiles; then
     done
 
     echo "export USER_DOTFILE_DIR=$install_path" >> $( dirname $0 )/../shellrc
+
+    if [[ $TERM != 'xterm-256color-italic' ]]; then
+        tic $install_path/xterm-256color-italic.terminfo
+    fi
 fi
 
 if $zsh; then

@@ -28,9 +28,7 @@ $HOME/.slack_config
 $HOME/.shellrc.local
 )
 
-for file in ${MY_CONFIG_FILES[@]}; do
-    source "$file" || echo "shellrc: could not source file [$file]"
-done
+for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 # Environmental variables
 export CLICOLOR=1
