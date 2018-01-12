@@ -19,7 +19,7 @@ Other options for the bootstrap script include
 ```
 -v: Also set up vim directory, including plugins
 -z: Change shell to zsh set up oh-my-zsh
--b: Change shell to baash set up bash-it
+-b: Change shell to bash set up bash-it
 -F: Replace current dotfiles if they already exist
 ```
 
