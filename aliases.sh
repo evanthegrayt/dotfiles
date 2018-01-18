@@ -5,11 +5,11 @@ OS="$( uname -s )"
 
 alias lrt='ls -lArth'
 
-alias vbrc="vim $USER_DOTFILE_DIR/bashrc"
-alias vzrc="vim $USER_DOTFILE_DIR/zshrc"
-alias vsrc="vim $USER_DOTFILE_DIR/shellrc"
-alias val="vim $USER_DOTFILE_DIR/aliases.sh"
-alias vvrc="vim $USER_VIM_DIR/vimrc"
+alias vbrc="vim $HOME/.bashrc"
+alias vzrc="vim $HOME/.zshrc"
+alias vsrc="vim $HOME/.shellrc"
+alias val="vim $HOME/.aliases.sh"
+alias vvrc="vim $HOME/.vim/vimrc"
 
 alias diff='colordiff'
 alias untar='tar -zxvf'

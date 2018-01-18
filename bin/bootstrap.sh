@@ -3,30 +3,50 @@
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 
 print_help() {
-    echo "$USAGE"
-    echo '  -f: Install dotfiles'
-    echo '  -v: Install vimfiles'
-    echo '  -z: Change shell to zsh and install oh-my-zsh'
-    echo '  -b: Change shell to bash and Install bash-it'
-    echo '  -F: Force overwrite of all current dotfiles'
-    echo '  -B: Same as "-f", but save with ".bak" extensions'
-    echo '  -h: Prints this help'
-
+    cat <<EOF
+    $USAGE
+      -f: Install dotfiles
+      -v: Install vimfiles
+      -a: Intstall everything. Must still pass '-z' or '-b' for shell
+      -z: Change shell to zsh and install oh-my-zsh
+      -b: Change shell to bash and Install bash-it
+      -F: Force overwrite of all current dotfiles
+      -B: Same as '-f', but save with '.bak' extensions
+      -h: Print this help and exit
+      -u: Print usage and exit
+EOF
     exit
 }
 
+change_login_shell() {
+    local passed_shell=$1
+
+    shell="$( grep "$passed_shell$" /etc/shells 2>/dev/null | tail -n 1 )"
+    if [[ -x "$shell" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
+        if ! grep "^$LOGNAME:.*$shell" /etc/passwd >/dev/null; then
+            echo "Changing login shell to $shell."
+            chsh -s "$shell"
+        fi
+    else
+        echo "Cannot change shell to $shell; $shell executable not found."
+    fi
+}
+
+all=false
 dotfiles=false
 vim=false
 zsh=false
 bash=false
+rvm=false
 force=false
 backup=false
-rvm=false
+change_shell=false
 
 if (( $# == 0 )); then echo "$USAGE"; exit 1; fi
 
-while getopts 'fvzbrFBhu' opts; do
+while getopts 'rafvzbrFBhu' opts; do
     case $opts in
+        a)  all=true      ;;
         f)  dotfiles=true ;;
         v)  vim=true      ;;
         z)  zsh=true      ;;
@@ -46,101 +66,84 @@ while getopts 'fvzbrFBhu' opts; do
     esac
 done
 
-files=(
-bash_profile
-bash_logout
-zlogin
-zlogout
-zshrc
-profile
-colordiffrc
-LESS_TERMCAP
-Xdefaults
-Xmodmap
-bashrc
-cshrc
-dir_colors
-emacs
-exedrc
-hushlogin
-inputrc
-irbrc
-pryrc
-screenrc
-xterm-256color-italic.terminfo
-taskrc
-)
-
-if $dotfiles; then
+if $dotfiles || $all; then
     install_path="$( cd $( dirname $0 )/../ && pwd )"
 
-    for file in ${files[@]}; do
-        if $force || $backup; then
-            if [[ -e $HOME/.$file ]]; then
-                if $backup; then
-                    echo "$HOME/.$file exists. Backing up..."
-                    mv $HOME/.$file{,.bak}
-                elif $force; then
-                    echo "$HOME/.$file exists. Removing..."
-                    rm -f $HOME/.$file
+    for file in $install_path/*; do
+        sfile=${file##*/}
+        if [[ -f $file ]]; then
+            if $force || $backup; then
+                if [[ -e $HOME/.$sfile ]]; then
+                    if $backup; then
+                        echo "$HOME/.$sfile exists. Backing up..."
+                        mv $HOME/.$sfile{,.bak}
+                    elif $force; then
+                        echo "$HOME/.$sfile exists. Removing..."
+                        rm -f $HOME/.$sfile
+                    fi
                 fi
-            fi
-            ln -s $install_path/$file $HOME/.$file
-        else
-            if [[ -e $HOME/.$file ]]; then
-                echo "$HOME/.$file already exists. Run with '-f' to force"
+                ln -s $file $HOME/.$sfile
             else
-                ln -s $install_path/$file $HOME/.$file
+                if [[ -e $HOME/.$file ]]; then
+                    echo "$HOME/.$file already exists. Run with '-f' to force"
+                else
+                    ln -s $file $HOME/.$sfile
+                fi
             fi
         fi
     done
 
-    echo "export USER_DOTFILE_DIR=$install_path" >> $( dirname $0 )/../shellrc
-
     if [[ $TERM != 'xterm-256color-italic' ]]; then
-        tic $install_path/xterm-256color-italic.terminfo
+        tic $HOME/.xterm-256color-italic.terminfo
+    fi
+fi
+
+
+if $vim || $all; then
+    if [[ -d ~/.vim ]]; then
+        if $force; then
+            rm -rf ~/.vim
+            git clone --recursive https://github.com/evanthegrayt/vimfiles.git \
+                ~/.vim
+        elif $backup; then
+            mv ~/.vim{,.bak}
+            git clone --recursive https://github.com/evanthegrayt/vimfiles.git \
+                ~/.vim
+        else
+            echo "~/.vim exists. Run with '-F' to force, or '-B' to back-up"
+        fi
+    fi
+fi
+
+if $rvm || $all; then
+    if which rvm > /dev/null; then
+        echo "rvm already installed."
+    else
+        echo "Installing rvm"
+        "curl" -sSL https://get.rvm.io | bash -s stable
     fi
 fi
 
 if $zsh; then
-    zsh="$( grep 'zsh$' /etc/shells 2>/dev/null|head -1 )"
-    if [[ -x "$zsh" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
-        if ! grep "^$LOGNAME:.*zsh" /etc/passwd >/dev/null; then
-            echo "Changing login shell to zsh."
-            chsh -s "$zsh"
-        fi
-        if [[ ! -d ~/.oh-my-zsh ]]; then
-            git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-            rm -rf ~/.oh-my-zsh/custom
-            git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
-                ~/.oh-my-zsh/custom
-        fi
-    else
-        echo "Cannot change shell to zsh; zsh executable not found."
+    if $change_shell; then
+        change_login_shell zsh
+    fi
+
+    if [[ ! -d ~/.oh-my-zsh ]]; then
+        git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+        rm -rf ~/.oh-my-zsh/custom
+        git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
+            ~/.oh-my-zsh/custom
     fi
 fi
 
 if $bash; then
-    bash="$( grep 'bash$' /etc/shells 2>/dev/null|head -1 )"
-    if [[ -x "$bash" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
-        if ! grep "^$LOGNAME:.*zsh" /etc/passwd >/dev/null; then
-            echo "Changing login shell to bash."
-            chsh -s "$bash"
-        fi
-        if [[ ! -d ~/.bash_it ]]; then
-            git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
-        fi
-    else
-        echo "Cannot change shell to bash; bash executable not found."
+    if $change_shell; then
+        change_login_shell bash
     fi
-fi
 
-if $vim; then
-    [[ -d ~/.vim ]] && rm -rf ~/.vim
-    git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
-fi
-
-if $rvm; then
-    echo "Installing rvm"
+    if [[ ! -d ~/.bash_it ]]; then
+        git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
+    fi
 fi
 

@@ -1,6 +1,5 @@
 # zshrc
 
-export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
 export DISABLE_AUTO_UPDATE="true"
 export ENABLE_CORRECTION="true"
 export COMPLETION_WAITING_DOTS="true"
@@ -38,5 +37,5 @@ fpath=(~/bin/lib/zsh $fpath)
 () {
     local file
     for file { [[ -f $file ]] && source "$file" }
-} $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $USER_DOTFILE_DIR/shellrc
+    } $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $HOME/.shellrc
 

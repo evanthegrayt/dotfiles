@@ -1,7 +1,6 @@
 # bashrc
-export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
 
-source $USER_DOTFILE_DIR/shellrc
+source $HOME/.shellrc
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 

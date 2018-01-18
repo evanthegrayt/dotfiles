@@ -2,27 +2,12 @@
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
-echo '
-     ___                         ___           ___
-    /  /\          ___          /  /\         /  /\
-   /  /::\        /  /\        /  /::\       /  /::|
-  /  /:/\:\      /  /:/       /  /:/\:\     /  /:|:|
- /  /::\ \:\    /  /:/       /  /::\ \:\   /  /:/|:|__
-/__/:/\:\ \:\  /__/:/  ___  /__/:/\:\_\:\ /__/:/ |:| /\
-\  \:\ \:\_\/  |  |:| /  /\ \__\/  \:\/:/ \__\/  |:|/:/
- \  \:\ \:\    |  |:|/  /:/      \__\::/      |  |:/:/
-  \  \:\_\/    |__|:|__/:/       /  /:/       |__|::/
-   \  \:\       \__\::::/       /__/:/        /__/:/
-    \__\/           ~~~~        \__\/         \__\/
-'
-
 # Custom environmental variables
-export USER_DOTFILE_DIR="$HOME/workflow/dotfiles"
 export USER_VIM_DIR="$HOME/.vim"
 
 MY_CONFIG_FILES=(
-$USER_DOTFILE_DIR/aliases.sh
-$USER_DOTFILE_DIR/colors.sh
+$HOME/.aliases.sh
+$HOME/.colors.sh
 $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
 $HOME/.shellrc.local

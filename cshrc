@@ -24,9 +24,5 @@ else
     alias ls 'env CLICOLOR=1 LSCOLORS=ExGxFxdxCxfxDxxbadacad ls -hFG'
 endif
 
-alias lrt             'clear;ls -lart | less -X'
-alias less            'less -X'
-alias cp              'cp -v'
-alias mv              'mv -v'
-alias rm              'rm -v'
+eval `grep '^alias' $HOME/workflow/dotfiles/aliases.sh | sed -e 's/=/ /' -e 's/$/;/'`
 
