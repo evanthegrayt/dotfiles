@@ -5,13 +5,24 @@ readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 print_help() {
     cat <<EOF
     $USAGE
+
+    Install options (must pass one of these options)
       -f: Install dotfiles
       -v: Install vimfiles
-      -a: Intstall everything. Must still pass '-z' or '-b' for shell
-      -z: Change shell to zsh and install oh-my-zsh
-      -b: Change shell to bash and Install bash-it
+      -a: Intstall dotfiles, rvm, and vim
+      -z: Install 'oh-my-zsh' (not included with '-a')
+      -b: Install 'bash-it'   (not included with '-a')
+
+    Additional install options (default: Don't add these settings)
+      -C: With '-z' or '-b'; change login shell to bash or zsh
+      -i: Enable terminal italics
+
+    Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
       -F: Force overwrite of all current dotfiles
-      -B: Same as '-f', but save with '.bak' extensions
+      -B: Replace old dotfiles, but save them with '.bak' extension
+      -A: Append new dotfiles to current dotfiles
+
+    Usage options
       -h: Print this help and exit
       -u: Print usage and exit
 EOF
@@ -20,8 +31,8 @@ EOF
 
 change_login_shell() {
     local passed_shell=$1
+    local shell="$( grep "$passed_shell$" /etc/shells 2>/dev/null | tail -n 1 )"
 
-    shell="$( grep "$passed_shell$" /etc/shells 2>/dev/null | tail -n 1 )"
     if [[ -x "$shell" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
         if ! grep "^$LOGNAME:.*$shell" /etc/passwd >/dev/null; then
             echo "Changing login shell to $shell."
@@ -32,7 +43,13 @@ change_login_shell() {
     fi
 }
 
+clone_vim() {
+    git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
+}
+
 all=false
+italic=false
+append=false
 dotfiles=false
 vim=false
 zsh=false
@@ -42,19 +59,24 @@ force=false
 backup=false
 change_shell=false
 
-if (( $# == 0 )); then echo "$USAGE"; exit 1; fi
-
-while getopts 'rafvzbrFBhu' opts; do
+while getopts 'aiAfvzbrFBChu' opts; do
     case $opts in
-        a)  all=true      ;;
-        f)  dotfiles=true ;;
-        v)  vim=true      ;;
-        z)  zsh=true      ;;
-        b)  bash=true     ;;
-        r)  rvm=true      ;;
-        F)  force=true    ;;
-        B)  backup=true   ;;
-        h)  print_help    ;;
+        A)  append=true       ;;
+        f)  dotfiles=true     ;;
+        v)  vim=true          ;;
+        z)  zsh=true          ;;
+        b)  bash=true         ;;
+        r)  rvm=true          ;;
+        F)  force=true        ;;
+        B)  backup=true       ;;
+        C)  change_shell=true ;;
+        i)  italics=true      ;;
+        h)  print_help        ;;
+        a)
+            dotfiles=true
+            vim=true
+            rvm=true
+            ;;
         u)
             echo $USAGE
             exit 0
@@ -66,15 +88,38 @@ while getopts 'rafvzbrFBhu' opts; do
     esac
 done
 
-if $dotfiles || $all; then
+if (( $# == 0 )); then
+    echo $USAGE
+    exit 1
+fi
+
+if $change_shell && !( $zsh || $bash ); then
+    echo $USAGE
+    echo "Must pass '-C' with '-z' or '-b'"
+    exit 1
+fi
+
+if $force && !($vim || $dotfiles); then
+    echo $USAGE
+    echo "Must pass '-C' with '-z' or '-b'"
+    exit 1
+fi
+
+if $dotfiles; then
     install_path="$( cd $( dirname $0 )/../ && pwd )"
 
     for file in $install_path/*; do
         sfile=${file##*/}
         if [[ -f $file ]]; then
-            if $force || $backup; then
+            if $force || $backup || $append; then
                 if [[ -e $HOME/.$sfile ]]; then
-                    if $backup; then
+                    if $append; then
+                        echo "$HOME/.$sfile exists. Appending..."
+                        cat $HOME/.$sfile > $file.tmp
+                        rm $HOME/.$sfile
+                        cat $file >> $file.tmp
+                        mv $file.tmp $file
+                    elif $backup; then
                         echo "$HOME/.$sfile exists. Backing up..."
                         mv $HOME/.$sfile{,.bak}
                     elif $force; then
@@ -92,30 +137,26 @@ if $dotfiles || $all; then
             fi
         fi
     done
-
-    if [[ $TERM != 'xterm-256color-italic' ]]; then
-        tic $HOME/.xterm-256color-italic.terminfo
-    fi
 fi
 
+if $italics && [[ $TERM != 'xterm-256color-italic' ]]; then
+    tic $HOME/.xterm-256color-italic.terminfo
+fi
 
-if $vim || $all; then
+if $vim; then
     if [[ -d ~/.vim ]]; then
         if $force; then
             rm -rf ~/.vim
-            git clone --recursive https://github.com/evanthegrayt/vimfiles.git \
-                ~/.vim
         elif $backup; then
             mv ~/.vim{,.bak}
-            git clone --recursive https://github.com/evanthegrayt/vimfiles.git \
-                ~/.vim
         else
             echo "~/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
     fi
+    [[ ! -d ~/.vim ]] && clone_vim
 fi
 
-if $rvm || $all; then
+if $rvm; then
     if which rvm > /dev/null; then
         echo "rvm already installed."
     else
@@ -125,9 +166,7 @@ if $rvm || $all; then
 fi
 
 if $zsh; then
-    if $change_shell; then
-        change_login_shell zsh
-    fi
+    $change_shell && change_login_shell zsh
 
     if [[ ! -d ~/.oh-my-zsh ]]; then
         git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
@@ -138,9 +177,7 @@ if $zsh; then
 fi
 
 if $bash; then
-    if $change_shell; then
-        change_login_shell bash
-    fi
+    $change_shell && change_login_shell bash
 
     if [[ ! -d ~/.bash_it ]]; then
         git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
