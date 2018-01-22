@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
+readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
 
 print_help() {
     cat <<EOF
@@ -27,6 +28,37 @@ print_help() {
       -u: Print usage and exit
 EOF
     exit
+}
+
+link_dotfile() {
+    local file="$1"
+    local sfile="${file##*/}"
+    if [[ -f $file ]]; then
+        if $force || $backup || $append; then
+            if [[ -e $HOME/.$sfile ]]; then
+                if $append; then
+                    echo "$HOME/.$sfile exists. Appending..."
+                    cat $HOME/.$sfile > $file.tmp
+                    rm $HOME/.$sfile
+                    cat $file >> $file.tmp
+                    mv $file.tmp $file
+                elif $backup; then
+                    echo "$HOME/.$sfile exists. Backing up..."
+                    mv $HOME/.$sfile{,.bak}
+                elif $force; then
+                    echo "$HOME/.$sfile exists. Removing..."
+                    rm -f $HOME/.$sfile
+                fi
+            fi
+            ln -s $file $HOME/.$sfile
+        else
+            if [[ -e $HOME/.$sfile ]]; then
+                echo "$HOME/.$sfile already exists. Run with '-f' to force"
+            else
+                ln -s $file $HOME/.$sfile
+            fi
+        fi
+    fi
 }
 
 change_login_shell() {
@@ -59,19 +91,23 @@ force=false
 backup=false
 change_shell=false
 
-while getopts 'aiAfvzbrFBChu' opts; do
+while getopts 'aiAfvzbrFBChus:' opts; do
     case $opts in
-        A)  append=true       ;;
-        f)  dotfiles=true     ;;
-        v)  vim=true          ;;
-        z)  zsh=true          ;;
-        b)  bash=true         ;;
-        r)  rvm=true          ;;
-        F)  force=true        ;;
-        B)  backup=true       ;;
-        C)  change_shell=true ;;
-        i)  italics=true      ;;
-        h)  print_help        ;;
+        A)  append=true         ;;
+        f)  dotfiles=true       ;;
+        v)  vim=true            ;;
+        z)  zsh=true            ;;
+        b)  bash=true           ;;
+        r)  rvm=true            ;;
+        F)  force=true          ;;
+        B)  backup=true         ;;
+        C)  change_shell=true   ;;
+        i)  italics=true        ;;
+        h)  print_help          ;;
+        s)
+            single_file=$OPTARG
+            [[ $single_file =~ ^\. ]] && single_file=${single_file#*.}
+            ;;
         a)
             dotfiles=true
             vim=true
@@ -93,6 +129,12 @@ if (( $# == 0 )); then
     exit 1
 fi
 
+if $dotfiles && [[ -n $single_file ]]; then
+    echo $USAGE
+    echo "Cannot pass '-f' with '-s FILE'"
+    exit 1
+fi
+
 if $change_shell && !( $zsh || $bash ); then
     echo $USAGE
     echo "Must pass '-C' with '-z' or '-b'"
@@ -105,37 +147,11 @@ if $force && !($vim || $dotfiles); then
     exit 1
 fi
 
-if $dotfiles; then
-    install_path="$( cd $( dirname $0 )/../ && pwd )"
-
-    for file in $install_path/*; do
-        sfile=${file##*/}
-        if [[ -f $file ]]; then
-            if $force || $backup || $append; then
-                if [[ -e $HOME/.$sfile ]]; then
-                    if $append; then
-                        echo "$HOME/.$sfile exists. Appending..."
-                        cat $HOME/.$sfile > $file.tmp
-                        rm $HOME/.$sfile
-                        cat $file >> $file.tmp
-                        mv $file.tmp $file
-                    elif $backup; then
-                        echo "$HOME/.$sfile exists. Backing up..."
-                        mv $HOME/.$sfile{,.bak}
-                    elif $force; then
-                        echo "$HOME/.$sfile exists. Removing..."
-                        rm -f $HOME/.$sfile
-                    fi
-                fi
-                ln -s $file $HOME/.$sfile
-            else
-                if [[ -e $HOME/.$file ]]; then
-                    echo "$HOME/.$file already exists. Run with '-f' to force"
-                else
-                    ln -s $file $HOME/.$sfile
-                fi
-            fi
-        fi
+if [[ -n $single_file ]]; then
+    link_dotfile "$INSTALL_PATH/$single_file"
+elif $dotfiles; then
+    for file in $INSTALL_PATH/*; do
+        link_dotfile "$file"
     done
 fi
 
