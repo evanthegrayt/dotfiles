@@ -1,11 +1,12 @@
+# vi: set ft=csh:
 #==================================================
 #         File:   .cshrc
 #
 #  Description:   This customizes your C-shell
 #       Author:   erg
 #
-# vi: set syntax=csh:
 #==============================================================
+if ( -f $HOME/.cshrc.local ) source $HOME/.cshrc.local
 
 set host = `echo $HOST| cut -d. -f1`
 alias setprompt 'set prompt=" (${user}@${host}) ${cwd}\n $ "'

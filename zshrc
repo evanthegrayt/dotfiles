@@ -1,4 +1,5 @@
 # zshrc
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
 export DISABLE_AUTO_UPDATE="true"
 export ENABLE_CORRECTION="true"

@@ -112,7 +112,7 @@ while getopts 'aiAfvzbrFBChus:' opts; do
             exit 0
             ;;
         *)
-            echo $USAGE
+            echo $USAGE >&2
             exit 1
             ;;
     esac
@@ -122,25 +122,25 @@ readonly FORCE APPEND INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH INSTALL_BASH
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL
 
 if (( $# == 0 )); then
-    echo $USAGE
+    echo $USAGE >&2
     exit 1
 fi
 
 if $INSTALL_DOTFILES && [[ -n $single_file ]]; then
-    echo $USAGE
-    echo "Cannot pass '-f' with '-s FILE'"
+    echo $USAGE >&2
+    echo "Cannot pass '-f' with '-s FILE'" >&2
     exit 1
 fi
 
 if $CHANGE_SHELL && !( $INSTALL_ZSH || $INSTALL_BASH ); then
-    echo $USAGE
-    echo "Must pass '-C' with '-z' or '-b'"
+    echo $USAGE >&2
+    echo "Must pass '-C' with '-z' or '-b'" >&2
     exit 1
 fi
 
 if $FORCE && !( $INSTALL_VIM || $INSTALL_DOTFILES ); then
-    echo $USAGE
-    echo "Must pass '-C' with '-z' or '-b'"
+    echo $USAGE >&2
+    echo "Must pass '-C' with '-z' or '-b'" >&2
     exit 1
 fi
 

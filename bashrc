@@ -1,6 +1,7 @@
 # bashrc
 
-source $HOME/.shellrc
+[[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
+[[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
