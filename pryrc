@@ -1,6 +1,8 @@
 # vi: set filetype=ruby :
 # Whether or not to enable this feature. Defaults to true.
+Pry.config.history.file = "~/.irb_history"
 Pry.config.coolline_paren_matching = false
+Pry.editor = ENV['VISUAL']
 
 # Change the color code inserted when paprens are (mis)matched.
 Pry.config.coolline_matched_paren    = "\e[42m"
@@ -16,5 +18,6 @@ Gem.path.each do |gemset|
   $:.concat(Dir.glob("#{gemset}/gems/pry-*/lib"))
 end if defined?(Bundler)
 $:.uniq!
+
 require 'pry-editline'
 
