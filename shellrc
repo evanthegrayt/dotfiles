@@ -2,15 +2,12 @@
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
-# Custom environmental variables
-export USER_VIM_DIR="$HOME/.vim"
-
 MY_CONFIG_FILES=(
+$HOME/.shellrc.local
 $HOME/.aliases.sh
 $HOME/.colors.sh
 $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
-$HOME/.shellrc.local
 )
 
 for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
