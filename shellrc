@@ -19,7 +19,7 @@ for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 export CLICOLOR=1
 export LSCOLORS="ExGxcxcxcxexexcxcxexex"
 export EDITOR="/bin/vi -x"
-export VISUAL="/usr/local/bin/vim"
+export VISUAL="vim"
 export FCEDIT=$VISUAL
 export MANPATH=$HOME/scripts/man:$MANPATH
 export GREP_OPTIONS="-i --color=tty"

@@ -5,8 +5,9 @@ source $HOME/.shellrc
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
 case $current_host in
-    ique*|homeb*) Color="$RRED" ;;
-    *adfitech*) Color="$RWHITE" ;;
+    ique*|homeb*) Color="$RRED"   ;;
+    oliver*)      Color="$RGREEN" ;;
+    *adfitech*)   Color="$RWHITE" ;;
     *) Color="$RBLUE" ;;
 esac
 Color2="$BBLACK"
