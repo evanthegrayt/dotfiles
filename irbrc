@@ -5,10 +5,11 @@ require 'irb/completion'
 
 # load .irbrc_rails in rails environments
 railsrc_path = File.expand_path('~/.irbrc_rails')
-if ( ENV['RAILS_ENV'] || defined? Rails ) && File.exist?( railsrc_path )
+local_irbrc = File.expand_path('~/.irbrc.local')
+if (ENV['RAILS_ENV'] || defined? Rails) && File.exist?(railsrc_path)
   begin
     load railsrc_path
-  rescue Exception
+  rescue LoadError
     warn "Could not load: #{railsrc_path} because of #{$!.message}"
   end
 end
@@ -30,4 +31,7 @@ require 'irb/ext/save-history'
 #History configuration
 IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-save-history"
+if File.exist?(local_irbrc)
+  load local_irbrc
+end
 

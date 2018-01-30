@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 # Bootstrap script to help me install my dotfiles across different platforms
+# TODO When {,re}moving files, make sure they were actually {,re}moved
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
+readonly EXCLUDED_FILES=(README.md)
+
+contains_element() {
+  local match="$1"
+  local element
+  shift
+
+  for element; do [[ "$element" == "$match" ]] && echo 'true'; done
+  echo 'false'
+}
 
 print_help() {
     cat <<EOF
@@ -35,6 +46,11 @@ EOF
 link_dotfile() {
     local file="$1"
     local basename_file="${file##*/}"
+
+    if $( contains_element $basename_file "${EXCLUDED_FILES[@]}" ); then
+        echo "$basename_file is excluded!"
+        return
+    fi
 
     if [[ -f $file ]]; then
         if $FORCE || $BACKUP || $APPEND; then
