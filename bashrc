@@ -1,6 +1,5 @@
 # bashrc
 
-[[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 [[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
@@ -29,4 +28,6 @@ shopt -s histappend
 [[ -d $HOME/.bash_it ]] && export BASH_IT="$HOME/.bash_it"
 
 bind -x '"\C-l": clear'
+
+[[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 

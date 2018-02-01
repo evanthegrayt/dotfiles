@@ -6,7 +6,6 @@
 #       Author:   erg
 #
 #==============================================================
-if ( -f $HOME/.cshrc.local ) source $HOME/.cshrc.local
 
 set host = `echo $HOST| cut -d. -f1`
 alias setprompt 'set prompt=" (${user}@${host}) ${cwd}\n $ "'
@@ -26,4 +25,6 @@ else
 endif
 
 eval `grep '^alias' $HOME/workflow/dotfiles/aliases.sh | sed -e 's/=/ /' -e 's/$/;/'`
+
+if ( -f $HOME/.cshrc.local ) source $HOME/.cshrc.local
 

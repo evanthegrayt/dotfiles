@@ -1,5 +1,4 @@
 # zshrc
-[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
 export DISABLE_AUTO_UPDATE="true"
 export ENABLE_CORRECTION="true"
@@ -38,5 +37,7 @@ fpath=(~/bin/lib/zsh $fpath)
 () {
     local file
     for file { [[ -f $file ]] && source "$file" }
-    } $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $HOME/.shellrc
+} $HOME/.opam/opam-init/init.zsh $ZSH/oh-my-zsh.sh $HOME/.shellrc
+
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
