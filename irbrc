@@ -26,7 +26,7 @@ if defined?(IRB)
   require 'irb/ext/save-history'
   require 'irb/completion'
   IRB.conf[:SAVE_HISTORY] = 1000
-  IRB.conf[:HISTORY_FILE] = File.join(ENV['HOME'], '.irb-save-history')
+  IRB.conf[:HISTORY_FILE] = File.join(ENV['HOME'], '.irb_history')
   local_irbrc = File.join(ENV['HOME'], '.irbrc.local')
   load local_irbrc if File.exist?(local_irbrc)
 end

@@ -6,6 +6,11 @@ readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
 readonly EXCLUDED_FILES=(README.md)
 
+abort() {
+    printf "$1\n" >&2
+    exit 1
+}
+
 contains_element() {
   local match="$1"
   local element
@@ -20,25 +25,28 @@ print_help() {
     $USAGE
 
     Install options (must pass one of these options)
-      -f        | Install all dotfiles
-      -s [FILE] | Install a single dotfile
-      -v        | Install vimfiles
-      -z        | Install 'oh-my-zsh'
-      -b        | Install 'bash-it'
+      -f         | Install all dotfiles
+      -s [FILE]  | Install a single dotfile
+      -v         | Install vimfiles
+      -z         | Install 'oh-my-zsh'
+      -b         | Install 'bash-it'
 
     Additional install options (default: Don't add these settings)
-      -C        | With '-z' or '-b'; change login shell to bash or zsh
-      -i        | Enable terminal italics
+      -C [SHELL] | Change login shell to [SHELL]
+      -i         | Enable terminal italics
 
     Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-      -F        | Force overwrite of all current dotfiles
-      -B        | Replace old dotfiles, but save them with '.bak' extension
-      -A        | Append new dotfiles to current dotfiles. Note that this will
-                | not link the file, but wil add to the file in your home dir.
+      -F         | Force overwrite of all current dotfiles
+      -B         | Replace old dotfiles, but save them with '.bak' extension
+      -L         | If file already exists, move it to [FILE].local. This is
+                 + different from '-B', because my dotfiles will source a file
+                 + of the same name if it's in the home directory with the
+                 + '.local' extension. This allows for additional settings to be
+                 + applied on different systems.
 
     Usage options
-      -h: Print this help and exit
-      -u: Print usage and exit
+      -h         | Print this help and exit
+      -u         | Print usage and exit
 EOF
     exit
 }
@@ -53,17 +61,13 @@ link_dotfile() {
     fi
 
     if [[ -f $file ]]; then
-        if $FORCE || $BACKUP || $APPEND; then
+        if $FORCE || [[ -n $EXTENSION ]]; then
             if [[ -e $HOME/.$basename_file ]]; then
-                if $APPEND; then
-                    echo "$HOME/.$basename_file exists. Appending..."
-                    cat $file >> $HOME/.$basename_file
-                elif $BACKUP; then
-                    echo "$HOME/.$basename_file exists. Backing up..."
-                    mv $HOME/.$basename_file{,.bak}
-                elif $FORCE; then
+                if $FORCE; then
                     echo "$HOME/.$basename_file exists. Removing..."
                     rm -f $HOME/.$basename_file
+                elif [[ -n $EXTENSION ]]; then
+                    mv ~/.$basename_file{,.$EXTENSION}
                 fi
             fi
             ln -s $file $HOME/.$basename_file
@@ -77,26 +81,11 @@ link_dotfile() {
     fi
 }
 
-change_login_shell() {
-    local passed_shell=$1
-    local shell="$( grep "$passed_shell$" /etc/shells 2>/dev/null | tail -n 1 )"
-
-    if [[ -x "$shell" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
-        if ! grep "^$LOGNAME:.*$shell" /etc/passwd >/dev/null; then
-            echo "Changing login shell to $shell."
-            chsh -s "$shell"
-        fi
-    else
-        echo "Cannot change shell to $shell; $shell executable not found."
-    fi
-}
-
 clone_vim() {
     git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
 }
 
 ITALICS=false
-APPEND=false
 INSTALL_DOTFILES=false
 INSTALL_VIM=false
 INSTALL_ZSH=false
@@ -104,21 +93,28 @@ INSTALL_BASH=false
 INSTALL_RVM=false
 FORCE=false
 BACKUP=false
-CHANGE_SHELL=false
 
-while getopts 'aiAfvzbrFBChus:' opts; do
+while getopts 'aiLfvzbrFBChus:' opts; do
     case $opts in
-        A)  APPEND=true           ;;
+        L)  EXTENSION='local'     ;;
         f)  INSTALL_DOTFILES=true ;;
         v)  INSTALL_VIM=true      ;;
         z)  INSTALL_ZSH=true      ;;
         b)  INSTALL_BASH=true     ;;
         r)  INSTALL_RVM=true      ;;
         F)  FORCE=true            ;;
-        B)  BACKUP=true           ;;
-        C)  CHANGE_SHELL=true     ;;
+        B)  EXTENSION='bak'       ;;
         i)  ITALICS=true          ;;
         h)  print_help            ;;
+        C)
+            CHANGE_SHELL=$OPTARG
+            case $CHANGE_SHELL in
+                z|zsh)  CHANGE_SHELL='zsh'  ;;
+                b|bash) CHANGE_SHELL='bash' ;;
+                c|csh)  CHANGE_SHELL='csh'  ;;
+                *) abort "Must pass '-C [bash|zsh|csh]'"
+            esac
+            ;;
         s)
             single_file=$OPTARG
             [[ $single_file =~ ^\. ]] && single_file=${single_file#*.}
@@ -128,36 +124,37 @@ while getopts 'aiAfvzbrFBChus:' opts; do
             exit 0
             ;;
         *)
-            echo $USAGE >&2
-            exit 1
+            abort $USAGE
             ;;
     esac
 done
 
-readonly FORCE APPEND INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH INSTALL_BASH
-readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL
+readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
+readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH
 
 if (( $# == 0 )); then
-    echo $USAGE >&2
-    exit 1
+    abort $USAGE
+fi
+
+if [[ -n $CHANGE_SHELL ]]; then
+    shell="$( grep "$CHANGE_SHELL$" /etc/shells 2>/dev/null | tail -n 1 )"
+
+    if [[ -x "$shell" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
+        if ! grep "^$LOGNAME:.*$shell" /etc/passwd >/dev/null; then
+            echo "Changing login shell to $shell."
+            chsh -s "$shell"
+        fi
+    else
+        echo "Cannot change shell to $shell; $shell executable not found."
+    fi
 fi
 
 if $INSTALL_DOTFILES && [[ -n $single_file ]]; then
-    echo $USAGE >&2
-    echo "Cannot pass '-f' with '-s FILE'" >&2
-    exit 1
-fi
-
-if $CHANGE_SHELL && !( $INSTALL_ZSH || $INSTALL_BASH ); then
-    echo $USAGE >&2
-    echo "Must pass '-C' with '-z' or '-b'" >&2
-    exit 1
+    abort "$USAGE\nCannot pass '-f' with '-s FILE'"
 fi
 
 if $FORCE && !( $INSTALL_VIM || $INSTALL_DOTFILES ); then
-    echo $USAGE >&2
-    echo "Must pass '-C' with '-z' or '-b'" >&2
-    exit 1
+    abort "$USAGE\nMust pass '-C' with '-z' or '-b'"
 fi
 
 if [[ -n $single_file ]]; then
@@ -176,8 +173,8 @@ if $INSTALL_VIM; then
     if [[ -d ~/.vim ]]; then
         if $FORCE; then
             rm -rf ~/.vim
-        elif $BACKUP; then
-            mv ~/.vim{,.bak}
+        elif [[ -n $EXTENSION ]]; then
+            mv ~/.vim{,.$EXTENSION}
         else
             echo "~/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
@@ -195,8 +192,6 @@ if $INSTALL_RVM; then
 fi
 
 if $INSTALL_ZSH; then
-    $CHANGE_SHELL && change_login_shell zsh
-
     if [[ ! -d ~/.oh-my-zsh ]]; then
         git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
         rm -rf ~/.oh-my-zsh/custom
@@ -206,8 +201,6 @@ if $INSTALL_ZSH; then
 fi
 
 if $INSTALL_BASH; then
-    $CHANGE_SHELL && change_login_shell bash
-
     if [[ ! -d ~/.bash_it ]]; then
         git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
     fi
