@@ -43,6 +43,7 @@ print_help() {
                  + of the same name if it's in the home directory with the
                  + '.local' extension. This allows for additional settings to be
                  + applied on different systems.
+      -U         | Unlink files
 
     Usage options
       -h         | Print this help and exit
@@ -67,6 +68,8 @@ link_dotfile() {
                     echo "$HOME/.$basename_file exists. Removing..."
                     rm -f $HOME/.$basename_file
                 elif [[ -n $EXTENSION ]]; then
+                    printf "$HOME/.$basename_file exists. "
+                    echo "Moving to $basename_file.$EXTENSION"
                     mv ~/.$basename_file{,.$EXTENSION}
                 fi
             fi
@@ -81,10 +84,20 @@ link_dotfile() {
     fi
 }
 
+unlink_dotfile() {
+    local file="$1"
+    local basename_file="${file##*/}"
+
+    if [[ -L $HOME/.$basename_file ]]; then
+        rm $HOME/.$basename_file
+    fi
+}
+
 clone_vim() {
     git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
 }
 
+UNINSTALL=false
 ITALICS=false
 INSTALL_DOTFILES=false
 INSTALL_VIM=false
@@ -94,8 +107,9 @@ INSTALL_RVM=false
 FORCE=false
 BACKUP=false
 
-while getopts 'aiLfvzbrFBChus:' opts; do
+while getopts 'UaiLfvzbrFBChus:' opts; do
     case $opts in
+        U)  UNINSTALL=true        ;;
         L)  EXTENSION='local'     ;;
         f)  INSTALL_DOTFILES=true ;;
         v)  INSTALL_VIM=true      ;;
@@ -130,10 +144,16 @@ while getopts 'aiLfvzbrFBChus:' opts; do
 done
 
 readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
-readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH
+readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
 
 if (( $# == 0 )); then
     abort $USAGE
+fi
+
+if $UNINSTALL; then
+    for file in $INSTALL_PATH/*; do
+        unlink_dotfile "$file"
+    done
 fi
 
 if [[ -n $CHANGE_SHELL ]]; then
