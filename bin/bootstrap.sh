@@ -30,6 +30,7 @@ print_help() {
       -v         | Install vimfiles
       -z         | Install 'oh-my-zsh'
       -b         | Install 'bash-it'
+      -r         | Install 'rvm'
 
     Additional install options (default: Don't add these settings)
       -C [SHELL] | Change login shell to [SHELL]
