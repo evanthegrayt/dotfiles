@@ -25,7 +25,6 @@ export LESS="-JmNirU"
 export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
 export GIT_EDITOR=$VISUAL
 export SIMPLE_BACKUP_SUFFIX=".sav"
-export TERM=xterm-256color-italic
 export IRC_CLIENT='irssi'
 export TODO="t"
 export SCM_CHECK=true
