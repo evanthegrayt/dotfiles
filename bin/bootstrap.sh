@@ -71,7 +71,7 @@ link_dotfile() {
                 elif [[ -n $EXTENSION ]]; then
                     printf "$HOME/.$basename_file exists. "
                     echo "Moving to $basename_file.$EXTENSION"
-                    mv ~/.$basename_file{,.$EXTENSION}
+                    mv $HOME/.$basename_file{,.$EXTENSION}
                 fi
             fi
             ln -s $file $HOME/.$basename_file
@@ -95,7 +95,8 @@ unlink_dotfile() {
 }
 
 clone_vim() {
-    git clone --recursive https://github.com/evanthegrayt/vimfiles.git ~/.vim
+    git clone --recursive \
+        https://github.com/evanthegrayt/vimfiles.git $HOME/.vim
 }
 
 UNINSTALL=false
@@ -186,21 +187,21 @@ elif $INSTALL_DOTFILES; then
     done
 fi
 
-if $ITALICS && [[ $TERM != 'xterm-256color-italic' ]]; then
-    tic $HOME/.xterm-256color-italic.terminfo
+if $ITALICS; then
+    tic $HOME/.xterm-256color.terminfo
 fi
 
 if $INSTALL_VIM; then
-    if [[ -d ~/.vim ]]; then
+    if [[ -d $HOME/.vim ]]; then
         if $FORCE; then
-            rm -rf ~/.vim
+            rm -rf $HOME/.vim
         elif [[ -n $EXTENSION ]]; then
-            mv ~/.vim{,.$EXTENSION}
+            mv $HOME/.vim{,.$EXTENSION}
         else
-            echo "~/.vim exists. Run with '-F' to force, or '-B' to back-up"
+            echo "$HOME/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
     fi
-    [[ ! -d ~/.vim ]] && clone_vim
+    [[ ! -d $HOME/.vim ]] && clone_vim
 fi
 
 if $INSTALL_RVM; then
@@ -213,17 +214,17 @@ if $INSTALL_RVM; then
 fi
 
 if $INSTALL_ZSH; then
-    if [[ ! -d ~/.oh-my-zsh ]]; then
-        git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-        rm -rf ~/.oh-my-zsh/custom
+    if [[ ! -d $HOME/.oh-my-zsh ]]; then
+        git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+        rm -rf $HOME/.oh-my-zsh/custom
         git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
-            ~/.oh-my-zsh/custom
+            $HOME/.oh-my-zsh/custom
     fi
 fi
 
 if $INSTALL_BASH; then
-    if [[ ! -d ~/.bash_it ]]; then
-        git clone https://github.com/Bash-it/bash-it.git ~/.bash_it
+    if [[ ! -d $HOME/.bash_it ]]; then
+        git clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
     fi
 fi
 
