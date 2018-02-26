@@ -17,6 +17,7 @@ export LSCOLORS="ExGxcxcxcxexexcxcxexex"
 export EDITOR="/bin/vi -x"
 export VISUAL="vim"
 export FCEDIT=$VISUAL
+export GEM_OPEN_EDITOR=$VISUAL
 export MANPATH=$HOME/scripts/man:$MANPATH
 export GREP_OPTIONS="-i --color=tty"
 export GREP_COLOR='07;38;5;74'
