@@ -21,7 +21,7 @@ export PS1=" \[$Color\](\[$Color2\]\u\[$Color\]@\[$Color2\]${current_host%%.*}"\
 
 export PS2="\[$Color2\] Line \[$RESET\]\[$Color2\]"'$((PS2c=PS2c+1))'\
 "\[$Color\])=>\[$RESET\] "
-export PS4=" \[$Color2\]"'${LINENO}'"\[$Color\])=>\[$Reset\] "
+export PS4=" \[$Color2\]"'${LINENO}'"\[$Color\])=>\[$RESET\] "
 unset Color Color2 Color3 current_host
 
 # History Management
