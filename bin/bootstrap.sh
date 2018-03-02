@@ -12,12 +12,17 @@ abort() {
 }
 
 contains_element() {
-  local match="$1"
-  local element
-  shift
+    local match="$1"
+    local element
+    shift
 
-  for element; do [[ "$element" == "$match" ]] && echo 'true'; done
-  echo 'false'
+    for element; do
+        if [[ "$element" == "$match" ]]; then
+            echo 'true'
+            return
+        fi
+    done
+    echo 'false'
 }
 
 print_help() {
