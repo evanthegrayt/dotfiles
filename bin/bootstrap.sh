@@ -18,11 +18,11 @@ contains_element() {
 
     for element; do
         if [[ "$element" == "$match" ]]; then
-            echo 'true'
-            return
+            return 0
         fi
     done
-    echo 'false'
+
+    return 1
 }
 
 print_help() {
@@ -62,7 +62,7 @@ link_dotfile() {
     local file="$1"
     local basename_file="${file##*/}"
 
-    if $( contains_element $basename_file "${EXCLUDED_FILES[@]}" ); then
+    if contains_element $basename_file "${EXCLUDED_FILES[@]}"; then
         echo "$basename_file is excluded!"
         return
     fi
@@ -114,7 +114,7 @@ INSTALL_RVM=false
 FORCE=false
 BACKUP=false
 
-while getopts 'UaiLfvzbrFBChus:' opts; do
+while getopts 'UaiLfvzbrFBC:hus:' opts; do
     case $opts in
         U)  UNINSTALL=true        ;;
         L)  EXTENSION='local'     ;;
