@@ -28,8 +28,6 @@ if which ag &> /dev/null; then
 fi
 
 if [[ "$OS" == 'Darwin' ]]; then
-    alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-    alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
     alias ls='ls -G'
 elif [[ "$OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
