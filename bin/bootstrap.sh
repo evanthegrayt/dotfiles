@@ -145,7 +145,7 @@ while getopts 'UaiLfvzbrFBC:hus:' opts; do
             exit 0
             ;;
         *)
-            abort $USAGE
+            abort "$USAGE"
             ;;
     esac
 done
@@ -154,7 +154,7 @@ readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
 
 if (( $# == 0 )); then
-    abort $USAGE
+    abort "$USAGE"
 fi
 
 if $UNINSTALL; then
