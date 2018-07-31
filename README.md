@@ -21,6 +21,7 @@ Other options for the bootstrap script include
 -z: Change shell to zsh set up oh-my-zsh
 -b: Change shell to bash set up bash-it
 -F: Replace current dotfiles if they already exist
+-h: See all available options
 ```
 
 Obviously, this is set up for my workflow, so don't be surprised when stuff
