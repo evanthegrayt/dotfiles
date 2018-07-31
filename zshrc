@@ -22,6 +22,7 @@ per-directory-history
 history-substring-search
 zsh-autosuggestions
 zsh-syntax-highlighting
+exercism_completion
 )
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then

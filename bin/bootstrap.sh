@@ -181,7 +181,7 @@ if $INSTALL_DOTFILES && [[ -n $single_file ]]; then
 fi
 
 if $FORCE && !( $INSTALL_VIM || $INSTALL_DOTFILES ); then
-    abort "$USAGE\nMust pass '-C' with '-z' or '-b'"
+    abort "$USAGE\nMust pass '-F' with '-f' or '-v'"
 fi
 
 if [[ -n $single_file ]]; then
