@@ -206,7 +206,7 @@ if $INSTALL_VIM; then
             echo "$HOME/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
     fi
-    [[ ! -d $HOME/.vim ]] && clone_vim
+    [[ -d $HOME/.vim ]] || clone_vim
 fi
 
 if $INSTALL_RVM; then
