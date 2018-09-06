@@ -7,7 +7,9 @@ readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
 readonly EXCLUDED_FILES=(README.md)
 
 abort() {
-    printf "$1\n" >&2
+    local msg="$1"
+
+    printf "$msg\n" >&2
     exit 1
 }
 
@@ -47,8 +49,8 @@ print_help() {
       -L         | If file already exists, move it to [FILE].local. This is
                  + different from '-B', because my dotfiles will source a file
                  + of the same name if it's in the home directory with the
-                 + '.local' extension. This allows for additional settings to be
-                 + applied on different systems.
+                 + '.local' extension. This allows for additional settings to
+                 + be applied on different systems.
       -U         | Unlink files
 
     Usage options
@@ -91,8 +93,7 @@ link_dotfile() {
 }
 
 unlink_dotfile() {
-    local file="$1"
-    local basename_file="${file##*/}"
+    local basename_file="${1##*/}"
 
     if [[ -L $HOME/.$basename_file ]]; then
         rm $HOME/.$basename_file
