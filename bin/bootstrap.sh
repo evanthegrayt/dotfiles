@@ -167,11 +167,9 @@ fi
 if [[ -n $CHANGE_SHELL ]]; then
     shell="$( grep "$CHANGE_SHELL$" /etc/shells 2>/dev/null | tail -n 1 )"
 
-    if [[ -x "$shell" ]] && grep "^$LOGNAME:" /etc/passwd >/dev/null; then
-        if ! grep "^$LOGNAME:.*$shell" /etc/passwd >/dev/null; then
-            echo "Changing login shell to $shell."
-            chsh -s "$shell"
-        fi
+    if [[ -x "$shell" ]]; then
+        echo "Changing login shell to $shell."
+        chsh -s "$shell"
     else
         echo "Cannot change shell to $shell; $shell executable not found."
     fi
