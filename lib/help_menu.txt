@@ -1,0 +1,27 @@
+
+Install options (must pass one of these options)
+  -f         | Install all dotfiles
+  -s [FILE]  | Install a single dotfile
+  -v         | Install vimfiles
+  -z         | Install 'oh-my-zsh'
+  -b         | Install 'bash-it'
+  -r         | Install 'rvm'
+
+Additional install options (default: Don't add these settings)
+  -C [SHELL] | Change login shell to [SHELL]
+  -i         | Enable terminal italics
+
+Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
+  -F         | Force overwrite of all current dotfiles
+  -B         | Replace old dotfiles, but save them with '.bak' extension
+  -L         | If file already exists, move it to [FILE].local. This is
+             + different from '-B', because my dotfiles will source a file
+             + of the same name if it's in the home directory with the
+             + '.local' extension. This allows for additional settings to
+             + be applied on different systems.
+  -U         | Unlink files
+
+Usage options
+  -h         | Print this help and exit
+  -u         | Print usage and exit
+
