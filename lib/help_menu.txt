@@ -1,5 +1,5 @@
 
-Install options (must pass one of these options)
+Install options (must pass at least one of these options)
   -f         | Install all dotfiles
   -s [FILE]  | Install a single dotfile
   -v         | Install vimfiles
