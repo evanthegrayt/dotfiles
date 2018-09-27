@@ -8,7 +8,7 @@ you're looking to get weird, you can clone the entire repo. Once cloned, `cd`
 into the repository and run the shell script.
 
 ```sh
-bash bin/bootstrap.sh -f
+bin/install -f
 ```
 
 By default, the script won't overwrite currently-existing files. To overwrite

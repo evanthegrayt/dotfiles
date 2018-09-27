@@ -1,109 +1,11 @@
 #!/usr/bin/env bash
-# Bootstrap script to help me install my dotfiles across different platforms
+# Installation script to help me install my dotfiles across different platforms
 # TODO When {,re}moving files, make sure they were actually {,re}moved
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
-readonly EXCLUDED_FILES=(README.md)
 
-abort() {
-    local msg="$1"
-
-    printf "$msg\n" >&2
-    exit 1
-}
-
-contains_element() {
-    local match="$1"
-    local element
-    shift
-
-    for element; do
-        if [[ "$element" == "$match" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-print_help() {
-    cat <<EOF
-    $USAGE
-
-    Install options (must pass one of these options)
-      -f         | Install all dotfiles
-      -s [FILE]  | Install a single dotfile
-      -v         | Install vimfiles
-      -z         | Install 'oh-my-zsh'
-      -b         | Install 'bash-it'
-      -r         | Install 'rvm'
-
-    Additional install options (default: Don't add these settings)
-      -C [SHELL] | Change login shell to [SHELL]
-      -i         | Enable terminal italics
-
-    Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-      -F         | Force overwrite of all current dotfiles
-      -B         | Replace old dotfiles, but save them with '.bak' extension
-      -L         | If file already exists, move it to [FILE].local. This is
-                 + different from '-B', because my dotfiles will source a file
-                 + of the same name if it's in the home directory with the
-                 + '.local' extension. This allows for additional settings to
-                 + be applied on different systems.
-      -U         | Unlink files
-
-    Usage options
-      -h         | Print this help and exit
-      -u         | Print usage and exit
-EOF
-    exit
-}
-
-link_dotfile() {
-    local file="$1"
-    local basename_file="${file##*/}"
-
-    if contains_element $basename_file "${EXCLUDED_FILES[@]}"; then
-        echo "$basename_file is excluded!"
-        return
-    fi
-
-    if [[ -f $file ]]; then
-        if $FORCE || [[ -n $EXTENSION ]]; then
-            if [[ -e $HOME/.$basename_file ]]; then
-                if $FORCE; then
-                    echo "$HOME/.$basename_file exists. Removing..."
-                    rm -f $HOME/.$basename_file
-                elif [[ -n $EXTENSION ]]; then
-                    printf "$HOME/.$basename_file exists. "
-                    echo "Moving to $basename_file.$EXTENSION"
-                    mv $HOME/.$basename_file{,.$EXTENSION}
-                fi
-            fi
-            ln -s $file $HOME/.$basename_file
-        else
-            if [[ -e $HOME/.$basename_file ]]; then
-                echo "$HOME/.$basename_file already exists. Pass '-F' to force"
-            else
-                ln -s $file $HOME/.$basename_file
-            fi
-        fi
-    fi
-}
-
-unlink_dotfile() {
-    local basename_file="${1##*/}"
-
-    if [[ -L $HOME/.$basename_file ]]; then
-        rm $HOME/.$basename_file
-    fi
-}
-
-clone_vim() {
-    git clone --recursive \
-        https://github.com/evanthegrayt/vimfiles.git $HOME/.vim
-}
+source $INSTALL_PATH/lib/install_helpers.sh
 
 UNINSTALL=false
 ITALICS=false
