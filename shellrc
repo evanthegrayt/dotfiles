@@ -9,6 +9,13 @@ $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
 )
 
+REPO_DIRS=(
+$HOME/workflow
+$HOME/workflow/vagrant-ique/src
+$HOME/workflow/vagrant-dotcom/src
+)
+
+
 for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 # Environmental variables

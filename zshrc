@@ -16,13 +16,15 @@ autoload -U zmv
 plugins=(
 sudo
 ruby
-git
 osx
 per-directory-history
 history-substring-search
 zsh-autosuggestions
 zsh-syntax-highlighting
 exercism_completion
+rails
+vb
+cdc
 )
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
