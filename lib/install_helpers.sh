@@ -26,13 +26,22 @@ print_help() {
     exit
 }
 
+is_excluded() {
+    local file="$1"
+
+    if grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/lib/ignore.yml; then
+        return 0
+    fi
+    return 1
+}
+
 link_dotfile() {
     local file="$1"
     local basename_file="${file##*/}"
 
-    if contains_element $basename_file "${EXCLUDED_FILES[@]}"; then
+    if is_excluded $basename_file && ! $ALLOW_IGNORED; then
         echo "$basename_file is excluded!"
-        return
+        return 1
     fi
 
     if [[ -f $file ]]; then
@@ -70,3 +79,4 @@ clone_vim() {
     git clone --recursive \
         https://github.com/evanthegrayt/vimfiles.git $HOME/.vim
 }
+

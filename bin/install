@@ -16,9 +16,11 @@ INSTALL_BASH=false
 INSTALL_RVM=false
 FORCE=false
 BACKUP=false
+ALLOW_IGNORED=false
 
-while getopts 'UaiLfvzbrFBC:hus:' opts; do
+while getopts 'aUaiLfvzbrFBC:hus:' opts; do
     case $opts in
+        a)  ALLOW_IGNORED=true    ;;
         U)  UNINSTALL=true        ;;
         L)  EXTENSION='local'     ;;
         f)  INSTALL_DOTFILES=true ;;
@@ -40,8 +42,8 @@ while getopts 'UaiLfvzbrFBC:hus:' opts; do
             esac
             ;;
         s)
-            single_file=$OPTARG
-            [[ $single_file =~ ^\. ]] && single_file=${single_file#*.}
+            SINGLE_FILE=$OPTARG
+            [[ $SINGLE_FILE =~ ^\. ]] && SINGLE_FILE=${SINGLE_FILE#*.}
             ;;
         u)
             echo $USAGE
@@ -53,7 +55,7 @@ while getopts 'UaiLfvzbrFBC:hus:' opts; do
     esac
 done
 
-readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
+readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH ALLOW_IGNORED
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
 
 if (( $# == 0 )); then
@@ -77,7 +79,7 @@ if [[ -n $CHANGE_SHELL ]]; then
     fi
 fi
 
-if $INSTALL_DOTFILES && [[ -n $single_file ]]; then
+if $INSTALL_DOTFILES && [[ -n $SINGLE_FILE ]]; then
     abort "$USAGE\nCannot pass '-f' with '-s FILE'"
 fi
 
@@ -85,8 +87,8 @@ if $FORCE && !( $INSTALL_VIM || $INSTALL_DOTFILES ); then
     abort "$USAGE\nMust pass '-F' with '-f' or '-v'"
 fi
 
-if [[ -n $single_file ]]; then
-    link_dotfile "$INSTALL_PATH/$single_file"
+if [[ -n $SINGLE_FILE ]]; then
+    link_dotfile "$INSTALL_PATH/$SINGLE_FILE"
 elif $INSTALL_DOTFILES; then
     for file in $INSTALL_PATH/*; do
         link_dotfile "$file"
