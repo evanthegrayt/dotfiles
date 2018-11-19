@@ -29,10 +29,7 @@ print_help() {
 is_excluded() {
     local file="$1"
 
-    if grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/lib/ignore.yml; then
-        return 0
-    fi
-    return 1
+    grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/lib/ignore.yml
 }
 
 link_dotfile() {

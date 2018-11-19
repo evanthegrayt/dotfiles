@@ -36,7 +36,7 @@ if defined?(Pry)
     require 'pry-editline'
     Pry.config.history.file = File.join(ENV['HOME'], '.irb_history')
     Pry.config.coolline_paren_matching = false
-    Pry.editor = ENV['VISUAL']
+    Pry.config.editor = ENV['VISUAL']
     Pry.config.coolline_matched_paren    = "\e[42m"
     Pry.config.coolline_mismatched_paren = "\e[41m"
     Pry.config.theme = "zenburn"
