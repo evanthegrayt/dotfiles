@@ -2,19 +2,12 @@
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
-MY_CONFIG_FILES=(
+export MY_CONFIG_FILES=(
 $HOME/.aliases.sh
 $HOME/.colors.sh
 $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
 )
-
-REPO_DIRS=(
-$HOME/workflow
-$HOME/workflow/vagrant-ique/src
-$HOME/workflow/vagrant-dotcom/src
-)
-
 
 for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 

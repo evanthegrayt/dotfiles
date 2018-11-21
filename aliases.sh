@@ -16,8 +16,6 @@ alias untar='tar -zxvf'
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
-alias exed="$HOME/workflow/exed/bin/exed"
-alias mkex="$HOME/workflow/mkex/bin/mkex"
 
 if which ag &> /dev/null; then
     alias ag="ag --color-line-number='07;01;38;5;131' --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
