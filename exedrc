@@ -1,4 +1,6 @@
 #!/usr/local/bin/bash
 
-PATH=$PATH:~/workflow/selection-CLUs/ruby:~/workflow/selection-CLUs/bash
+PATH=$PATH:\
+~/workflow/vagrant-ique/src/selection-CLUs/bash:\
+~/workflow/vagrant-ique/src/selection-CLUs/ruby
 
