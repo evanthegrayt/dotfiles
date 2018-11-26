@@ -10,6 +10,7 @@ source $INSTALL_PATH/lib/install_helpers.sh
 UNINSTALL=false
 ITALICS=false
 INSTALL_DOTFILES=false
+REINSTALL_OLD_DOTFILES=false
 INSTALL_VIM=false
 INSTALL_ZSH=false
 INSTALL_BASH=false
@@ -18,20 +19,20 @@ FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
 
-while getopts 'aUaiLfvzbrFBC:hus:' opts; do
+while getopts 'aUaiLfvzbrRFBC:hus:' opts; do
     case $opts in
-        a)  ALLOW_IGNORED=true    ;;
-        U)  UNINSTALL=true        ;;
-        L)  EXTENSION='local'     ;;
-        f)  INSTALL_DOTFILES=true ;;
-        v)  INSTALL_VIM=true      ;;
-        z)  INSTALL_ZSH=true      ;;
-        b)  INSTALL_BASH=true     ;;
-        r)  INSTALL_RVM=true      ;;
-        F)  FORCE=true            ;;
-        B)  EXTENSION='bak'       ;;
-        i)  ITALICS=true          ;;
-        h)  print_help            ;;
+        a)  ALLOW_IGNORED=true          ;;
+        U)  UNINSTALL=true              ;;
+        L)  EXTENSION='local'           ;;
+        f)  INSTALL_DOTFILES=true       ;;
+        v)  INSTALL_VIM=true            ;;
+        z)  INSTALL_ZSH=true            ;;
+        b)  INSTALL_BASH=true           ;;
+        r)  INSTALL_RVM=true            ;;
+        R)  REINSTALL_OLD_DOTFILES=true ;;
+        F)  FORCE=true                  ;;
+        B)  EXTENSION='bak'             ;;
+        i)  ITALICS=true                ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -49,14 +50,14 @@ while getopts 'aUaiLfvzbrFBC:hus:' opts; do
             echo $USAGE
             exit 0
             ;;
-        *)
-            abort "$USAGE"
-            ;;
+        h) print_help     ;;
+        *) abort "$USAGE" ;;
     esac
 done
 
 readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH ALLOW_IGNORED
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
+readonly REINSTALL_OLD_DOTFILES
 
 if (( $# == 0 )); then
     abort "$USAGE"

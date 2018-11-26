@@ -69,6 +69,16 @@ unlink_dotfile() {
 
     if [[ -L $HOME/.$basename_file ]]; then
         rm $HOME/.$basename_file
+
+        if $REINSTALL_OLD_DOTFILES; then
+            if [[ -n $EXTENSION && -f $HOME/.$basename_file.$EXTENSION ]]; then
+                mv $HOME/.$basename_file{.$EXTENSION,}
+            elif [[ -f $HOME/.$basename_file.local ]]; then
+                mv $HOME/.$basename_file{.local,}
+            elif [[ -f $HOME/.$basename_file.bak ]]; then
+                mv $HOME/.$basename_file{.bak,}
+            fi
+        fi
     fi
 }
 
