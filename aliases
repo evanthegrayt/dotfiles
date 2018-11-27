@@ -18,7 +18,8 @@ alias cp='cp -v'
 alias mv='mv -v'
 
 if which ag &> /dev/null; then
-    alias ag="ag --color-line-number='07;01;38;5;131' --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
+    alias ag="ag --color-line-number='07;01;38;5;131' \
+    --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
 if [[ "$OS" == 'Darwin' ]]; then
@@ -39,6 +40,8 @@ if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
         alias -s odt='open -a LibreOffice'
     fi
 fi
+
+[[ -f $HOME/.aliases.local ]] && source $HOME/.aliases.local
 
 unset OS
 

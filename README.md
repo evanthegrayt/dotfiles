@@ -5,23 +5,48 @@ My dotfiles, plus an installation script. Here be dragons.
 I doubt you'd want to use my exact config, so I'd recommend just copying the
 lines of code that you want and put them in your own config files... but if
 you're looking to get weird, you can clone the entire repo. Once cloned, `cd`
-into the repository and run the shell script.
+into the repository and run the shell script, which is arguably the biggest
+reason someone would want to clone this repository.
 
 ```sh
 bin/install -f
 ```
 
-By default, the script won't overwrite currently-existing files. To overwrite
-all existing files, run with `-F`
+By default, the script won't move or overwrite currently-existing files. To
+change the way existing files are handled, see the options under
+"Handling old dotfiles"
 
-Some other options for the installation script include:
+```
+USAGE: install [OPTIONS]
 
-```txt
--v: Also set up vim directory, including plugins
--z: Change shell to zsh set up oh-my-zsh
--b: Change shell to bash set up bash-it
--F: Replace current dotfiles if they already exist
--h: See all available options
+Install options (must pass at least one of these options)
+  -a         | Allow ignored files to be installed
+  -f         | Install all dotfiles
+  -s [FILE]  | Install a single dotfile
+  -v         | Install vimfiles
+  -z         | Install 'oh-my-zsh'
+  -b         | Install 'bash-it'
+  -r         | Install 'rvm'
+
+Additional install options (default: Don't add these settings)
+  -C [SHELL] | Change login shell to [SHELL]
+  -i         | Enable terminal italics
+
+Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
+  -F         | Force overwrite of all current dotfiles
+  -B         | Replace old dotfiles, but save them with '.bak' extension
+  -L         | If file already exists, move it to [FILE].local. This is
+             + different from '-B', because my dotfiles will source a file
+             + of the same name if it's in the home directory with the
+             + '.local' extension. This allows for additional settings to
+             + be applied on different systems.
+  -u         | Unlink all files
+  -U [FILE]  | Unlink FILE
+  -R         | With `-u` or `-U`; if dotfile exists with `.bak` or `.local`
+             + extension, move it back to original name.
+
+Usage options
+  -h         | Print this help and exit
 ```
 
 Obviously, this is set up for my workflow, so don't be surprised if some stuff

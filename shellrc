@@ -45,6 +45,18 @@ $HOME/scripts/bin
 
 unset MAILCHECK file
 
+mcd() {
+    local dir="$1"
+
+    [[ -z $dir ]] && return 1
+
+    if [[ ! -d $dir ]]; then
+        mkdir -p "$dir"
+    fi
+
+    cd "$dir"
+}
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -d $HOME/.rvm/bin ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
