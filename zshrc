@@ -31,11 +31,6 @@ if [[ -d "$HOME/.oh-my-zsh" ]]; then
     export ZSH_THEME="evanthegrayt_top_heavy"
     bindkey -M emacs '^N' history-substring-search-down
     bindkey -M emacs '^P' history-substring-search-up
-    export REPO_DIRS=(
-        $HOME/workflow
-        $HOME/workflow/vagrant-ique/src
-        $HOME/workflow/vagrant-dotcom/src
-    )
 fi
 
 fpath=(~/bin/lib/zsh $fpath)
