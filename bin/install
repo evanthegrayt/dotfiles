@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ash
 # Installation script to help me install my dotfiles across different platforms
 # TODO When {,re}moving files, make sure they were actually {,re}moved
 
@@ -19,10 +19,10 @@ FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
 
-while getopts 'aUaiLfvzbrRFBC:hus:' opts; do
+while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
     case $opts in
         a)  ALLOW_IGNORED=true          ;;
-        U)  UNINSTALL=true              ;;
+        u)  UNINSTALL=true              ;;
         L)  EXTENSION='local'           ;;
         f)  INSTALL_DOTFILES=true       ;;
         v)  INSTALL_VIM=true            ;;
@@ -36,34 +36,39 @@ while getopts 'aUaiLfvzbrRFBC:hus:' opts; do
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
-                z|zsh)  CHANGE_SHELL='zsh'  ;;
-                b|bash) CHANGE_SHELL='bash' ;;
-                c|csh)  CHANGE_SHELL='csh'  ;;
-                *) abort "Must pass '-C [bash|zsh|csh]'"
+                z|zsh)  CHANGE_SHELL='zsh'               ;;
+                b|bash) CHANGE_SHELL='bash'              ;;
+                c|csh)  CHANGE_SHELL='csh'               ;;
+                *) abort "Must pass '-C [bash|zsh|csh]'" ;;
             esac
+            ;;
+        U)
+            echo $OPTARG
+            UNINSTALL_SINGLE=$OPTARG
+            echo $UNINSTALL_SINGLE
+            [[ $UNINSTALL_SINGLE =~ ^\. ]] && SINGLE_FILE=${UNINSTALL_SINGLE#*.}
             ;;
         s)
             SINGLE_FILE=$OPTARG
             [[ $SINGLE_FILE =~ ^\. ]] && SINGLE_FILE=${SINGLE_FILE#*.}
-            ;;
-        u)
-            echo $USAGE
-            exit 0
             ;;
         h) print_help     ;;
         *) abort "$USAGE" ;;
     esac
 done
 
-readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH ALLOW_IGNORED
+readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
-readonly REINSTALL_OLD_DOTFILES
+readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
 
 if (( $# == 0 )); then
     abort "$USAGE"
 fi
 
-if $UNINSTALL; then
+if [[ -n $UNINSTALL_SINGLE ]]; then
+    echo here
+    unlink_dotfile "$UNINSTALL_SINGLE"
+elif $UNINSTALL; then
     for file in $INSTALL_PATH/*; do
         unlink_dotfile "$file"
     done

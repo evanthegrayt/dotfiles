@@ -3,8 +3,8 @@
 # options that both languages can use in this file.
 
 export MY_CONFIG_FILES=(
-$HOME/.aliases.sh
-$HOME/.colors.sh
+$HOME/.aliases
+$HOME/.colors
 $HOME/.rvm/scripts/rvm
 $HOME/.slack_config
 )

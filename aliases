@@ -8,7 +8,7 @@ alias lrt='ls -lArth'
 alias vbrc="vim $HOME/.bashrc"
 alias vzrc="vim $HOME/.zshrc"
 alias vsrc="vim $HOME/.shellrc"
-alias val="vim $HOME/.aliases.sh"
+alias val="vim $HOME/.aliases"
 alias vvrc="vim $HOME/.vim/vimrc"
 
 alias diff='colordiff'

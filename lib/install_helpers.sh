@@ -67,6 +67,7 @@ link_dotfile() {
 unlink_dotfile() {
     local basename_file="${1##*/}"
 
+    echo $basename_file
     if [[ -L $HOME/.$basename_file ]]; then
         rm $HOME/.$basename_file
 
