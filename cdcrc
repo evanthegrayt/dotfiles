@@ -1,6 +1,6 @@
 # vi: set ft=sh :
 
-REPO_DIRS=(
+CDC_DIRS=(
     $HOME/workflow
     $HOME/workflow/vagrant-ique/src
     $HOME/workflow/vagrant-dotcom/src
