@@ -13,7 +13,7 @@ Additional install options (default: Don't add these settings)
   -i         | Enable terminal italics
 
 Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-  -F         | Force overwrite of all current dotfiles
+  -F         | Force overwrite of all current dotfiles. THIS DELETES OLD COPIES!
   -B         | Replace old dotfiles, but save them with '.bak' extension
   -L         | If file already exists, move it to [FILE].local. This is
              + different from '-B', because my dotfiles will source a file

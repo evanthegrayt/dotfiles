@@ -1,13 +1,25 @@
-# dotfiles
-My dotfiles, plus an installation script. Here be dragons.
+# Dotfiles, plus so much more!
+My dotfiles, plus an installation script with a boat-load of features.
+
+It should go without saying, but here be dragons.
 
 ### Installation
-I doubt you'd want to use my exact config, so I'd recommend just copying the
-lines of code that you want and put them in your own config files... but if
-you're looking to get weird, you can clone the entire repo. Once cloned, `cd`
-into the repository and run the shell script, which is arguably the biggest
-reason someone would want to clone this repository.
+These are my personal configuration files, and I've taken a lot of steps to make
+sure these work on both Linux and BSD, with either `zsh` or `bash` (and `csh`,
+although this hasn't really been tested). I doubt you'd want to clone this
+entire repository just for my files, but if you do, feel free to do so.
 
+What is much more likely, is that you'd want the installation script, which has
+the ability to log changes, backup files, skip installing specified files, clone
+my `vim` config, install `oh-my-zsh`, `bash_it` and `rvm`, etc. (basically
+everything *except* my config files). If this is the case, you should fork the
+repository, commit your own dotfiles to your forked version, and then proceed.
+
+If you want the whole enchilada, clone my repository wherever you want it:
+```sh
+git clone https://github.com/evanthegrayt/dotfiles.git
+```
+...or clone your forked version. Then run the installation script:
 ```sh
 bin/install -f
 ```
@@ -22,7 +34,7 @@ USAGE: install [OPTIONS]
 Install options (must pass at least one of these options)
   -a         | Allow ignored files to be installed
   -f         | Install all dotfiles
-  -s [FILE]  | Install a single dotfile
+  -s [FILE]  | Install single dotfile [FILE]
   -v         | Install vimfiles
   -z         | Install 'oh-my-zsh'
   -b         | Install 'bash-it'
@@ -33,7 +45,7 @@ Additional install options (default: Don't add these settings)
   -i         | Enable terminal italics
 
 Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-  -F         | Force overwrite of all current dotfiles
+  -F         | Force overwrite of all current dotfiles. THIS DELETES OLD COPIES!
   -B         | Replace old dotfiles, but save them with '.bak' extension
   -L         | If file already exists, move it to [FILE].local. This is
              + different from '-B', because my dotfiles will source a file
@@ -51,6 +63,14 @@ Usage options
 
 Obviously, this is set up for my workflow, so don't be surprised if some stuff
 doesn't work for you.
+
+### Un-Installation
+If you want to un-install just the dotfiles, just run the `install` script with
+the `-u` option; however, this script *does* come with a way to safely remove
+the entire repository without losing the files saved in the `backup` directory.
+Just run the `safely_uninstall_repo` script in the `bin` directory. It will move
+all the files in the `backup` directory to your `$HOME` directory before
+removing the entire repository.
 
 ### Other Features
 There are settings I have that are specifically for work that I didn't want
