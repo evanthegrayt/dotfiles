@@ -41,7 +41,7 @@ if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
     fi
 fi
 
-[[ -f $HOME/.aliases.local ]] && source $HOME/.aliases.local
+[[ -e $HOME/.aliases.local ]] && source $HOME/.aliases.local
 
 unset OS
 

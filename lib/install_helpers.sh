@@ -37,54 +37,68 @@ link_dotfile() {
     local basename_file="${file##*/}"
 
     if is_excluded $basename_file && ! $ALLOW_IGNORED; then
-        echo "$basename_file is excluded!"
+        log "$basename_file is excluded! Skipping installation."
         return 1
     fi
 
-    if [[ -f $file ]]; then
-        if $FORCE || [[ -n $EXTENSION ]]; then
-            if [[ -e $HOME/.$basename_file ]]; then
-                if $FORCE; then
-                    echo "$HOME/.$basename_file exists. Removing..."
-                    rm -f $HOME/.$basename_file
-                elif [[ -n $EXTENSION ]]; then
-                    printf "$HOME/.$basename_file exists. "
-                    echo "Moving to $basename_file.$EXTENSION"
-                    mv $HOME/.$basename_file{,.$EXTENSION}
-                fi
+    if [[ -e $HOME/.$basename_file ]]; then
+        if $FORCE; then
+            log "$HOME/.$basename_file exists. Moving to backup folder..."
+            mv -f $HOME/.$basename_file $INSTALL_PATH/backup/$basename_file
+        elif [[ -n $EXTENSION ]]; then
+            log "$HOME/.$basename_file exists. " \
+                "Moving to $basename_file.$EXTENSION"
+            mv -f $HOME/.$basename_file \
+                $INSTALL_PATH/backup/$basename_file.$EXTENSION
+            if [[ $EXTENSION == 'local' ]]; then
+                log "Linking $basename_file.$EXTENSION to $HOME"\
+                    "so it can be sourced"
+                ln -s $INSTALL_PATH/backup/$basename_file.$EXTENSION \
+                    $HOME/.$basename_file.$EXTENSION
             fi
-            ln -s $file $HOME/.$basename_file
         else
-            if [[ -e $HOME/.$basename_file ]]; then
-                echo "$HOME/.$basename_file already exists. Pass '-F' to force"
-            else
-                ln -s $file $HOME/.$basename_file
-            fi
+            log "$HOME/.$basename_file already exists. Pass '-F' to force"
+            return 1
         fi
     fi
+
+    log "Linking $file => $HOME/.$basename_file"
+    ln -s $file $HOME/.$basename_file
 }
 
 unlink_dotfile() {
     local basename_file="${1##*/}"
 
-    echo $basename_file
     if [[ -L $HOME/.$basename_file ]]; then
+        log "Removing $HOME/.$basename_file"
         rm $HOME/.$basename_file
 
         if $REINSTALL_OLD_DOTFILES; then
             if [[ -n $EXTENSION && -f $HOME/.$basename_file.$EXTENSION ]]; then
+                log "Restoring .$basename_file from .$basename_file.$EXTENSION"
                 mv $HOME/.$basename_file{.$EXTENSION,}
             elif [[ -f $HOME/.$basename_file.local ]]; then
+                log "Restoring .$basename_file from .$basename_file.local"
                 mv $HOME/.$basename_file{.local,}
             elif [[ -f $HOME/.$basename_file.bak ]]; then
+                log "Restoring .$basename_file from .$basename_file.bak"
                 mv $HOME/.$basename_file{.bak,}
+            else
+                log "No local/backup file found for $basename_file"
             fi
         fi
     fi
 }
 
 clone_vim() {
-    git clone --recursive \
-        https://github.com/evanthegrayt/vimfiles.git $HOME/.vim
+    log "Cloning vim from $VIM_REPO"
+    git clone --recursive $VIM_REPO $HOME/.vim
+}
+
+log() {
+    local msg="$@"
+    local prefix="[$( date "+%Y-%m-%d %H:%M:%S" )]:"
+
+    echo "$prefix $msg" | tee -a $INSTALL_PATH/log/dotfiles.log
 }
 

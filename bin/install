@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # Installation script to help me install my dotfiles across different platforms
-# TODO When {,re}moving files, make sure they were actually {,re}moved
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
+readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
+readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
 
 source $INSTALL_PATH/lib/install_helpers.sh
 
-UNINSTALL=false
 ITALICS=false
 INSTALL_DOTFILES=false
+UNINSTALL_DOTFILES=false
 REINSTALL_OLD_DOTFILES=false
 INSTALL_VIM=false
 INSTALL_ZSH=false
@@ -22,7 +23,7 @@ ALLOW_IGNORED=false
 while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
     case $opts in
         a)  ALLOW_IGNORED=true          ;;
-        u)  UNINSTALL=true              ;;
+        u)  UNINSTALL_DOTFILES=true     ;;
         L)  EXTENSION='local'           ;;
         f)  INSTALL_DOTFILES=true       ;;
         v)  INSTALL_VIM=true            ;;
@@ -43,14 +44,19 @@ while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
             esac
             ;;
         U)
-            echo $OPTARG
             UNINSTALL_SINGLE=$OPTARG
-            echo $UNINSTALL_SINGLE
-            [[ $UNINSTALL_SINGLE =~ ^\. ]] && SINGLE_FILE=${UNINSTALL_SINGLE#*.}
+            if [[ $UNINSTALL_SINGLE =~ ^\. ]]; then
+                UNINSTALL_SINGLE=${UNINSTALL_SINGLE#*.}
+            fi
             ;;
         s)
             SINGLE_FILE=$OPTARG
-            [[ $SINGLE_FILE =~ ^\. ]] && SINGLE_FILE=${SINGLE_FILE#*.}
+            if [[ $SINGLE_FILE =~ ^\. ]]; then
+                SINGLE_FILE=${SINGLE_FILE#*.}
+            fi
+            if [[ ! -f $INSTALL_PATH/resource/$SINGLE_FILE ]]; then
+                abort "$INSTALL_PATH/resource/$SINGLE_FILE not a valid dotfile!"
+            fi
             ;;
         h) print_help     ;;
         *) abort "$USAGE" ;;
@@ -58,17 +64,23 @@ while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
 done
 
 readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
-readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL
+readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
 readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
 
 if (( $# == 0 )); then
     abort "$USAGE"
+elif $INSTALL_DOTFILES && [[ -n $SINGLE_FILE ]]; then
+    abort "$USAGE\nCannot pass '-f' with '-s FILE'"
+elif $UNINSTALL_DOTFILES && [[ -n $UNINSTALL_SINGLE ]]; then
+    abort "$USAGE\nCannot pass '-u' with '-U FILE'"
+elif $INSTALL_DOTFILES && $UNINSTALL_DOTFILES; then
+    abort "$USAGE\nCannot install and uninstall at the same time..."
 fi
 
 if [[ -n $UNINSTALL_SINGLE ]]; then
     unlink_dotfile "$UNINSTALL_SINGLE"
-elif $UNINSTALL; then
-    for file in $INSTALL_PATH/*; do
+elif $UNINSTALL_DOTFILES; then
+    for file in $INSTALL_PATH/resource/*; do
         unlink_dotfile "$file"
     done
 fi
@@ -77,41 +89,36 @@ if [[ -n $CHANGE_SHELL ]]; then
     shell="$( grep "$CHANGE_SHELL$" /etc/shells 2>/dev/null | tail -n 1 )"
 
     if [[ -x "$shell" ]]; then
-        echo "Changing login shell to $shell."
+        log "Changing login shell to $shell."
         chsh -s "$shell"
     else
-        echo "Cannot change shell to $shell; $shell executable not found."
+        log "Cannot change shell; $shell executable not found."
     fi
 fi
 
-if $INSTALL_DOTFILES && [[ -n $SINGLE_FILE ]]; then
-    abort "$USAGE\nCannot pass '-f' with '-s FILE'"
-fi
-
-if $FORCE && !( $INSTALL_VIM || $INSTALL_DOTFILES ); then
-    abort "$USAGE\nMust pass '-F' with '-f' or '-v'"
-fi
-
 if [[ -n $SINGLE_FILE ]]; then
-    link_dotfile "$INSTALL_PATH/$SINGLE_FILE"
+    link_dotfile "$INSTALL_PATH/resource/$SINGLE_FILE"
 elif $INSTALL_DOTFILES; then
-    for file in $INSTALL_PATH/*; do
+    for file in $INSTALL_PATH/resource/*; do
         link_dotfile "$file"
     done
 fi
 
 if $ITALICS; then
-    tic $HOME/.xterm-256color.terminfo
+    log "Enabling italics; sourcing $INSTALL_PATH/xterm-256color.terminfo"
+    tic $INSTALL_PATH/xterm-256color.terminfo
 fi
 
 if $INSTALL_VIM; then
     if [[ -d $HOME/.vim ]]; then
         if $FORCE; then
+            log "Forcing removal of $HOME/.vim"
             rm -rf $HOME/.vim
         elif [[ -n $EXTENSION ]]; then
+            log "$HOME/.vim exists; moving to $HOME/.vim.$EXTENSION"
             mv $HOME/.vim{,.$EXTENSION}
         else
-            echo "$HOME/.vim exists. Run with '-F' to force, or '-B' to back-up"
+            log "$HOME/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
     fi
     [[ -d $HOME/.vim ]] || clone_vim
@@ -119,24 +126,26 @@ fi
 
 if $INSTALL_RVM; then
     if which rvm > /dev/null; then
-        echo "rvm already installed."
+        log "Skipping rvm installation; already installed."
     else
-        echo "Installing rvm"
+        log "Installing rvm"
         "curl" -sSL https://get.rvm.io | bash -s stable
     fi
 fi
 
 if $INSTALL_ZSH; then
     if [[ ! -d $HOME/.oh-my-zsh ]]; then
+        log "Installing $HOME/.oh-my-zsh"
         git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
         rm -rf $HOME/.oh-my-zsh/custom
-        git clone https://github.com/evanthegrayt/oh-my-zsh-custom.git \
-            $HOME/.oh-my-zsh/custom
+        log "Installing $HOME/.oh-my-zsh/custom from $ZSH_CUSTOM_REPO"
+        git clone $ZSH_CUSTOM_REPO $HOME/.oh-my-zsh/custom
     fi
 fi
 
 if $INSTALL_BASH; then
     if [[ ! -d $HOME/.bash_it ]]; then
+        log "Installing $HOME/.bash_it"
         git clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
     fi
 fi

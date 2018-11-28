@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
+
+source $INSTALL_PATH/lib/install_helpers.sh
+
+echo "WARNING! This will delete the whole 'dotfiles' repository!"
+echo "If you're wanting to remove the dotfiles, run \`install -u'"
+echo "Continuing this script WILL move all of the files contained in the"
+echo "backup directory back to your home directory before "
+echo
+printf "Continue? (y/n): "
+read
+
+case $REPLY in
+    y) echo "Okay... Moving forward."  ;;
+    n) exit                            ;;
+    *) abort "Invalid option. Exiting" ;;
+esac
+
+for file in $INSTALL_PATH/backup/*; do
+    mv -vf $file $HOME/$file
+done
+
+rm -rfv $INSTALL_PATH
+
