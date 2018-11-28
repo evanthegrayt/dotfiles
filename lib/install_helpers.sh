@@ -74,15 +74,17 @@ unlink_dotfile() {
         rm $HOME/.$basename_file
 
         if $REINSTALL_OLD_DOTFILES; then
-            if [[ -n $EXTENSION && -f $HOME/.$basename_file.$EXTENSION ]]; then
-                log "Restoring .$basename_file from .$basename_file.$EXTENSION"
-                mv $HOME/.$basename_file{.$EXTENSION,}
-            elif [[ -f $HOME/.$basename_file.local ]]; then
+            if [[ -f $INSTALL_PATH/backup/$basename_file.local ]]; then
+                if [[ -L $HOME/.$basename_file.local ]]; then
+                    rm $HOME/.$basename_file.local
+                fi
                 log "Restoring .$basename_file from .$basename_file.local"
-                mv $HOME/.$basename_file{.local,}
-            elif [[ -f $HOME/.$basename_file.bak ]]; then
+                mv $INSTALL_PATH/backup/$basename_file.local \
+                    $HOME/.$basename_file
+            elif [[ -f $INSTALL_PATH/backup/$basename_file.bak ]]; then
                 log "Restoring .$basename_file from .$basename_file.bak"
-                mv $HOME/.$basename_file{.bak,}
+                mv $INSTALL_PATH/backup/$basename_file.bak \
+                    $HOME/.$basename_file
             else
                 log "No local/backup file found for $basename_file"
             fi
