@@ -5,6 +5,7 @@ readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
 readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
 readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
+readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
 
 source $INSTALL_PATH/lib/install_helpers.sh
 
@@ -134,19 +135,12 @@ if $INSTALL_RVM; then
 fi
 
 if $INSTALL_ZSH; then
-    if [[ ! -d $HOME/.oh-my-zsh ]]; then
-        log "Installing $HOME/.oh-my-zsh"
-        git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
-        rm -rf $HOME/.oh-my-zsh/custom
-        log "Installing $HOME/.oh-my-zsh/custom from $ZSH_CUSTOM_REPO"
-        git clone $ZSH_CUSTOM_REPO $HOME/.oh-my-zsh/custom
-    fi
+    clone_shell_framework .oh-my-zsh \
+        https://github.com/robbyrussell/oh-my-zsh.git $ZSH_CUSTOM_REPO
 fi
 
 if $INSTALL_BASH; then
-    if [[ ! -d $HOME/.bash_it ]]; then
-        log "Installing $HOME/.bash_it"
-        git clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
-    fi
+    clone_shell_framework .bash_it \
+        https://github.com/Bash-it/bash-it.git $BASH_CUSTOM_REPO
 fi
 

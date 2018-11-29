@@ -89,12 +89,33 @@ unlink_dotfile() {
                 log "No local/backup file found for $basename_file"
             fi
         fi
+    else
+        log "$HOME/.$basename_file is not a symlink. Unable to remove."
     fi
 }
 
 clone_vim() {
     log "Cloning vim from $VIM_REPO"
     git clone --recursive $VIM_REPO $HOME/.vim
+}
+
+clone_shell_framework() {
+    local directory="$1"
+    local url="$2"
+    local custom_url="$3"
+
+    if [[ -d $HOME/$directory ]]; then
+        log "$HOME/$directory already exists."
+        return
+    fi
+
+    log "Installing $HOME/$directory from $url"
+    git clone $url $HOME/$directory
+    if [[ -n $custom_url ]]; then
+        rm -rf $HOME/$directory/custom
+        log "Installing $HOME/$directory/custom from $custom_url"
+        git clone $custom_url $HOME/$directory/custom
+    fi
 }
 
 log() {

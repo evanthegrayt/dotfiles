@@ -1,7 +1,6 @@
 # bashrc
 
 [[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
-
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
 case $current_host in
@@ -14,6 +13,10 @@ esac
 Color2="$BBLACK"
 Color3="$UBLACK"
 
+if [[ -d $HOME/.bash_it ]]; then
+    export BASH_IT="$HOME/.bash_it"
+    source "$BASH_IT"/bash_it.sh
+fi
 export PS1=" \[$Color\](\[$Color2\]\u\[$Color\]@\[$Color2\]${current_host%%.*}"\
 "\[$Color|${Color2}bash\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e "\
 "'s/* \(.*\)/\[$Color\]|\[$Color3\]\1/')\[$RESET\]\[$Color\])\[$RESET\] "\
@@ -31,8 +34,6 @@ export HISTIGNORE="pwd"
 export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend
-
-[[ -d $HOME/.bash_it ]] && export BASH_IT="$HOME/.bash_it"
 
 bind -x '"\C-l": clear'
 
