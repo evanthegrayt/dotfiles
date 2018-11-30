@@ -3,7 +3,7 @@ My dotfiles, plus an installation script with a boat-load of features. It should
 
 ### Rationale
 Ideally, you shouldn't need an script this hefty for installing your
-configuration, as most people only need to get their environment set up once
+configuration, as most people only need to set up their environment once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
 set up `vim`, `rvm`, `zsh`, and the like. So, as any good developer would do, I made a
@@ -41,21 +41,22 @@ change the way existing files are handled, see the options under
 USAGE: install [OPTIONS]
 
 Install options (must pass at least one of these options)
-  -a         | Allow ignored files to be installed
-  -f         | Install all dotfiles
-  -s [FILE]  | Install single dotfile [FILE]
-  -v         | Install vimfiles
-  -z         | Install 'oh-my-zsh'
-  -b         | Install 'bash-it'
-  -r         | Install 'rvm'
+  -a         | Allow ignored files to be installed.
+  -f         | Install all dotfiles.
+  -s [FILE]  | Install single dotfile [FILE].
+  -v         | Install vimfiles.
+  -z         | Install 'oh-my-zsh'.
+  -b         | Install 'bash-it'.
+  -r         | Install 'rvm'.
 
 Additional install options (default: Don't add these settings)
-  -C [SHELL] | Change login shell to [SHELL]
-  -i         | Enable terminal italics
+  -C [SHELL] | Change login shell to [SHELL].
+  -i         | Enable terminal italics.
+  -d [DIR]   | Specify a sub-directory of 'custom' to install files from.
 
 Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
   -F         | Force overwrite of all current dotfiles. THIS DELETES OLD COPIES!
-  -B         | Replace old dotfiles, but save them with '.bak' extension
+  -B         | Replace old dotfiles, but save them with '.bak' extension.
   -L         | If file already exists, move it to [FILE].local. This is
              + different from '-B', because my dotfiles will source a file
              + of the same name if it's in the home directory with the
@@ -63,13 +64,13 @@ Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
              + be applied on different systems.
 
 Uninstalling dotfiles
-  -u         | Unlink all files
-  -U [FILE]  | Unlink FILE
+  -u         | Unlink all files.
+  -U [FILE]  | Unlink FILE.
   -R         | With `-u` or `-U`; if dotfile exists with `.bak` or `.local`
              + extension, move it back to original name.
 
 Usage options
-  -h         | Print this help and exit
+  -h         | Print this help and exit.
 ```
 
 Don't manually move things around; the directory and file structure is important
@@ -83,6 +84,10 @@ extension, that file will be sourced *after* the file from the repository is
 loaded. This allows for overriding settings from the files in the repository.
 You can keep these locally, or store them in a private repository, which is
 what I've done.
+
+There is an untracked directory called `custom` where you can add other files,
+or subdirectories. To install/uninstall files located in this directory, you can
+pass `-d [DIRECTORY]` to specify
 
 ### Un-Installation
 If you want to un-install just the dotfiles, just run the `install` script with

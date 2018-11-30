@@ -20,21 +20,23 @@ INSTALL_RVM=false
 FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
+DIRECTORY=$INSTALL_PATH/resource
 
-while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
+while getopts 'auLfvzbrRFBiC:U:s:hd:' opts; do
     case $opts in
-        a)  ALLOW_IGNORED=true          ;;
-        u)  UNINSTALL_DOTFILES=true     ;;
-        L)  EXTENSION='local'           ;;
-        f)  INSTALL_DOTFILES=true       ;;
-        v)  INSTALL_VIM=true            ;;
-        z)  INSTALL_ZSH=true            ;;
-        b)  INSTALL_BASH=true           ;;
-        r)  INSTALL_RVM=true            ;;
-        R)  REINSTALL_OLD_DOTFILES=true ;;
-        F)  FORCE=true                  ;;
-        B)  EXTENSION='bak'             ;;
-        i)  ITALICS=true                ;;
+        a)  ALLOW_IGNORED=true                      ;;
+        u)  UNINSTALL_DOTFILES=true                 ;;
+        L)  EXTENSION='local'                       ;;
+        f)  INSTALL_DOTFILES=true                   ;;
+        v)  INSTALL_VIM=true                        ;;
+        z)  INSTALL_ZSH=true                        ;;
+        b)  INSTALL_BASH=true                       ;;
+        r)  INSTALL_RVM=true                        ;;
+        R)  REINSTALL_OLD_DOTFILES=true             ;;
+        F)  FORCE=true                              ;;
+        B)  EXTENSION='bak'                         ;;
+        i)  ITALICS=true                            ;;
+        d)  DIRECTORY=$INSTALL_PATH/custom/$OPTARG  ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -55,19 +57,18 @@ while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
             if [[ $SINGLE_FILE =~ ^\. ]]; then
                 SINGLE_FILE=${SINGLE_FILE#*.}
             fi
-            if [[ ! -f $INSTALL_PATH/resource/$SINGLE_FILE ]]; then
-                abort "$INSTALL_PATH/resource/$SINGLE_FILE not a valid dotfile!"
-            fi
             ;;
         h) print_help     ;;
         *) abort "$USAGE" ;;
     esac
 done
 
-readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
+readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH DIRECTORY
 readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
 readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
 
+##
+# Validations
 if (( $# == 0 )); then
     abort "$USAGE"
 elif $INSTALL_DOTFILES && [[ -n $SINGLE_FILE ]]; then
@@ -76,12 +77,16 @@ elif $UNINSTALL_DOTFILES && [[ -n $UNINSTALL_SINGLE ]]; then
     abort "$USAGE\nCannot pass '-u' with '-U FILE'"
 elif $INSTALL_DOTFILES && $UNINSTALL_DOTFILES; then
     abort "$USAGE\nCannot install and uninstall at the same time..."
+elif [[ ! -d $DIRECTORY ]]; then
+    abort "$DIRECTORY is not a valid directory!"
+elif [[ -n $SINGLE_FILE && ! -f $DIRECTORY/$SINGLE_FILE ]]; then
+    abort "$DIRECTORY/$SINGLE_FILE not a valid dotfile!"
 fi
 
 if [[ -n $UNINSTALL_SINGLE ]]; then
     unlink_dotfile "$UNINSTALL_SINGLE"
 elif $UNINSTALL_DOTFILES; then
-    for file in $INSTALL_PATH/resource/*; do
+    for file in $DIRECTORY/*; do
         unlink_dotfile "$file"
     done
 fi
@@ -98,16 +103,16 @@ if [[ -n $CHANGE_SHELL ]]; then
 fi
 
 if [[ -n $SINGLE_FILE ]]; then
-    link_dotfile "$INSTALL_PATH/resource/$SINGLE_FILE"
+    link_dotfile "$DIRECTORY/$SINGLE_FILE"
 elif $INSTALL_DOTFILES; then
-    for file in $INSTALL_PATH/resource/*; do
+    for file in $DIRECTORY/*; do
         link_dotfile "$file"
     done
 fi
 
 if $ITALICS; then
-    log "Enabling italics; sourcing $INSTALL_PATH/xterm-256color.terminfo"
-    tic $INSTALL_PATH/xterm-256color.terminfo
+    log "Enabling italics; sourcing $DIRECTORY/xterm-256color.terminfo"
+    tic $DIRECTORY/xterm-256color.terminfo
 fi
 
 if $INSTALL_VIM; then

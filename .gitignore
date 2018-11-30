@@ -2,3 +2,5 @@ log/*
 !log/.gitkeep
 backup/*
 !backup/.gitkeep
+custom/*
+!custom/.gitkeep
