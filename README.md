@@ -77,14 +77,12 @@ for the install script to work properly. Let the script do all the work for you;
 otherwise, why are you cloning this?
 
 There are settings I have that are specifically for work that I didn't want
-to publicly commit, so I have added a feature in all my dotfiles where, if a
+to publicly commit, so I have added a feature to deal with this issue. If a
 file exists in your home directory with the same name, but has a `.local`
-extension, that file will be sourced after the file from the repository is
-loaded, overwriting settings from the original file. You can keep these locally,
-or store them in a private repository (which is what I've done).
-
-Obviously, this is set up for my workflow, so don't be surprised if some stuff
-doesn't work for you.
+extension, that file will be sourced *after* the file from the repository is
+loaded. This allows for overriding settings from the files in the repository.
+You can keep these locally, or store them in a private repository, which is
+what I've done.
 
 ### Un-Installation
 If you want to un-install just the dotfiles, just run the `install` script with
@@ -98,4 +96,8 @@ removing the entire repository.
 Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles)
+
+### Disclaimer
+Obviously, this is set up for my workflow, so don't be surprised if some stuff
+doesn't work for you.
 
