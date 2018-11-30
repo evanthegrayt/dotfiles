@@ -99,7 +99,3 @@ Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles)
 
-### Screenshots
-Here's my shell prompt on iTerm2
-![](images/prompt.jpg)
-
