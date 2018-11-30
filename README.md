@@ -26,8 +26,10 @@ If you want the whole enchilada, clone my repository wherever you want it:
 ```sh
 git clone https://github.com/evanthegrayt/dotfiles.git
 ```
-...or clone your forked version. Then run the installation script:
+...or clone your forked version. Then run the installation script from within
+the repository:
 ```sh
+cd dotfiles
 bin/install -f
 ```
 
