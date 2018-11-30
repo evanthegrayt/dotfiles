@@ -76,6 +76,13 @@ Don't manually move things around; the directory and file structure is important
 for the install script to work properly. Let the script do all the work for you;
 otherwise, why are you cloning this?
 
+There are settings I have that are specifically for work that I didn't want
+to publicly commit, so I have added a feature in all my dotfiles where, if a
+file exists in your home directory with the same name, but has a `.local`
+extension, that file will be sourced after the file from the repository is
+loaded, overwriting settings from the original file. You can keep these locally,
+or store them in a private repository (which is what I've done).
+
 Obviously, this is set up for my workflow, so don't be surprised if some stuff
 doesn't work for you.
 
@@ -87,16 +94,12 @@ Just run the `safely_uninstall_repo` script in the `bin` directory. It will move
 all the files in the `backup` directory to your `$HOME` directory before
 removing the entire repository.
 
-### Other Features
-There are settings I have that are specifically for work that I didn't want
-to publicly commit, so I have added a feature in all my dotfiles where, if a
-file exists in your home directory with the same name, but has a `.local`
-extension, that file will be sourced after the file from the repository is
-loaded, overwriting settings from the original file. You can keep these locally,
-or store them in a private repository (which is what I've done).
-
 ### Where are your vim runtime files?
 Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles)
+
+### Screenshots
+Here's my shell prompt on iTerm2
+![](images/prompt.jpg)
 
