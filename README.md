@@ -61,6 +61,8 @@ Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
              + of the same name if it's in the home directory with the
              + '.local' extension. This allows for additional settings to
              + be applied on different systems.
+
+Uninstalling dotfiles
   -u         | Unlink all files
   -U [FILE]  | Unlink FILE
   -R         | With `-u` or `-U`; if dotfile exists with `.bak` or `.local`
