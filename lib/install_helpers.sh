@@ -1,8 +1,8 @@
 
 abort() {
-    local msg="$@"
+    local msg=("$@")
 
-    printf "$msg\n" >&2
+    printf "%s\n" "${msg[@]}" >&2
     exit 1
 }
 
@@ -22,7 +22,8 @@ contains_element() {
 
 print_help() {
     echo $USAGE
-    cat $INSTALL_PATH/lib/help_menu.txt
+    echo "$( < $INSTALL_PATH/lib/help_menu.txt )"
+
     exit
 }
 
