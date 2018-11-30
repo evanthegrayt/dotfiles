@@ -6,8 +6,8 @@ Ideally, you shouldn't need an script this hefty for installing your
 configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
-set up `vim`, `rvm`, `zsh`, etc., so as any good developer would do, I made a
-script do it all for me.
+set up `vim`, `rvm`, `zsh`, and the like. So, as any good developer would do, I made a
+script that does it all for me.
 
 ### Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
