@@ -18,8 +18,15 @@ case $REPLY in
 esac
 
 for file in $INSTALL_PATH/backup/*; do
-    mv -vf $file $HOME/$file
+    mv -vf $file $HOME
 done
+
+if (( $( ls $INSTALL_PATH/backup | wc -l ) != 0 )); then
+    abort "$INSTALL_PATH/backup is not empty! Please rectify this manually" \
+        "and the re-run the script!"
+
+    exit 1
+fi
 
 rm -rfv $INSTALL_PATH
 

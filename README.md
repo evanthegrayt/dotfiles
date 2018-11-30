@@ -1,12 +1,18 @@
 # Dotfiles, plus so much more!
-My dotfiles, plus an installation script with a boat-load of features.
+My dotfiles, plus an installation script with a boat-load of features. It should go without saying, but here be dragons.
 
-It should go without saying, but here be dragons.
+### Rationale
+Ideally, you shouldn't need an script this hefty for installing your
+configuration, as most people only need to get their environment set up once
+per-computer they purchase. However, I regularly have to set up my workflow on
+various VMs and Vagrant boxes, and I got tired of contstantly having to manually
+set up `vim`, `rvm`, `zsh`, etc., so as any good developer would do, I made a
+script do it all for me.
 
 ### Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
 sure these work on both Linux and BSD, with either `zsh` or `bash` (and `csh`,
-although this hasn't really been tested). I doubt you'd want to clone this
+although I don't have much set up for it). I doubt you'd want to clone this
 entire repository just for my files, but if you do, feel free to do so.
 
 What is much more likely, is that you'd want the installation script, which has
@@ -61,6 +67,10 @@ Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
 Usage options
   -h         | Print this help and exit
 ```
+
+Don't manually move things around; the directory and file structure is important
+for the install script to work properly. Let the script do all the work for you;
+otherwise, why are you cloning this?
 
 Obviously, this is set up for my workflow, so don't be surprised if some stuff
 doesn't work for you.

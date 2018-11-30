@@ -1,6 +1,6 @@
 
 abort() {
-    local msg="$1"
+    local msg="$@"
 
     printf "$msg\n" >&2
     exit 1
