@@ -107,7 +107,10 @@ my setup.
 These are my config files, so a "bug" for you is probably not a "bug" for me;
 however, if you see things that could be done more efficiently, anything that
 is implemented incorrectly, or you find an actual bug in one of the scripts,
-please let me know by creating an issue in the repository detailing the problem.
+please let me know by
+[creating an issue in the
+repository](https://github.com/evanthegrayt/dotfiles/issues/new)
+detailing the problem.
 If it's truly an issue, I'll fix it; otherwise, if it's a configuration
 preference, I suggest that you fork the repository and add your own
 customizations.
