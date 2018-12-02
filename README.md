@@ -1,13 +1,14 @@
 # Dotfiles, plus so much more!
-My dotfiles, plus an installation script with a boat-load of features. It should go without saying, but here be dragons.
+My dotfiles, plus an installation script with a boat-load of features. It should
+go without saying, but here be dragons.
 
 ### Rationale
 Ideally, you shouldn't need an script this hefty for installing your
 configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
-set up `vim`, `rvm`, `zsh`, and the like. So, as any good developer would do, I made a
-script that does it all for me.
+set up `vim`, `rvm`, `zsh`, and the like. So, as any good developer would do, I
+made a script that does it all for me.
 
 ### Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
@@ -98,6 +99,16 @@ have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles)
 
 ### Disclaimer
-Obviously, this is set up for my workflow, so don't be surprised if some stuff
-doesn't work for you.
+Obviously, the dotfiles in the `resource` directory are set up for my workflow,
+so don't be surprised if some things don't work for you, or if you don't like
+my setup.
+
+### Reporting Bugs
+These are my config files, so a "bug" for you is probably not a "bug" for me;
+however, if you see things that could be done more efficiently, anything that
+is implemented incorrectly, or you find an actual bug in one of the scripts,
+please let me know by creating an issue in the repository detailing the problem.
+If it's truly an issue, I'll fix it; otherwise, if it's a configuration
+preference, I suggest that you fork the repository and add your own
+customizations.
 
