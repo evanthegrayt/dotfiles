@@ -115,7 +115,7 @@ clone_shell_framework() {
     if [[ -n $custom_url ]]; then
         rm -rf $HOME/$directory/custom
         log "Installing $HOME/$directory/custom from $custom_url"
-        git clone $custom_url $HOME/$directory/custom
+        git clone --recursive $custom_url $HOME/$directory/custom
     fi
 }
 
