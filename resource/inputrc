@@ -1,9 +1,13 @@
 #.inputrc
+$include /etc/inputrc
+# To see bindings, run `bind -p` from the command line
 # Resources:
+#>  http://man7.org/linux/man-pages/man3/readline.3.html <= the actual man pages
 #>  http://brettterpstra.com/2015/07/09/shell-tricks-inputrc-binding-fun/
 #>  http://www.gnu.org/software/bash/manual/bashref.html#Command-Line-Editing
 # This makes auto-completion ignore case
 set completion-ignore-case on
+set completion-query-items 150
 # This makes the editing mode vi instead of emacs
 # set editing-mode vi
 # History. Start tying, hit up, and only previous commands starting with
@@ -12,9 +16,6 @@ set completion-ignore-case on
 "\C-n":history-search-forward
 "\e[A":history-search-backward
 "\e[B":history-search-forward
-
-# Clear screen
-"\C-l":clear-screen
 
 #-- this maps the up and down arrow to searching
 $if mode=vi
@@ -32,11 +33,17 @@ $endif
 
 # If there are multiple matches for completion, Tab should cycle through them
 TAB:menu-complete
+"\e[Z":menu-complete-backward
 
 # Display a list of the matching files
 set show-all-if-ambiguous on
+set colored-completion-prefix on
+set colored-stats on
 
 # Perform partial completion on the first Tab press,
 # only start cycling full results on the second Tab press
 set menu-complete-display-prefix on
+
+# Source local inputrc if it exists
+$include ~/.inputrc.local
 

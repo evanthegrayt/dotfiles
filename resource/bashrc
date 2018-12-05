@@ -35,7 +35,5 @@ export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend
 
-bind -x '"\C-l": clear'
-
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 
