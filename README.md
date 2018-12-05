@@ -7,8 +7,8 @@ Ideally, you shouldn't need an script this hefty for installing your
 configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
-set up `vim`, `rvm`, `zsh`, and the like. So, as any good developer would do, I
-made a script that does it all for me.
+set up `vim`, `rvm`, `zsh`, `virtualbox`, `vagrant`, `git-lfs`, and the like.
+So, as any good developer would do, I made a script that does it all for me.
 
 ### Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
@@ -39,16 +39,16 @@ change the way existing files are handled, see the options under
 "Handling old dotfiles"
 
 ```
-USAGE: install [OPTIONS]
 
 Install options (must pass at least one of these options)
   -a         | Allow ignored files to be installed
   -f         | Install all dotfiles
-  -s [FILE]  | Install single dotfile [FILE]
+  -s [FILE]  | Install a single dotfile
   -v         | Install vimfiles
   -z         | Install 'oh-my-zsh'
   -b         | Install 'bash-it'
-  -r         | Install 'rvm'
+  -m         | Install MacOS files I need for work
+             + rvm, command-line-tools, homebrew, git-lfs, virtualbox, vagrant
 
 Additional install options (default: Don't add these settings)
   -C [SHELL] | Change login shell to [SHELL]
@@ -71,6 +71,7 @@ Uninstalling dotfiles
 
 Usage options
   -h         | Print this help and exit
+
 ```
 
 Don't manually move things around; the directory and file structure is important

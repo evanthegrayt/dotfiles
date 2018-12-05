@@ -6,7 +6,8 @@ Install options (must pass at least one of these options)
   -v         | Install vimfiles
   -z         | Install 'oh-my-zsh'
   -b         | Install 'bash-it'
-  -r         | Install 'rvm'
+  -m         | Install MacOS files I need for work
+             + rvm, command-line-tools, homebrew, git-lfs, virtualbox, vagrant
 
 Additional install options (default: Don't add these settings)
   -C [SHELL] | Change login shell to [SHELL]

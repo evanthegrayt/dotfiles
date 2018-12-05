@@ -119,6 +119,45 @@ clone_shell_framework() {
     fi
 }
 
+install_mac_work_stuff() {
+    if which rvm > /dev/null; then
+        log "Skipping rvm installation; already installed."
+    else
+        log "Installing rvm"
+        "curl" -sSL https://get.rvm.io | bash -s stable
+    fi
+    if [[ -d /Library/Developer/CommandLineTools/ ]]; then
+        log "Skipping Command Line Tools installation; already installed."
+    else
+        log "Installing Command Line Tools"
+        xcode-select --install
+    fi
+    if which brew > /dev/null; then
+        log "Skipping Homebrew installation; already installed."
+    else
+        log "Installing homebrew"
+        /usr/bin/ruby -e "$( curl -fsSL $BREW )"
+    fi
+    if which git-lfs > /dev/null; then
+        log "Skipping git-lfs installation; already installed."
+    else
+        log "Installing git-lfs"
+        brew install git-lfs
+    fi
+    if which virtualbox > /dev/null; then
+        log "Skipping virtualbox installation; already installed."
+    else
+        log "Installing virtualbox"
+        brew cask install virtualbox
+    fi
+    if which vagrant > /dev/null; then
+        log "Skipping vagrant installation; already installed."
+    else
+        log "Installing vagrant"
+        brew cask install vagrant
+    fi
+}
+
 log() {
     local msg="$@"
     local prefix="[$( date "+%Y-%m-%d %H:%M:%S" )]:"

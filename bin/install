@@ -6,22 +6,25 @@ readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
 readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
 readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
 readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
+readonly BREW="https://raw.githubusercontent.com/Homebrew/install/master/install"
+readonly OS="$( uname -s )"
 
 source $INSTALL_PATH/lib/install_helpers.sh
 
-ITALICS=false
+ENABLE_ITALICS=false
 INSTALL_DOTFILES=false
 UNINSTALL_DOTFILES=false
 REINSTALL_OLD_DOTFILES=false
 INSTALL_VIM=false
 INSTALL_ZSH=false
 INSTALL_BASH=false
-INSTALL_RVM=false
+INSTALL_MAC_STUFF=false
 FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
+INSTALL_VB_AND_VAGRANT=false
 
-while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
+while getopts 'auLfvzbrRFBimC:U:s:h' opts; do
     case $opts in
         a)  ALLOW_IGNORED=true          ;;
         u)  UNINSTALL_DOTFILES=true     ;;
@@ -30,11 +33,11 @@ while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
         v)  INSTALL_VIM=true            ;;
         z)  INSTALL_ZSH=true            ;;
         b)  INSTALL_BASH=true           ;;
-        r)  INSTALL_RVM=true            ;;
         R)  REINSTALL_OLD_DOTFILES=true ;;
         F)  FORCE=true                  ;;
         B)  EXTENSION='bak'             ;;
-        i)  ITALICS=true                ;;
+        i)  ENABLE_ITALICS=true         ;;
+        m)  INSTALL_MAC_WORK_STUFF=true ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -64,9 +67,10 @@ while getopts 'auLfvzbrRFBiC:U:s:h' opts; do
     esac
 done
 
-readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH
-readonly INSTALL_RVM BACKUP ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
+readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH BACKUP
+readonly ENABLE_ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
 readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
+readonly INSTALL_MAC_WORK_STUFF
 
 if (( $# == 0 )); then
     abort "$USAGE"
@@ -105,7 +109,15 @@ elif $INSTALL_DOTFILES; then
     done
 fi
 
-if $ITALICS; then
+if $INSTALL_MAC_WORK_STUFF; then
+    if [[ "$OS" == 'Darwin' ]]; then
+        install_mac_work_stuff
+    else
+        log "Not on MacOS. Skipping installation of Mac-specific packages."
+    fi
+fi
+
+if $ENABLE_ITALICS; then
     log "Enabling italics; sourcing $INSTALL_PATH/xterm-256color.terminfo"
     tic $INSTALL_PATH/xterm-256color.terminfo
 fi
@@ -123,15 +135,6 @@ if $INSTALL_VIM; then
         fi
     fi
     [[ -d $HOME/.vim ]] || clone_vim
-fi
-
-if $INSTALL_RVM; then
-    if which rvm > /dev/null; then
-        log "Skipping rvm installation; already installed."
-    else
-        log "Installing rvm"
-        "curl" -sSL https://get.rvm.io | bash -s stable
-    fi
 fi
 
 if $INSTALL_ZSH; then
