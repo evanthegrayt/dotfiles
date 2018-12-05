@@ -17,6 +17,7 @@ if [[ -d $HOME/.bash_it ]]; then
     export BASH_IT="$HOME/.bash_it"
     source "$BASH_IT"/bash_it.sh
 fi
+
 export PS1=" \[$Color\](\[$Color2\]\u\[$Color\]@\[$Color2\]${current_host%%.*}"\
 "\[$Color|${Color2}bash\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e "\
 "'s/* \(.*\)/\[$Color\]|\[$Color3\]\1/')\[$RESET\]\[$Color\])\[$RESET\] "\
@@ -33,7 +34,7 @@ export HISTCONTROL=ignoreboth:erasedups
 export HISTIGNORE="pwd"
 export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
-shopt -s histappend
+shopt -s histappend histverify
 
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 

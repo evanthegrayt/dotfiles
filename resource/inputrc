@@ -31,6 +31,10 @@ $if mode=vi
     "\C-j":'\033'
 $endif
 
+$if Bash
+    Space: magic-space
+$endif
+
 # If there are multiple matches for completion, Tab should cycle through them
 TAB:menu-complete
 "\e[Z":menu-complete-backward
