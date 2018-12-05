@@ -120,6 +120,8 @@ clone_shell_framework() {
 }
 
 install_mac_work_stuff() {
+    local manually_install=()
+
     if which rvm > /dev/null; then
         log "Skipping rvm installation; already installed."
     else
@@ -155,6 +157,12 @@ install_mac_work_stuff() {
     else
         log "Installing vagrant"
         brew cask install vagrant
+    fi
+    if [[ ! -d /Applications/Tunnelblick.app/ ]]; then
+        manually_install+=(Tunnelblick)
+    fi
+    if (( ${#manually_install[@]} != 0 )); then
+        osascript -e "display notification \"${manually_install[@]}\" with title \"Please manually install:\""
     fi
 }
 
