@@ -157,7 +157,7 @@ install_program() {
 
 log() {
     local msg="$@"
-    local timestamp="$( date "+%Y-%m-%d %H:%M:%S" )]:"
+    local timestamp="$( date "+%Y-%m-%d %H:%M:%S" )"
     local logfile="$INSTALL_PATH/log/dotfiles.${timestamp%% *}.log"
 
     echo "[$timestamp]: $msg" | tee -a $logfile
