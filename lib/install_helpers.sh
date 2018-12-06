@@ -121,7 +121,7 @@ clone_shell_framework() {
 
 install_mac_work_stuff() {
     local inst=()
-    local to_check=(Tunnelblickk)
+    local to_check=(Tunnelblick)
     local title="Please manually install:"
 
     install_program '/Library/Developer/CommandLineTools' \
