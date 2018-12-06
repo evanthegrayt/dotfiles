@@ -99,10 +99,15 @@ Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles)
 
-### Disclaimer
+### Disclaimers
 Obviously, the dotfiles in the `resource` directory are set up for my workflow,
 so don't be surprised if some things don't work for you, or if you don't like
 my setup.
+
+Also, I've given users a lot of options for saving/backing up their
+old dotfiles, but it IS possible -- and even easy -- to delete your old files
+(for example, using the `-F` option). As I've said, I *really* recommend forking
+this repository and replacing my files in the `resource/` directory with your own.
 
 ### Reporting Bugs
 These are my config files, so a "bug" for you is probably not a "bug" for me;
