@@ -120,7 +120,9 @@ clone_shell_framework() {
 }
 
 install_mac_work_stuff() {
-    local man_inst=()
+    local inst=()
+    local to_check=(Tunnelblickk)
+    local title="Please manually install:"
 
     install_program '/Library/Developer/CommandLineTools' \
         'xcode-select --install'
@@ -129,11 +131,14 @@ install_mac_work_stuff() {
     install_program git-lfs    'brew install git-lfs'
     install_program virtualbox 'brew cask install virtualbox'
     install_program vagrant    'brew cask install vagrant'
-    if [[ ! -d /Applications/Tunnelblick.app/ ]]; then
-        man_inst+=(Tunnelblick)
-    fi
-    if (( ${#man_inst[@]} != 0 )); then
-        osascript -e "display notification \"${man_inst[@]}\" with title \"Please manually install:\""
+    for check in ${to_check[@]}; do
+        if [[ ! -d /Applications/$check.app ]]; then
+            log "$check needs to be manually installed."
+            inst+=($check)
+        fi
+    done
+    if (( ${#inst[@]} != 0 )); then
+        osascript -e "display notification \"${inst[@]}\" with title \"$title\""
     fi
 }
 
