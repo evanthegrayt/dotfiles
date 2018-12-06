@@ -120,56 +120,41 @@ clone_shell_framework() {
 }
 
 install_mac_work_stuff() {
-    local manually_install=()
+    local man_inst=()
 
-    if which rvm > /dev/null; then
-        log "Skipping rvm installation; already installed."
-    else
-        log "Installing rvm"
-        "curl" -sSL https://get.rvm.io | bash -s stable
-    fi
-    if [[ -d /Library/Developer/CommandLineTools/ ]]; then
-        log "Skipping Command Line Tools installation; already installed."
-    else
-        log "Installing Command Line Tools"
-        xcode-select --install
-    fi
-    if which brew > /dev/null; then
-        log "Skipping Homebrew installation; already installed."
-    else
-        log "Installing homebrew"
-        /usr/bin/ruby -e "$( curl -fsSL $BREW )"
-    fi
-    if which git-lfs > /dev/null; then
-        log "Skipping git-lfs installation; already installed."
-    else
-        log "Installing git-lfs"
-        brew install git-lfs
-    fi
-    if which virtualbox > /dev/null; then
-        log "Skipping virtualbox installation; already installed."
-    else
-        log "Installing virtualbox"
-        brew cask install virtualbox
-    fi
-    if which vagrant > /dev/null; then
-        log "Skipping vagrant installation; already installed."
-    else
-        log "Installing vagrant"
-        brew cask install vagrant
-    fi
+    install_program '/Library/Developer/CommandLineTools' \
+        'xcode-select --install'
+    install_program rvm        "'curl' -sSL https://get.rvm.io | bash -s stable"
+    install_program brew       "/usr/bin/ruby -e '$( curl -fsSL $BREW )'"
+    install_program git-lfs    'brew install git-lfs'
+    install_program virtualbox 'brew cask install virtualbox'
+    install_program vagrant    'brew cask install vagrant'
     if [[ ! -d /Applications/Tunnelblick.app/ ]]; then
-        manually_install+=(Tunnelblick)
+        man_inst+=(Tunnelblick)
     fi
-    if (( ${#manually_install[@]} != 0 )); then
-        osascript -e "display notification \"${manually_install[@]}\" with title \"Please manually install:\""
+    if (( ${#man_inst[@]} != 0 )); then
+        osascript -e "display notification \"${man_inst[@]}\" with title \"Please manually install:\""
     fi
+}
+
+install_program() {
+    local exe="$1"
+    local install_cmd="$2"
+
+    if which $exe > /dev/null || [[ -d $exe ]]; then
+        log "Skipping ${exe##*/} installation; already installed."
+        return
+    fi
+
+    log "Installing ${exe##*/}"
+    $install_cmd
 }
 
 log() {
     local msg="$@"
-    local prefix="[$( date "+%Y-%m-%d %H:%M:%S" )]:"
+    local timestamp="$( date "+%Y-%m-%d %H:%M:%S" )]:"
+    local logfile="$INSTALL_PATH/log/dotfiles.${timestamp%% *}.log"
 
-    echo "$prefix $msg" | tee -a $INSTALL_PATH/log/dotfiles.log
+    echo "[$timestamp]: $msg" | tee -a $logfile
 }
 
