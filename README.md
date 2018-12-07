@@ -107,7 +107,8 @@ my setup.
 Also, I've given users a lot of options for saving/backing up their
 old dotfiles, but it IS possible -- and even easy -- to delete your old files
 (for example, using the `-F` option). As I've said, I *really* recommend forking
-this repository and replacing my files in the `resource/` directory with your own.
+this repository and replacing my files by committing your files to the
+`resource/` directory.
 
 ### Reporting Bugs
 These are my config files, so a "bug" for you is probably not a "bug" for me;

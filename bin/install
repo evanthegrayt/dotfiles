@@ -2,7 +2,7 @@
 # Installation script to help me install my dotfiles across different platforms
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
-readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd )"
+readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
 readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
 readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
 readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
@@ -18,11 +18,10 @@ REINSTALL_OLD_DOTFILES=false
 INSTALL_VIM=false
 INSTALL_ZSH=false
 INSTALL_BASH=false
-INSTALL_MAC_STUFF=false
+INSTALL_MAC_WORK_STUFF=false
 FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
-INSTALL_VB_AND_VAGRANT=false
 
 while getopts 'auLfvzbrRFBimC:U:s:h' opts; do
     case $opts in
