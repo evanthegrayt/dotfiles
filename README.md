@@ -33,46 +33,12 @@ the repository:
 cd dotfiles
 bin/install -f
 ```
-
-By default, the script won't move or overwrite currently-existing files. To
-change the way existing files are handled, see the options under
-"Handling old dotfiles"
-
-```
-
-Install options (must pass at least one of these options)
-  -a         | Allow ignored files to be installed
-  -f         | Install all dotfiles
-  -s [FILE]  | Install a single dotfile
-  -v         | Install vimfiles
-  -z         | Install 'oh-my-zsh'
-  -b         | Install 'bash-it'
-  -m         | Install MacOS files I need for work
-             + rvm, command-line-tools, homebrew, git-lfs, virtualbox, vagrant
-
-Additional install options (default: Don't add these settings)
-  -C [SHELL] | Change login shell to [SHELL]
-  -i         | Enable terminal italics
-
-Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-  -F         | Force overwrite of all current dotfiles. THIS DELETES OLD COPIES!
-  -B         | Replace old dotfiles, but save them with '.bak' extension
-  -L         | If file already exists, move it to [FILE].local. This is
-             + different from '-B', because my dotfiles will source a file
-             + of the same name if it's in the home directory with the
-             + '.local' extension. This allows for additional settings to
-             + be applied on different systems.
-
-Uninstalling dotfiles
-  -u         | Unlink all files
-  -U [FILE]  | Unlink FILE
-  -R         | With `-u` or `-U`; if dotfile exists with `.bak` or `.local`
-             + extension, move it back to original name.
-
-Usage options
-  -h         | Print this help and exit
-
-```
+This will link the files from `resource/` to `$HOME`, unless the file is in the
+`lib/ignore.yml` file. By default, the script won't move or overwrite
+currently-existing files. To change the way existing files are handled, see the
+options under "Handling old dotfiles" in the
+[help documentation](lib/help_menu.txt). There are also a lot of other options,
+including installing a single file, cloning shell frameworks, etc.
 
 Don't manually move things around; the directory and file structure is important
 for the install script to work properly. Let the script do all the work for you;
@@ -105,10 +71,9 @@ so don't be surprised if some things don't work for you, or if you don't like
 my setup.
 
 Also, I've given users a lot of options for saving/backing up their
-old dotfiles, but it IS possible -- and even easy -- to delete your old files
-(for example, using the `-F` option). As I've said, I *really* recommend forking
-this repository and replacing my files by committing your files to the
-`resource/` directory.
+old dotfiles, but it IS possible to delete your old files. As I've said, I
+*really* recommend forking this repository and replacing my files by committing
+your files to the `resource/` directory.
 
 ### Reporting Bugs
 These are my config files, so a "bug" for you is probably not a "bug" for me;
