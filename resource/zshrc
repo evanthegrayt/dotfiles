@@ -14,16 +14,16 @@ autoload -U zmv
 
 # ENABLED PLUGINS
 plugins=(
-sudo
-ruby
-osx
-per-directory-history
-history-substring-search
-zsh-autosuggestions
-fast-syntax-highlighting
-rails
 vb
 cdc
+osx
+sudo
+ruby
+rails
+zsh-autosuggestions
+per-directory-history
+history-substring-search
+fast-syntax-highlighting
 history-search-multi-word
 )
 
@@ -34,7 +34,7 @@ if [[ -d "$HOME/.oh-my-zsh" ]]; then
     bindkey -M emacs '^P' history-substring-search-up
 fi
 
-fpath=(~/bin/lib/zsh $fpath)
+[[ -d $HOME/bin/lib/zsh ]] && fpath=($HOME/bin/lib/zsh $fpath)
 
 # Source ZSH files and shellrc
 () {
