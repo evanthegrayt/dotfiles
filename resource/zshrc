@@ -20,10 +20,11 @@ osx
 per-directory-history
 history-substring-search
 zsh-autosuggestions
-zsh-syntax-highlighting
+fast-syntax-highlighting
 rails
 vb
 cdc
+history-search-multi-word
 )
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
