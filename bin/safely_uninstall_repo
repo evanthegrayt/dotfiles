@@ -25,11 +25,11 @@ for file in $INSTALL_PATH/resource/*; do
 done
 
 did_save_backups=false
-backups=$INSTALL_PATH/backup/*
+backups=($INSTALL_PATH/backup/*)
 if (( ${#backups[@]} != 0 )); then
     new_backup_dir=$HOME/dotfiles_backup.$( date +%Y-%m-%d )
-    echo mv -v $INSTALL_PATH/backup $new_backup_dir
-    saved_backups=true
+    mv -v $INSTALL_PATH/backup $new_backup_dir
+    did_save_backups=true
 fi
 
 rm -rfv $INSTALL_PATH
@@ -38,5 +38,5 @@ if $did_save_backups; then
     echo ">> Your backups are located in $new_backup_dir <<"
 fi
 
-echo "Goodbye"
+echo "Goodbye!"
 
