@@ -3,7 +3,7 @@ My dotfiles, plus an installation script with a boat-load of features.
 
 It should go without saying, but here be dragons.
 
-### Rationale
+## Rationale
 Ideally, you shouldn't need an script this hefty for installing your
 configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
@@ -11,7 +11,7 @@ various VMs and Vagrant boxes, and I got tired of contstantly having to manually
 set up `vim`, `rvm`, `zsh`, `virtualbox`, `vagrant`, `git-lfs`, and the like.
 So, I made a script that does it all for me.
 
-### Installation and Features
+## Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
 sure these work on both Linux and BSD, with either `zsh` or `bash` (and `csh`,
 although I don't have much set up for it). I doubt you'd want to clone this
@@ -53,7 +53,7 @@ loaded. This allows for overriding settings from the files in the repository.
 You can keep these locally, or store them in a private repository, which is
 what I've done.
 
-### Un-Installation
+## Un-Installation
 If you want to un-install just the dotfiles, just run the `install` script with
 the `-u` option; however, this script *does* come with a way to safely remove
 the entire repository without losing the files saved in the `backup` directory.
@@ -61,12 +61,19 @@ Just run the `safely_uninstall_repo` script in the `bin` directory. It will move
 all the files in the `backup` directory to your `$HOME` directory before
 removing the entire repository.
 
-### Where are your vim runtime files?
+## Where are your vim runtime files?
 Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles).
 
-### Disclaimers
+#### What about other repositories, like oh-my-zsh? Why not use submodules?
+
+I tried keeping repositories in here as submodules (such as `vim`, `oh-my-zsh`,
+etc.), but I didn't like it, as I wanted more control over what gets installed.
+Having the option to install these other repositories via the `install` script
+seemed like the best compromise.
+
+## Disclaimers
 Obviously, the dotfiles in the `resource` directory are set up for my workflow,
 so don't be surprised if some things don't work for you, or if you don't like
 my setup.
@@ -76,7 +83,7 @@ old dotfiles, but it IS possible to delete your old files. As I've said, I
 *really* recommend forking this repository and replacing my files by committing
 your files to the `resource/` directory.
 
-### Reporting Bugs
+## Reporting Bugs
 These are my config files, so a "bug" for you is probably not a "bug" for me;
 however, if you see things that could be done more efficiently, anything that
 is implemented incorrectly, or you find an actual bug in one of the scripts,
