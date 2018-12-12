@@ -1,3 +1,0 @@
-[submodule "resource/vim"]
-	path = resource/vim
-	url = https://github.com/evanthegrayt/vimfiles.git
