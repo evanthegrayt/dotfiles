@@ -1,6 +1,7 @@
 # Dotfiles, plus so much more!
-My dotfiles, plus an installation script with a boat-load of features. It should
-go without saying, but here be dragons.
+My dotfiles, plus an installation script with a boat-load of features.
+
+It should go without saying, but here be dragons.
 
 ### Rationale
 Ideally, you shouldn't need an script this hefty for installing your
@@ -8,7 +9,7 @@ configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
 set up `vim`, `rvm`, `zsh`, `virtualbox`, `vagrant`, `git-lfs`, and the like.
-So, as any good developer would do, I made a script that does it all for me.
+So, I made a script that does it all for me.
 
 ### Installation and Features
 These are my personal configuration files, and I've taken a lot of steps to make
@@ -63,7 +64,7 @@ removing the entire repository.
 ### Where are your vim runtime files?
 Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
-[here](https://github.com/evanthegrayt/vimfiles)
+[here](https://github.com/evanthegrayt/vimfiles).
 
 ### Disclaimers
 Obviously, the dotfiles in the `resource` directory are set up for my workflow,
