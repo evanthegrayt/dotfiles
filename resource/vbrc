@@ -1,0 +1,4 @@
+# vi: set ft=sh :
+VB_BOXES_LOCATION=$HOME/workflow
+VB_BOXES=(vagrant-{ique,dotcom})
+
