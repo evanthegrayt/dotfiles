@@ -34,14 +34,15 @@ end
 if defined?(Pry)
   begin
     require 'pry-editline'
+  rescue LoadError
+  end
     Pry.config.history.file = File.join(ENV['HOME'], '.irb_history')
     Pry.config.coolline_paren_matching = false
     Pry.config.editor = ENV['VISUAL']
     Pry.config.coolline_matched_paren    = "\e[42m"
     Pry.config.coolline_mismatched_paren = "\e[41m"
     Pry.config.theme = "zenburn"
-  rescue LoadError
-  end
+    Pry.config.pager = false
 
   local_pryrc = File.join(ENV['HOME'], '.pryrc.local')
   load local_pryrc if File.exist?(local_pryrc)
