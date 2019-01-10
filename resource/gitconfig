@@ -1,16 +1,16 @@
 [http]
-    sslVerify = false
+	sslVerify = false
 [user]
 	name = Evan Gray
 	email = egray1985@gmail.com
 [core]
 	pager = diff-so-fancy | less --tabs=4 -nRFX
 [diff]
-    tool = vimdiff
+	tool = vimdiff
 [difftool]
-    prompt = false
+	prompt = false
 [alias]
-    d = difftool
+	d = difftool
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
