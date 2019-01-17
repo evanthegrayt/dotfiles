@@ -1,0 +1,3 @@
+--langdef=Notes
+--langmap=notes:.notes
+--regex-notes=/^\#/s,Section/

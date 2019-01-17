@@ -1,0 +1,3 @@
+--langdef=Properties
+--langmap=properties:.ini
+--regex-properties=/^\[(.*)\]/\1/s,Section/
