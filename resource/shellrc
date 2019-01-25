@@ -57,7 +57,16 @@ mcd() {
     cd "$dir"
 }
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+squash() {
+    local number_of_commits
+    if [[ -z $number_of_commits ]] || (( $number_of_commits == 0 )); then
+        echo "Pass how many commits to squash"
+        return 1
+    fi
+
+    git rebase -i HEAD~$number_of_commits
+}
+
 if [[ -d $HOME/.rvm/bin ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi

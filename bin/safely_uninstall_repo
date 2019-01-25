@@ -1,21 +1,54 @@
 #!/usr/bin/env bash
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
+readonly DOTFILES_BACKUP="dotfiles_backup.$( date +%Y-%m-%d )"
 
 source $INSTALL_PATH/lib/install_helpers.sh
 
-echo "WARNING! This will delete the whole 'dotfiles' repository!"
-echo "If you're only wanting to remove the dotfiles, run \`install -u'"
-echo "Continuing this script WILL move all of the files contained in the"
-echo "backup directory back to your home directory before "
-echo
-printf "Continue? (y/n): "
-read
+should_save_backups=false
+backups=($( ls $INSTALL_PATH/backup/ ))
+if (( ${#backups[@]} != 0 )); then
+    new_backup_dir=$HOME/$DOTFILES_BACKUP
+    should_save_backups=true
+fi
 
-case $REPLY in
+echo
+echo "WARNING! This will delete the whole 'dotfiles' repository!"
+echo
+echo "If you're only wanting to remove the dotfiles, run \`bin/install -u'"
+echo
+echo ">> IF YOU CONTINUE: <<"
+echo
+echo ">> Symlinks to files in the 'resource/' directory will be removed."
+echo
+if $should_save_backups; then
+    echo ">> The 'backup/' directory and all of its contents will be"
+    echo "   saved in your home directory as '$DOTFILES_BACKUP'."
+    echo "   For now, you will have to re-install them manually."
+    echo
+fi
+if ! git_directory_is_clean; then
+    echo
+    echo ">> You WILL lose all of the changes if you continue."
+    echo
+fi
+echo ">> Lastly, this repository ($INSTALL_PATH)"
+echo "   will be recursively removed."
+echo
+
+printf "Continue? (y/n): "
+read answer1
+case $answer1 in
+    y) printf "Are you sure? (y/n): "  ;;
+    n) exit                            ;;
+    *) abort "Invalid option. Exiting" ;;
+esac
+read answer2
+case $answer2 in
     y) echo "Okay... Moving forward."  ;;
     n) exit                            ;;
     *) abort "Invalid option. Exiting" ;;
 esac
+
 
 for file in $INSTALL_PATH/resource/*; do
     if [[ $( readlink $HOME/.${file##*/} ) == $file ]]; then
@@ -24,17 +57,13 @@ for file in $INSTALL_PATH/resource/*; do
     fi
 done
 
-did_save_backups=false
-backups=($INSTALL_PATH/backup/*)
-if (( ${#backups[@]} != 0 )); then
-    new_backup_dir=$HOME/dotfiles_backup.$( date +%Y-%m-%d )
+if $should_save_backups; then
     mv -v $INSTALL_PATH/backup $new_backup_dir
-    did_save_backups=true
 fi
 
 rm -rfv $INSTALL_PATH
 
-if $did_save_backups; then
+if $should_save_backups; then
     echo ">> Your backups are located in $new_backup_dir <<"
 fi
 

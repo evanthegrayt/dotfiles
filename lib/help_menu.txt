@@ -1,12 +1,11 @@
-
 Install options (must pass at least one of these options)
   -a         | Allow ignored files to be installed
   -f         | Install all dotfiles
-  -s [FILE]  | Install a single dotfile
+  -F [FILE]  | Install a single dotfile
   -v         | Install vimfiles
   -z         | Install 'oh-my-zsh'
   -b         | Install 'bash-it'
-  -m         | Install MacOS files I need for work
+  -m         | Install MacOS files I need for work, such as
              + rvm, command-line-tools, homebrew, git-lfs, virtualbox, vagrant
 
 Additional install options (default: Don't add these settings)
@@ -14,20 +13,20 @@ Additional install options (default: Don't add these settings)
   -i         | Enable terminal italics
 
 Handling old dotfiles; pass with '-f' (default: Do nothing if they exist)
-  -F         | Force overwrite of all current dotfiles. THIS DELETES OLD COPIES!
-  -B         | Replace old dotfiles, but save them with '.bak' extension
-  -L         | If file already exists, move it to [FILE].local. This is
-             + different from '-B', because my dotfiles will source a file
-             + of the same name if it's in the home directory with the
-             + '.local' extension. This allows for additional settings to
-             + be applied on different systems.
+  -B         | Replace old dotfiles, but move pre-existing copies to `backup/`,
+             + and rename them to `[FILE].$( date +%Y%m%d%H%M%S )`
+  -L         | If file already exists, move it to `backup/` and rename it to
+             + `[FILE].$( date +%Y%m%d%H%M%S ).local`. Lastly, symbolically link
+             + it back in the $HOME directory. This is different from '-B',
+             + because my dotfiles will source a file of the same name if it's
+             + in the home directory with the '.local' extension. This allows
+             + for additional settings to be applied on different systems.
 
 Uninstalling dotfiles
   -u         | Unlink all files
   -U [FILE]  | Unlink FILE
-  -R         | With `-u` or `-U`; if dotfile exists with `.bak` or `.local`
-             + extension, move it back to original name.
+  -R         | With `-u` or `-U`; if dotfile exists with in `backup/` with
+             + backup extension, restore the newest copy back to original name.
 
 Usage options
   -h         | Print this help and exit
-

@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 # Installation script to help me install my dotfiles across different platforms
+IFS=$'\n'
 
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
 readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
 readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
 readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
-readonly BREW="https://raw.githubusercontent.com/Homebrew/install/master/install"
+readonly BREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
 readonly OS="$( uname -s )"
+readonly LOCAL_FILES=(inputrc bashrc shellrc zshrc profile aliases irbrc pryrc
+cshrc bash_profile)
+readonly GEMS=() # TODO install gems? Maybe create a Gemfile, and
+#                  `gem install bundler && bundle install`?
 
 source $INSTALL_PATH/lib/install_helpers.sh
 
@@ -19,24 +24,22 @@ INSTALL_VIM=false
 INSTALL_ZSH=false
 INSTALL_BASH=false
 INSTALL_MAC_WORK_STUFF=false
-FORCE=false
 BACKUP=false
 ALLOW_IGNORED=false
+LOCAL=false
 
-while getopts 'auLfvzbrRFBimC:U:s:h' opts; do
-    case $opts in
-        a)  ALLOW_IGNORED=true          ;;
-        u)  UNINSTALL_DOTFILES=true     ;;
-        L)  EXTENSION='local'           ;;
-        f)  INSTALL_DOTFILES=true       ;;
-        v)  INSTALL_VIM=true            ;;
-        z)  INSTALL_ZSH=true            ;;
-        b)  INSTALL_BASH=true           ;;
-        R)  REINSTALL_OLD_DOTFILES=true ;;
-        F)  FORCE=true                  ;;
-        B)  EXTENSION='bak'             ;;
-        i)  ENABLE_ITALICS=true         ;;
-        m)  INSTALL_MAC_WORK_STUFF=true ;;
+while getopts 'auLfvzbrRBimC:U:F:h' opt; do
+    case $opt in
+        a)  ALLOW_IGNORED=true                ;;
+        u)  UNINSTALL_DOTFILES=true           ;;
+        f)  INSTALL_DOTFILES=true             ;;
+        v)  INSTALL_VIM=true                  ;;
+        z)  INSTALL_ZSH=true                  ;;
+        b)  INSTALL_BASH=true                 ;;
+        R)  REINSTALL_OLD_DOTFILES=true       ;;
+        B)  EXTENSION=$( date +%Y%m%d%H%M%S ) ;;
+        i)  ENABLE_ITALICS=true               ;;
+        m)  INSTALL_MAC_WORK_STUFF=true       ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -52,21 +55,25 @@ while getopts 'auLfvzbrRFBimC:U:s:h' opts; do
                 UNINSTALL_SINGLE=${UNINSTALL_SINGLE#*.}
             fi
             ;;
-        s)
+        F)
             SINGLE_FILE=$OPTARG
             if [[ $SINGLE_FILE =~ ^\. ]]; then
                 SINGLE_FILE=${SINGLE_FILE#*.}
             fi
-            if [[ ! -f $INSTALL_PATH/resource/$SINGLE_FILE ]]; then
+            if [[ ! -e $INSTALL_PATH/resource/$SINGLE_FILE ]]; then
                 abort "$INSTALL_PATH/resource/$SINGLE_FILE not a valid dotfile!"
             fi
+            ;;
+        L)
+            EXTENSION=$( date +%Y%m%d%H%M%S )
+            LOCAL=true
             ;;
         h) print_help     ;;
         *) abort "$USAGE" ;;
     esac
 done
 
-readonly FORCE EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH BACKUP
+readonly EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH BACKUP LOCAL
 readonly ENABLE_ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
 readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
 readonly INSTALL_MAC_WORK_STUFF
@@ -117,18 +124,15 @@ if $INSTALL_MAC_WORK_STUFF; then
 fi
 
 if $ENABLE_ITALICS; then
-    log "Enabling italics; sourcing $INSTALL_PATH/xterm-256color.terminfo"
-    tic $INSTALL_PATH/xterm-256color.terminfo
+    log "Enabling italics; sourcing xterm-256color.terminfo"
+    tic $INSTALL_PATH/resource/xterm-256color.terminfo
 fi
 
 if $INSTALL_VIM; then
     if [[ -d $HOME/.vim ]]; then
-        if $FORCE; then
-            log "Forcing removal of $HOME/.vim"
-            rm -rf $HOME/.vim
-        elif [[ -n $EXTENSION ]]; then
+        if [[ -n $EXTENSION ]]; then
             log "$HOME/.vim exists; moving to $HOME/.vim.$EXTENSION"
-            mv $HOME/.vim{,.$EXTENSION}
+            mv $HOME/.vim $INSTALL_PATH/backup/vim.$EXTENSION
         else
             log "$HOME/.vim exists. Run with '-F' to force, or '-B' to back-up"
         fi
@@ -137,12 +141,12 @@ if $INSTALL_VIM; then
 fi
 
 if $INSTALL_ZSH; then
-    clone_shell_framework .oh-my-zsh \
+    clone_shell_framework $HOME/.oh-my-zsh \
         https://github.com/robbyrussell/oh-my-zsh.git $ZSH_CUSTOM_REPO
 fi
 
 if $INSTALL_BASH; then
-    clone_shell_framework .bash_it \
+    clone_shell_framework $HOME/.bash_it \
         https://github.com/Bash-it/bash-it.git $BASH_CUSTOM_REPO
 fi
 

@@ -20,9 +20,8 @@ entire repository just for my files, but if you do, feel free to do so.
 What is much more likely, is that you'd want the installation script, which has
 the ability to log changes, backup files, skip installing specified files, clone
 my `vim` config, enable terminal italics, install `oh-my-zsh`, `bash_it` and
-`rvm`, etc. (basically everything *except* my config files). If this is the
-case, you should fork the repository, commit your own dotfiles to your forked
-version, and then proceed.
+`rvm`, etc.. If this is the case, you should fork the repository, commit your
+own dotfiles to your forked version, and then proceed.
 
 If you want the whole enchilada, clone my repository wherever you want it:
 ```sh
