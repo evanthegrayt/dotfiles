@@ -60,7 +60,8 @@ Just run the `safely_uninstall_repo` script in the `bin` directory. It will move
 all the files in the `backup` directory to your `$HOME` directory before
 removing the entire repository.
 
-## Where are your vim runtime files?
+## FAQ
+#### Where are your vim runtime files?
 Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles).
