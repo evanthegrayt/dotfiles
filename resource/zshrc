@@ -12,7 +12,7 @@ setopt EXTENDEDGLOB
 autoload -U zmv
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
-    plugins=(vb cdc osx sudo ruby rails zsh-autosuggestions
+    plugins=(omz-git vb cdc osx sudo ruby rails zsh-autosuggestions
       per-directory-history history-substring-search fast-syntax-highlighting
       history-search-multi-word)
     export ZSH="$HOME/.oh-my-zsh"
