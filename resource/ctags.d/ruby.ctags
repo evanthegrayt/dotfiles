@@ -10,7 +10,7 @@
 --regex-ruby=/[^#]options[ ]['"]([\/a-zA-Z0-9_:]+)['"]/\1/i,options/
 --regex-ruby=/[^#]factory[ ][:]([a-zA-Z0-9_]+)/\1/y,factories/
 --regex-ruby=/[^#]trait[ ][:]([a-zA-Z0-9_]+)/\1/z,traits/
---regex-ruby=/# ?TODO:?[ ](.+)/\1/T,todo/
---regex-ruby=/# ?NOTE:?[ ](.+)/\1/n,note/
 --regex-ruby=/[^#]context[ ]['"](.+)['"]/\1/Y,context/
 --regex-ruby=/[^#]it[ ]['"](.+)['"]/\1/Z,it/
+--regex-ruby=/# *TODO:?[ ](.+)/\1/T,todo/
+--regex-ruby=/# *NOTE:?[ ](.+)/\1/n,note/
