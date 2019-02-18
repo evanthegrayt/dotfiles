@@ -1,7 +1,7 @@
 --regex-ruby=/[^#]rule[ ][:]([a-zA-Z0-9_]+)/\1/r,rule/
 --regex-ruby=/[^#]on[ ][:]([a-zA-Z0-9_]+)/\1/o,on/
 --regex-ruby=/[^#]test[ ]"([a-zA-Z0-9_ ]+)"/\1/s,test/
---regex-ruby=/[^#]task[ ][:]([a-zA-Z0-9_]+)/\1/t,task/
+--regex-ruby=/[^#]task!?[ \(][:]([a-zA-Z0-9_]+)\)?/\1/t,task/
 --regex-ruby=/[^#]get[ ]['"]([\/a-zA-Z0-9_:]+)['"]/\1/g,get/
 --regex-ruby=/[^#]post[ ]['"]([\/a-zA-Z0-9_:]+)['"]/\1/p,post/
 --regex-ruby=/[^#]put[ ]['"]([\/a-zA-Z0-9_:]+)['"]/\1/u,put/
