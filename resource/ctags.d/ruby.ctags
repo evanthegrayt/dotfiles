@@ -1,6 +1,10 @@
 --mline-regex-ruby=/^[[:blank:]]*rule\(?[[:space:]]*:([[:alnum:]_]+)/\1/r,rule/{extend}{mgroup=1}
 --mline-regex-ruby=/task!?\(?[[:space:]]*:([[:alnum:]_]+)\)?/\1/t,task/{extend}{mgroup=1}
 --mline-regex-ruby=/task!?\(?[[:space:]]*['"]([[:alnum:]_]+)\)?['"]/\1/t,task/{extend}{mgroup=1}
+
+--regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+['"](.+)['"].*/\2/Q,describe/
+--regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+([a-zA-Z0-9_\.:]+).*/\2/Q,describe/
+
 --regex-ruby=/^[[:blank:]]*on[[:blank:]]+:([[:alnum]_]+)/\1/o,on/
 --regex-ruby=/^[[:blank:]]*test[[:blank:]]+"([[:alnum]_ ]+)"/\1/s,test/
 --regex-ruby=/^[[:blank:]]*get[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/g,get/
@@ -11,7 +15,6 @@
 --regex-ruby=/^[[:blank:]]*options[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/i,options/
 --regex-ruby=/^[[:blank:]]*factory[[:blank:]]+:([[:alnum]_]+)/\1/y,factories/
 --regex-ruby=/^[[:blank:]]*trait[[:blank:]]+:([[:alnum]_]+)/\1/z,traits/
---regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+['"]?(.+)['"]?,?[[:blank:]]+({|do)/\2/Q,describe/
 --regex-ruby=/^[[:blank:]]*context[[:blank:]]+['"](.+)['"]/\1/Y,context/
 --regex-ruby=/#[[:blank:]]*TODO:?[[:blank:]]+(.+)/\1/T,todo/
 --regex-ruby=/#[[:blank:]]*NOTE:?[[:blank:]]+(.+)/\1/n,note/
