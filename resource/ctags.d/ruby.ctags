@@ -1,17 +1,17 @@
---mline-regex-ruby=/^[ \t]*rule\(?[[:space:]]*:([a-zA-Z0-9_]+)/\1/r,rule/{extend}{mgroup=1}
---regex-ruby=/^[ \t]*on[ \t]+:([a-zA-Z0-9_]+)/\1/o,on/
---regex-ruby=/^[ \t]*test[ \t]+"([a-zA-Z0-9_ ]+)"/\1/s,test/
---regex-ruby=/^[ \t]*get[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/g,get/
---regex-ruby=/^[ \t]*post[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/p,post/
---regex-ruby=/^[ \t]*put[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/u,put/
---regex-ruby=/^[ \t]*patch[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/a,patch/
---regex-ruby=/^[ \t]*delete[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/e,delete/
---regex-ruby=/^[ \t]*options[ \t]+['"]([\/a-zA-Z0-9_:]+)['"]/\1/i,options/
---regex-ruby=/^[ \t]*factory[ \t]+:([a-zA-Z0-9_]+)/\1/y,factories/
---regex-ruby=/^[ \t]*trait[ \t]+:([a-zA-Z0-9_]+)/\1/z,traits/
---regex-ruby=/^[ \t]*(RSpec\.)?describe[ \t]+['"]?(.+)['"]?,?[ \t]+({|do)/\2/Q,describe/
---regex-ruby=/^[ \t]*context[ \t]+['"](.+)['"]/\1/Y,context/
---regex-ruby=/#[ \t]*TODO:?[ \t]+(.+)/\1/T,todo/
---regex-ruby=/#[ \t]*NOTE:?[ \t]+(.+)/\1/n,note/
---regex-ruby=/task!?[\t \(]:([a-zA-Z0-9_]+)\)?/\1/t,task/
---regex-ruby=/task!?[\t \(]['"]([a-zA-Z0-9_]+)\)?['"]/\1/t,task/
+--mline-regex-ruby=/^[[:blank:]]*rule\(?[[:space:]]*:([[:alnum:]_]+)/\1/r,rule/{extend}{mgroup=1}
+--mline-regex-ruby=/task!?\(?[[:space:]]*:([[:alnum:]_]+)\)?/\1/t,task/{extend}{mgroup=1}
+--mline-regex-ruby=/task!?\(?[[:space:]]*['"]([[:alnum:]_]+)\)?['"]/\1/t,task/{extend}{mgroup=1}
+--regex-ruby=/^[[:blank:]]*on[[:blank:]]+:([[:alnum]_]+)/\1/o,on/
+--regex-ruby=/^[[:blank:]]*test[[:blank:]]+"([[:alnum]_ ]+)"/\1/s,test/
+--regex-ruby=/^[[:blank:]]*get[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/g,get/
+--regex-ruby=/^[[:blank:]]*post[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/p,post/
+--regex-ruby=/^[[:blank:]]*put[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/u,put/
+--regex-ruby=/^[[:blank:]]*patch[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/a,patch/
+--regex-ruby=/^[[:blank:]]*delete[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/e,delete/
+--regex-ruby=/^[[:blank:]]*options[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/i,options/
+--regex-ruby=/^[[:blank:]]*factory[[:blank:]]+:([[:alnum]_]+)/\1/y,factories/
+--regex-ruby=/^[[:blank:]]*trait[[:blank:]]+:([[:alnum]_]+)/\1/z,traits/
+--regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+['"]?(.+)['"]?,?[[:blank:]]+({|do)/\2/Q,describe/
+--regex-ruby=/^[[:blank:]]*context[[:blank:]]+['"](.+)['"]/\1/Y,context/
+--regex-ruby=/#[[:blank:]]*TODO:?[[:blank:]]+(.+)/\1/T,todo/
+--regex-ruby=/#[[:blank:]]*NOTE:?[[:blank:]]+(.+)/\1/n,note/
