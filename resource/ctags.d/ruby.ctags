@@ -5,16 +5,20 @@
 --regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+['"](.+)['"].*/\2/Q,describe/
 --regex-ruby=/^[[:blank:]]*(RSpec\.)?describe[[:blank:]]+([a-zA-Z0-9_\.:]+).*/\2/Q,describe/
 
---regex-ruby=/^[[:blank:]]*on[[:blank:]]+:([[:alnum]_]+)/\1/o,on/
---regex-ruby=/^[[:blank:]]*test[[:blank:]]+"([[:alnum]_ ]+)"/\1/s,test/
---regex-ruby=/^[[:blank:]]*get[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/g,get/
---regex-ruby=/^[[:blank:]]*post[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/p,post/
---regex-ruby=/^[[:blank:]]*put[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/u,put/
---regex-ruby=/^[[:blank:]]*patch[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/a,patch/
---regex-ruby=/^[[:blank:]]*delete[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/e,delete/
---regex-ruby=/^[[:blank:]]*options[[:blank:]]+['"]([\/[:alnum]_:]+)['"]/\1/i,options/
---regex-ruby=/^[[:blank:]]*factory[[:blank:]]+:([[:alnum]_]+)/\1/y,factories/
---regex-ruby=/^[[:blank:]]*trait[[:blank:]]+:([[:alnum]_]+)/\1/z,traits/
+--regex-ruby=/^[[:blank:]]*on[[:blank:]]+:([[:alnum:]_]+)/\1/o,on/
+--regex-ruby=/^[[:blank:]]*test[[:blank:]]+"([[:alnum:]_ ]+)"/\1/s,test/
+--regex-ruby=/^[[:blank:]]*get[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/g,get/
+--regex-ruby=/^[[:blank:]]*post[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/p,post/
+--regex-ruby=/^[[:blank:]]*put[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/u,put/
+--regex-ruby=/^[[:blank:]]*patch[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/a,patch/
+--regex-ruby=/^[[:blank:]]*delete[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/e,delete/
+--regex-ruby=/^[[:blank:]]*options[[:blank:]]+['"]([\/[:alnum:]_]+)['"]/\1/i,options/
+--regex-ruby=/^[[:blank:]]*factory[[:blank:]]+:([[:alnum:]_]+)/\1/y,factories/
+--regex-ruby=/^[[:blank:]]*trait[[:blank:]]+:([[:alnum:]_]+)/\1/z,traits/
 --regex-ruby=/^[[:blank:]]*context[[:blank:]]+['"](.+)['"]/\1/Y,context/
 --regex-ruby=/#[[:blank:]]*TODO:?[[:blank:]]+(.+)/\1/T,todo/
 --regex-ruby=/#[[:blank:]]*NOTE:?[[:blank:]]+(.+)/\1/n,note/
+
+--regex-ruby=/[[:blank:]]*require(_relative)?[[:blank:]]+['"]([[:alnum:]\._\/]+)['"]/\2/R,require/
+--regex-ruby=/^[[:blank:]]*private[[:blank:]]+:([[:alnum:]_]+[?!]?)/\1/P,private/
+--mline-regex-ruby=/private[[:space:]]*def[[:blank:]]+([[:alnum:]_]+[?!]?)/\1/P,private/{extend}{mgroup=1}
