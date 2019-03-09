@@ -4,7 +4,7 @@ My dotfiles, plus an installation script with a boat-load of features.
 It should go without saying, but here be dragons.
 
 ## Rationale
-Ideally, you shouldn't need an script this hefty for installing your
+Ideally, you shouldn't need a script this hefty for installing your
 configuration, as most people only need to get their environment set up once
 per-computer they purchase. However, I regularly have to set up my workflow on
 various VMs and Vagrant boxes, and I got tired of contstantly having to manually
