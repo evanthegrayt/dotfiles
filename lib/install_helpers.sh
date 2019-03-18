@@ -118,30 +118,20 @@ clone_shell_framework() {
 }
 
 install_mac_work_stuff() {
-    local inst=()
-    local to_check=()
-    local title="Please manually install:"
-
-    install_program '/Library/Developer/CommandLineTools' \
-        'xcode-select --install'
-    install_program rvm        "'curl' -sSL https://get.rvm.io | bash -s stable"
-    install_program brew        "/usr/bin/env ruby -e '$( curl -fsSL $BREW )'"
-    install_program git-lfs     'brew install git-lfs'
-    install_program virtualbox  'brew cask install virtualbox'
-    install_program vagrant     'brew cask install vagrant'
-    install_program tunnelblick 'brew cask install tunnelblick'
-
-    (( ${#to_check[@]} == 0 )) && return
-
-    for check in ${to_check[@]}; do
-        if [[ ! -d /Applications/$check.app ]]; then
-            log "$check needs to be manually installed."
-            inst+=($check)
-        fi
-    done
-    if (( ${#inst[@]} != 0 )); then
-        osascript -e "display notification \"${inst[@]}\" with title \"$title\""
-    fi
+    xcode-select --install
+    /usr/bin/ruby -e $( curl -fsSL $BREW )
+    brew install the_silver_searcher
+    'curl' -sSL https://get.rvm.io | bash -s stable
+    brew install git
+    brew install git-lfs
+    brew cask install virtualbox
+    brew cask install vagrant
+    brew cask install tunnelblick
+    brew install vim
+    brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+    brew cask install iterm2
+    brew cask install firefox
+    brew cask install alfred
 }
 
 install_ruby_gems() {
@@ -150,19 +140,6 @@ install_ruby_gems() {
     for gem in ${GEMS[@]}; do
         gem install $gem
     done
-}
-
-install_program() {
-    local exe="$1"
-    local install_cmd="$2"
-
-    if which $exe > /dev/null || [[ -d $exe ]]; then
-        log "Skipping ${exe##*/} installation; already installed."
-        return
-    fi
-
-    log "Installing ${exe##*/}"
-    $install_cmd
 }
 
 git_directory_is_clean() {

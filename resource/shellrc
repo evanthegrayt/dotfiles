@@ -31,7 +31,7 @@ export TODO="t"
 export SCM_CHECK=true
 export PAGER='less'
 export MANPAGER='less'
-export PATH=$PATH:\
+export PATH=\
 .:\
 /usr/local/bin:\
 /usr/bin:\
@@ -41,7 +41,8 @@ export PATH=$PATH:\
 /opt/X11/bin:\
 $HOME/bin:\
 $HOME/bin/ruby:\
-$HOME/scripts/bin
+$HOME/scripts/bin:\
+$PATH
 
 unset MAILCHECK file
 
