@@ -1,0 +1,9 @@
+# Programs to install with `brew cask install`
+- virtualbox
+- vagrant
+- tunnelblick
+- iterm2
+- firefox
+- alfred
+- mattermost
+

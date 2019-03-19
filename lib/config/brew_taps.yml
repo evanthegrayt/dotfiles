@@ -1,0 +1,7 @@
+# Programs to install with `brew install`
+- vim
+- git
+- git-lfs
+- the_silver_searcher
+- --HEAD universal-ctags/universal-ctags/universal-ctags
+

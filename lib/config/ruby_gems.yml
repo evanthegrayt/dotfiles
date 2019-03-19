@@ -1,0 +1,12 @@
+# Gems I want installed for ruby. This isn't supported yet. Probably should
+# make a Gemfile. Haven't decided.
+- bundler
+- rake
+- rspec
+- ripper-tags
+- rubocop
+- pry
+- rdoc
+- rubylexer
+- vim
+

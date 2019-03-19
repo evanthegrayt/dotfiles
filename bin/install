@@ -2,19 +2,9 @@
 # Installation script to help me install my dotfiles across different platforms
 IFS=$'\n'
 
-readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
-readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
-readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
-readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
-readonly BREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
-readonly OS="$( uname -s )"
-readonly LOCAL_FILES=(inputrc bashrc shellrc zshrc profile aliases irbrc pryrc
-cshrc bash_profile)
-readonly GEMS=() # TODO install gems? Maybe create a Gemfile, and
-#                  `gem install bundler && bundle install`?
-
 source $INSTALL_PATH/lib/install_helpers.sh
+source $INSTALL_PATH/lib/constants.sh
 
 ENABLE_ITALICS=false
 INSTALL_DOTFILES=false
@@ -27,8 +17,9 @@ INSTALL_MAC_WORK_STUFF=false
 BACKUP=false
 ALLOW_IGNORED=false
 LOCAL=false
+CLONE_GITHUB_STUFF=false
 
-while getopts 'auLfvzbrRBimC:U:F:h' opt; do
+while getopts 'cauLfvzbrRBimC:U:F:h' opt; do
     case $opt in
         a)  ALLOW_IGNORED=true                ;;
         u)  UNINSTALL_DOTFILES=true           ;;
@@ -40,6 +31,7 @@ while getopts 'auLfvzbrRBimC:U:F:h' opt; do
         B)  EXTENSION=$( date +%Y%m%d%H%M%S ) ;;
         i)  ENABLE_ITALICS=true               ;;
         m)  INSTALL_MAC_WORK_STUFF=true       ;;
+        c)  CLONE_GITHUB_STUFF=true           ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -72,11 +64,6 @@ while getopts 'auLfvzbrRBimC:U:F:h' opt; do
         *) abort "$USAGE" ;;
     esac
 done
-
-readonly EXTENSION INSTALL_DOTFILES INSTALL_VIM INSTALL_ZSH BACKUP LOCAL
-readonly ENABLE_ITALICS CHANGE_SHELL INSTALL_BASH UNINSTALL_DOTFILES
-readonly REINSTALL_OLD_DOTFILES UNINSTALL_SINGLE ALLOW_IGNORED
-readonly INSTALL_MAC_WORK_STUFF
 
 if (( $# == 0 )); then
     abort "$USAGE"
@@ -148,5 +135,10 @@ fi
 if $INSTALL_BASH; then
     clone_shell_framework $HOME/.bash_it \
         https://github.com/Bash-it/bash-it.git $BASH_CUSTOM_REPO
+fi
+
+if $CLONE_GITHUB_STUFF; then
+    [[ -d $HOME/workflow ]] || mkdir $HOME/workflow
+    clone_github_stuff
 fi
 

@@ -1,0 +1,12 @@
+# Files that support having a `.local` extension.
+- inputrc
+- bashrc
+- shellrc
+- zshrc
+- profile
+- aliases
+- irbrc
+- pryrc
+- cshrc
+- bash_profile
+

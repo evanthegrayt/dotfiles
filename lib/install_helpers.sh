@@ -26,7 +26,7 @@ print_help() {
 is_in_ignore_yml_file() {
     local file="$1"
 
-    grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/lib/ignore.yml
+    grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/lib/config/ignore.yml
 }
 
 link_dotfile() {
@@ -118,20 +118,29 @@ clone_shell_framework() {
 }
 
 install_mac_work_stuff() {
+    local tap
+    local cask
+
     xcode-select --install
     /usr/bin/ruby -e $( curl -fsSL $BREW )
-    brew install the_silver_searcher
     'curl' -sSL https://get.rvm.io | bash -s stable
-    brew install git
-    brew install git-lfs
-    brew cask install virtualbox
-    brew cask install vagrant
-    brew cask install tunnelblick
-    brew install vim
-    brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-    brew cask install iterm2
-    brew cask install firefox
-    brew cask install alfred
+
+    for tap in ${BREW_TAPS[@]}; do echo brew install $tap; done
+    for cask in ${BREW_CASKS[@]}; do echo brew cask install $cask; done
+}
+
+clone_github_stuff() {
+    local repo
+    local install_dir=$HOME/workflow
+    for repo in ${PERSONAL_REPOS[@]}; do
+        [[ -d $install_dir/$repo ]] && continue
+        git clone https://github.com/evanthegrayt/$repo.git $install_dir/$repo
+        if [[ -f $install_dir/$repo/Rakefile ]]; then
+            pushd $install_dir/$repo
+            rake
+            popd
+        fi
+    done
 }
 
 install_ruby_gems() {
