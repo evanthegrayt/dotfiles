@@ -1,0 +1,4 @@
+--regex-sh=/#[[:blank:]]*TODO:?[[:blank:]]+(.+)/\1/T,todo/
+--regex-sh=/#[[:blank:]]*NOTE:?[[:blank:]]+(.+)/\1/n,note/
+--regex-sh=/^[[:blank:]]*(source|\.)[[:blank:]]+['"]?([[:alnum:]\._\/$]+)['"]?/\2/S,source/
+

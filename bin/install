@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Installation script to help me install my dotfiles across different platforms
+#==============================================================================#
+#>        File: bin/install                                                    #
+#> Description: Installation script to help me install my dotfiles across      #
+#+              different platforms                                            #
+#>      Author: Evan Gray                                                      #
+#==============================================================================#
 IFS=$'\n'
 
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
@@ -18,8 +23,9 @@ BACKUP=false
 ALLOW_IGNORED=false
 LOCAL=false
 CLONE_GITHUB_STUFF=false
+INSTALL_GEMS=false
 
-while getopts 'cauLfvzbrRBimC:U:F:h' opt; do
+while getopts 'gcauLfvzbrRBimC:U:F:h' opt; do
     case $opt in
         a)  ALLOW_IGNORED=true                ;;
         u)  UNINSTALL_DOTFILES=true           ;;
@@ -32,6 +38,7 @@ while getopts 'cauLfvzbrRBimC:U:F:h' opt; do
         i)  ENABLE_ITALICS=true               ;;
         m)  INSTALL_MAC_WORK_STUFF=true       ;;
         c)  CLONE_GITHUB_STUFF=true           ;;
+        g)  INSTALL_GEMS=true                 ;;
         C)
             CHANGE_SHELL=$OPTARG
             case $CHANGE_SHELL in
@@ -138,7 +145,11 @@ if $INSTALL_BASH; then
 fi
 
 if $CLONE_GITHUB_STUFF; then
-    [[ -d $HOME/workflow ]] || mkdir $HOME/workflow
+    [[ -d $REPO_DIR ]] || mkdir $REPO_DIR
     clone_github_stuff
+fi
+
+if $INSTALL_GEMS; then
+    install_ruby_gems
 fi
 

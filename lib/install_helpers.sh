@@ -1,3 +1,8 @@
+#==============================================================================#
+#>        File: lib/install_helpers.sh                                         #
+#> Description: Functions used by install scripts.                             #
+#>      Author: Evan Gray                                                      #
+#==============================================================================#
 
 abort() {
     local msg=("$@")
@@ -20,7 +25,7 @@ print_help() {
     echo $USAGE
     echo "$( < $INSTALL_PATH/lib/help_menu.txt )"
 
-    exit
+    exit 0
 }
 
 is_in_ignore_yml_file() {
@@ -125,19 +130,48 @@ install_mac_work_stuff() {
     /usr/bin/ruby -e $( curl -fsSL $BREW )
     'curl' -sSL https://get.rvm.io | bash -s stable
 
-    for tap in ${BREW_TAPS[@]}; do echo brew install $tap; done
-    for cask in ${BREW_CASKS[@]}; do echo brew cask install $cask; done
+    # TODO Dry this up.
+    if (( ${#BREW_TAPS[@]} == 0 )); then
+        log 'No brew taps to install.'
+    else
+        for tap in ${BREW_TAPS[@]}; do
+            log "Installing [$tap] with brew"
+            brew install $tap
+        done
+    fi
+
+    if (( ${#BREW_CASKS[@]} == 0 )); then
+        log 'No brew casks to install.'
+    else
+        for cask in ${BREW_CASKS[@]}; do
+            log "Installing [$cask] with brew cask"
+            brew cask install $cask
+        done
+    fi
 }
 
 clone_github_stuff() {
     local repo
-    local install_dir=$HOME/workflow
-    for repo in ${PERSONAL_REPOS[@]}; do
-        [[ -d $install_dir/$repo ]] && continue
-        git clone https://github.com/evanthegrayt/$repo.git $install_dir/$repo
-        if [[ -f $install_dir/$repo/Rakefile ]]; then
-            pushd $install_dir/$repo
+    local repo_name
+
+    if (( ${#GIT_REPOS[@]} == 0 )); then
+        log 'No git repos to install.'
+        return
+    fi
+
+    for repo in "${GIT_REPOS[@]}"; do
+        repo_name=${repo##*/}
+        [[ -d "$REPO_DIR/$repo_name" ]] && continue
+        git clone "$repo.git" "$REPO_DIR/$repo_name"
+        # TODO clean this up, and allow for more stuff, maybe `bundle install`.
+        if [[ -f "$REPO_DIR/$repo_name/Rakefile" ]]; then
+            pushd "$REPO_DIR/$repo_name"
             rake
+            popd
+        fi
+        if [[ -f "$REPO_DIR/$repo_name/Makefile" ]]; then
+            pushd "$REPO_DIR/$repo_name"
+            make
             popd
         fi
     done
@@ -146,12 +180,20 @@ clone_github_stuff() {
 install_ruby_gems() {
     local gem
 
+    if (( ${#GEMS[@]} == 0 )); then
+        log 'No git repos to install.'
+        return
+    fi
+
+    # TODO probably create a Gemfile instad of this and run bundle install?
     for gem in ${GEMS[@]}; do
         gem install $gem
+        log "Installing ruby gem [$gem]"
     done
 }
 
 git_directory_is_clean() {
+    # TODO this isn't working properly now... weird.
     # taken from https://www.spinics.net/lists/git/msg142043.html
     # Update the index
     local err=0

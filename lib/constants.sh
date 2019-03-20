@@ -8,6 +8,8 @@ readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
 
 readonly BREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
 
+readonly REPO_DIR="$HOME/workflow"
+
 readonly OS="$( uname -s )"
 
 readonly BREW_TAPS=(
@@ -22,8 +24,8 @@ readonly LOCAL_FILES=(
 $( grep '^\s*-' $INSTALL_PATH/lib/config/local_files.yml | cut -d' ' -f2- )
 )
 
-readonly PERSONAL_REPOS=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/personal_repos.yml | cut -d' ' -f2- )
+readonly GIT_REPOS=(
+$( grep '^\s*-' $INSTALL_PATH/lib/config/git_repos.yml | cut -d' ' -f2- )
 )
 
 readonly RUBY_GEMS=(
