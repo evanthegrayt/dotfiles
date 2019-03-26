@@ -12,6 +12,8 @@ readonly REPO_DIR="$HOME/workflow"
 
 readonly OS="$( uname -s )"
 
+readonly SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+
 readonly BREW_TAPS=(
 $( grep '^\s*-' $INSTALL_PATH/lib/config/brew_taps.yml | cut -d' ' -f2- )
 )

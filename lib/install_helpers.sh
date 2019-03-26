@@ -126,6 +126,11 @@ install_mac_work_stuff() {
     local tap
     local cask
 
+    log "Changing Screenshot directory to $SCREENSHOT_DIR"
+    [[ -d $SCREENSHOT_DIR ]] && mkdir -p $SCREENSHOT_DIR
+    defaults write com.apple.screencapture location $SCREENSHOT_DIR
+    killall SystemUIServer
+
     xcode-select --install
     /usr/bin/ruby -e $( curl -fsSL $BREW )
     'curl' -sSL https://get.rvm.io | bash -s stable
