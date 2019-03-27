@@ -131,8 +131,11 @@ install_mac_work_stuff() {
     defaults write com.apple.screencapture location $SCREENSHOT_DIR
     killall SystemUIServer
 
+    log "Installing xcode command line tools"
     xcode-select --install
+    log "Installing Homebrew"
     /usr/bin/ruby -e $( curl -fsSL $BREW )
+    log "Installing rvm"
     'curl' -sSL https://get.rvm.io | bash -s stable
 
     # TODO Dry this up.
@@ -167,14 +170,17 @@ clone_github_stuff() {
     for repo in "${GIT_REPOS[@]}"; do
         repo_name=${repo##*/}
         [[ -d "$REPO_DIR/$repo_name" ]] && continue
+        log "Cloning $repo"
         git clone "$repo.git" "$REPO_DIR/$repo_name"
         # TODO clean this up, and allow for more stuff, maybe `bundle install`.
         if [[ -f "$REPO_DIR/$repo_name/Rakefile" ]]; then
+            log "Running Rakefile for $repo"
             pushd "$REPO_DIR/$repo_name"
             rake
             popd
         fi
         if [[ -f "$REPO_DIR/$repo_name/Makefile" ]]; then
+            log "Running Makefile for $repo"
             pushd "$REPO_DIR/$repo_name"
             make
             popd
