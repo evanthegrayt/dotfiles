@@ -14,6 +14,12 @@ readonly OS="$( uname -s )"
 
 readonly SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 
+readonly LOGFILE_TIMESTAMP="$( date "+%Y-%m-%d %H:%M:%S" )"
+
+readonly LOGFILE_DATESTAMP="$( date "+%Y-%m-%d" )"
+
+readonly LOGFILE="$INSTALL_PATH/log/dotfiles.${LOGFILE_DATESTAMP}.log"
+
 readonly BREW_TAPS=(
 $( grep '^\s*-' $INSTALL_PATH/lib/config/brew_taps.yml | cut -d' ' -f2- )
 )

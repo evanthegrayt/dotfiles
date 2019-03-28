@@ -11,6 +11,7 @@ readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
 source $INSTALL_PATH/lib/install_helpers.sh
 source $INSTALL_PATH/lib/constants.sh
 
+PRINT_LOG=false
 ENABLE_ITALICS=false
 INSTALL_DOTFILES=false
 UNINSTALL_DOTFILES=false
@@ -24,8 +25,9 @@ ALLOW_IGNORED=false
 LOCAL=false
 CLONE_GITHUB_STUFF=false
 INSTALL_GEMS=false
+LOGFILE_DATE_TO_PRINT=$LOGFILE_DATESTAMP
 
-while getopts 'gcauLfvzbrRBimC:U:F:h' opt; do
+while getopts 'pP:gcauLfvzbrRBimC:U:F:h' opt; do
     case $opt in
         a)  ALLOW_IGNORED=true                ;;
         u)  UNINSTALL_DOTFILES=true           ;;
@@ -66,6 +68,13 @@ while getopts 'gcauLfvzbrRBimC:U:F:h' opt; do
         L)
             EXTENSION=$( date +%Y%m%d%H%M%S )
             LOCAL=true
+            ;;
+        p)
+            PRINT_LOG=true
+            ;;
+        P)
+            PRINT_LOG=true
+            LOGFILE_DATE_TO_PRINT=$OPTARG
             ;;
         h) print_help     ;;
         *) abort "$USAGE" ;;
@@ -151,5 +160,9 @@ fi
 
 if $INSTALL_GEMS; then
     install_ruby_gems
+fi
+
+if $PRINT_LOG; then
+    print_log
 fi
 

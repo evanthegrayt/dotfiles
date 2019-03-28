@@ -232,11 +232,17 @@ git_directory_is_clean() {
     return $err
 }
 
+print_log() {
+    if [[ -f $LOGFILE ]]; then
+        cat $INSTALL_PATH/log/*$LOGFILE_DATE_TO_PRINT*.log
+    else
+        echo >&2 "No logfile found for $LOGFILE_DATE_TO_PRINT to print."
+    fi
+}
+
 log() {
     local msg="$@"
-    local timestamp="$( date "+%Y-%m-%d %H:%M:%S" )"
-    local logfile="$INSTALL_PATH/log/dotfiles.${timestamp%% *}.log"
 
-    echo "[$timestamp]: $msg" | tee -a $logfile
+    echo "[$LOGFILE_TIMESTAMP]: $msg" | tee -a $LOGFILE
 }
 

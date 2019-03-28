@@ -29,5 +29,11 @@ Uninstalling dotfiles
   -R         | With `-u` or `-U`; if dotfile exists with in `backup/` with
              + backup extension, restore the newest copy back to original name.
 
+Other
+  -p         | Print the logfile for today's date, if it exists.
+  -P [DATE]  | Print the logfile for given [DATE], if it exists. [DATE] must be
+             + in the same format as `$LOGFILE_DATESTAMP`, which is CCYY-MM-DD
+             + by default. This can be changed in `lib/constants.sh`.
+
 Usage options
   -h         | Print this help and exit
