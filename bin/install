@@ -9,11 +9,32 @@ IFS=$'\n'
 shopt -s nullglob
 
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
-source $INSTALL_PATH/lib/constants.sh
+
 source $INSTALL_PATH/lib/install_script_helpers.sh
+source $INSTALL_PATH/lib/constants.sh
 source $INSTALL_PATH/lib/logging.sh
 source $INSTALL_PATH/lib/dotfiles.sh
 source $INSTALL_PATH/lib/externals.sh
+readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
+readonly LOGFILE="$INSTALL_PATH/log/dotfiles.${LOGFILE_DATESTAMP}.log"
+readonly BREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
+readonly OS="$( uname -s )"
+readonly BREW_TAPS=($( read_yaml brew_taps ))
+readonly BREW_CASKS=($( read_yaml brew_casks ))
+readonly LOCAL_FILES=($( read_yaml local_files ))
+readonly GIT_REPOS=($( read_yaml git_repos ))
+readonly RUBY_GEMS=($( read_yaml ruby_gems ))
+readonly CONSTANTS=(
+VIM_REPO
+ZSH_CUSTOM_REPO
+BASH_CUSTOM_REPO
+REPO_DIR
+SCREENSHOT_DIR
+LOGFILE_TIMESTAMP
+LOGFILE_DATESTAMP
+)
+
+validate_constants
 
 PRINT_LOG=false
 ENABLE_ITALICS=false

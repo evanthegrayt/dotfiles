@@ -34,6 +34,13 @@ is_ignored() {
     grep -q "^\s*-\s*$file\s*$" $INSTALL_PATH/config/ignore.yml
 }
 
+read_yaml() {
+    local file=$1
+
+    grep '^\s*-' $INSTALL_PATH/config/$file.yml | cut -d' ' -f2-
+}
+
+
 git_directory_is_clean() {
     # TODO this isn't working properly now... weird.
     # taken from https://www.spinics.net/lists/git/msg142043.html
@@ -61,5 +68,20 @@ git_directory_is_clean() {
     fi
 
     return $err
+}
+
+validate_constants() {
+
+    local not_set=()
+    local const
+    for const in ${CONSTANTS[@]}; do
+        if [[ -z ${!const} ]]; then
+            not_set+=($const)
+        fi
+    done
+
+    if (( ${#not_set[@]} != 0 )); then
+        abort "${not_set[@]} must be set in 'config/constants.sh'"
+    fi
 }
 
