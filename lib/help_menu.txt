@@ -5,7 +5,7 @@ Install options (must pass at least one of these options)
   -v         | Install vimfiles
   -z         | Install 'oh-my-zsh'
   -b         | Install 'bash-it'
-  -c         | Install git repositories in lib/config/git_repos.yml
+  -c         | Install git repositories in config/git_repos.yml
   -m         | Install MacOS files I need for work, such as
              + rvm, command-line-tools, homebrew, git-lfs, virtualbox, vagrant
 
@@ -29,11 +29,12 @@ Uninstalling dotfiles
   -R         | With `-u` or `-U`; if dotfile exists with in `backup/` with
              + backup extension, restore the newest copy back to original name.
 
-Other
+Log Files
   -p         | Print the logfile for today's date, if it exists.
   -P [DATE]  | Print the logfile for given [DATE], if it exists. [DATE] must be
              + in the same format as `$LOGFILE_DATESTAMP`, which is CCYY-MM-DD
              + by default. This can be changed in `lib/constants.sh`.
+  -l         | List all logfiles in the `log/` directory.
 
 Usage options
   -h         | Print this help and exit

@@ -48,6 +48,14 @@ do all the work for you; otherwise, why are you cloning this?
 ## Features
 Some, but not all, of the features include:
 
+### Logging
+Everything that's done by the install script is logged, whether it's
+installation of programs or linking of files. There will be a log file for every
+day the `bin/install` script is run, and these will be located in the `log/`
+directory, along with timestamps. You can print the log file for today's date
+using `bin/install -p`. To print an older log file, run `bin/install -P [DATE]`.
+To get a list of log files, run `bin/install -l`
+
 ### "Local" Config Files
 There are settings I have that are specifically for work that I didn't want
 to publicly commit, so I have added a feature to deal with this issue. If a
@@ -58,21 +66,21 @@ You can keep these locally, or store them in a private repository, which is what
 I've done. Currently, only one "local" counterpart is supported for each
 dotfile; that is, one `.bashrc.local` for your `.bashrc`. you can find which
 files will source "local" counterparts in the [config
-folder](lib/config/local_files.yml).
+folder](config/local_files.yml).
 
 ### Custom Repositories
 You can add repositories to [file in the config
-folder](lib/config/git_repos.yml) to be cloned with the `-c` option. When
+folder](config/git_repos.yml) to be cloned with the `-c` option. When
 this option is passed, the repository will be cloned, and if there's a
 `Rakefile` or `Makefile`, it will be executed.
 
 ### Install Packages with Brew
 There are two files in the `config` folder which allow you to add programs to be
-installed with [brew](lib/config/brew_taps.yml) or [brew
-cask](lib/config/brew_casks.yml).
+installed with [brew](config/brew_taps.yml) or [brew
+cask](config/brew_casks.yml).
 
 ### Ruby Gems
-You can add ruby gems to [a file](lib/config/ruby_gems.yml) and install them
+You can add ruby gems to [a file](config/ruby_gems.yml) and install them
 with `-g`.
 
 ### Constants

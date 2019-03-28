@@ -6,10 +6,14 @@
 #>      Author: Evan Gray                                                      #
 #==============================================================================#
 IFS=$'\n'
+shopt -s nullglob
 
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
-source $INSTALL_PATH/lib/install_helpers.sh
 source $INSTALL_PATH/lib/constants.sh
+source $INSTALL_PATH/lib/install_script_helpers.sh
+source $INSTALL_PATH/lib/logging.sh
+source $INSTALL_PATH/lib/dotfiles.sh
+source $INSTALL_PATH/lib/externals.sh
 
 PRINT_LOG=false
 ENABLE_ITALICS=false
@@ -25,9 +29,10 @@ ALLOW_IGNORED=false
 LOCAL=false
 CLONE_GITHUB_STUFF=false
 INSTALL_GEMS=false
+LIST_LOGFILES=false
 LOGFILE_DATE_TO_PRINT=$LOGFILE_DATESTAMP
 
-while getopts 'pP:gcauLfvzbrRBimC:U:F:h' opt; do
+while getopts 'lpP:gcauLfvzbrRBimC:U:F:h' opt; do
     case $opt in
         a)  ALLOW_IGNORED=true                ;;
         u)  UNINSTALL_DOTFILES=true           ;;
@@ -76,8 +81,9 @@ while getopts 'pP:gcauLfvzbrRBimC:U:F:h' opt; do
             PRINT_LOG=true
             LOGFILE_DATE_TO_PRINT=$OPTARG
             ;;
-        h) print_help     ;;
-        *) abort "$USAGE" ;;
+        l) LIST_LOGFILES=true ;;
+        h) print_help         ;;
+        *) abort "$USAGE"     ;;
     esac
 done
 
@@ -160,6 +166,10 @@ fi
 
 if $INSTALL_GEMS; then
     install_ruby_gems
+fi
+
+if $LIST_LOGFILES; then
+    list_logfiles
 fi
 
 if $PRINT_LOG; then

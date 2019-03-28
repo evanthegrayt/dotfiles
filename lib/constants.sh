@@ -21,22 +21,22 @@ readonly LOGFILE_DATESTAMP="$( date "+%Y-%m-%d" )"
 readonly LOGFILE="$INSTALL_PATH/log/dotfiles.${LOGFILE_DATESTAMP}.log"
 
 readonly BREW_TAPS=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/brew_taps.yml | cut -d' ' -f2- )
+$( grep '^\s*-' $INSTALL_PATH/config/brew_taps.yml | cut -d' ' -f2- )
 )
 
 readonly BREW_CASKS=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/brew_casks.yml | cut -d' ' -f2- )
+$( grep '^\s*-' $INSTALL_PATH/config/brew_casks.yml | cut -d' ' -f2- )
 )
 
 readonly LOCAL_FILES=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/local_files.yml | cut -d' ' -f2- )
+$( grep '^\s*-' $INSTALL_PATH/config/local_files.yml | cut -d' ' -f2- )
 )
 
 readonly GIT_REPOS=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/git_repos.yml | cut -d' ' -f2- )
+$( grep '^\s*-' $INSTALL_PATH/config/git_repos.yml | cut -d' ' -f2- )
 )
 
 readonly RUBY_GEMS=(
-$( grep '^\s*-' $INSTALL_PATH/lib/config/ruby_gems.yml | cut -d' ' -f2- )
+$( grep '^\s*-' $INSTALL_PATH/config/ruby_gems.yml | cut -d' ' -f2- )
 )
 
