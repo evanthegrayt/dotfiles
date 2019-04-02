@@ -24,3 +24,5 @@
 --mline-regex-ruby=/private[[:space:]]*def[[:blank:]]+([[:alnum:]_]+[?!]?)/\1/P,private/{extend}{mgroup=1}
 --regex-ruby=/^[[:blank:]]*protected[[:blank:]]+:([[:alnum:]_]+[?!]?)/\1/p,protected/
 --mline-regex-ruby=/protected[[:space:]]*def[[:blank:]]+([[:alnum:]_]+[?!]?)/\1/p,protected/{extend}{mgroup=1}
+--regex-ruby=/^[[:blank:]]*alias(_method)?[[:blank:]]+([[:alnum:]_:,[:blank:]]+)$/\2/a,alias/
+
