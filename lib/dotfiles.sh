@@ -9,28 +9,27 @@ link_dotfile() {
     fi
 
     if [[ -e $HOME/.$basename_file ]]; then
-        if [[ -n $EXTENSION ]]; then
-            log "$HOME/.$basename_file exists. " \
-                "Moving to $basename_file.$EXTENSION"
-            mv -f $HOME/.$basename_file \
-                $INSTALL_PATH/backup/$basename_file.$EXTENSION
-            if $LOCAL; then
-                if ! array_includes $basename_file "${LOCAL_FILES[@]}"; then
-                    log "No need to create local copy of $basename_file"
-                    return
-                elif [[ -f $HOME/.$basename_file.local ]]; then
-                    log "Cannot create $HOME/.$basename_file.local; file exists"
-                    return
-                fi
-                log "Linking $basename_file.$EXTENSION to" \
-                    "$HOME/$basename_file.local so it can be sourced"
-                ln -s $INSTALL_PATH/backup/$basename_file.$EXTENSION \
-                    $HOME/.$basename_file.local
-            fi
-        else
+        if ! [[ -n $EXTENSION ]]; then
             log "$HOME/.$basename_file already exists."
             echo " -- Pass '-B' to make backup, or '-L' to localize."
             return 1
+        fi
+        log "$HOME/.$basename_file exists. " \
+            "Moving to $basename_file.$EXTENSION"
+        mv -f $HOME/.$basename_file \
+            $INSTALL_PATH/backup/$basename_file.$EXTENSION
+        if $LOCAL; then
+            if ! array_includes $basename_file "${LOCAL_FILES[@]}"; then
+                log "No need to create local copy of $basename_file"
+                return
+            elif [[ -f $HOME/.$basename_file.local ]]; then
+                log "Cannot create $HOME/.$basename_file.local; file exists"
+                return
+            fi
+            log "Linking $basename_file.$EXTENSION to" \
+                "$HOME/$basename_file.local so it can be sourced"
+            ln -s $INSTALL_PATH/backup/$basename_file.$EXTENSION \
+                $HOME/.$basename_file.local
         fi
     fi
 
