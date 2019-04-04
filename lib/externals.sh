@@ -11,27 +11,34 @@ clone_shell_framework() {
 
     if [[ -d $directory ]]; then
         log "$directory already exists."
-        return
+        return 1
     fi
 
     log "Installing $directory from $url"
     git clone $url $directory
 
-    if [[ -n $custom_url ]]; then
-        rm -rf $directory/custom
-        log "Installing $directory/custom from $custom_url"
-        git clone --recursive $custom_url $directory/custom
+    if [[ -z $custom_url ]]; then
+        log "No custom directory set $directory."
+        return 1
     fi
+
+    rm -rf $directory/custom
+    log "Installing $directory/custom from $custom_url"
+    git clone --recursive $custom_url $directory/custom
 }
 
 install_mac_work_stuff() {
     local tap
     local cask
 
-    log "Changing Screenshot directory to $SCREENSHOT_DIR"
-    [[ -d $SCREENSHOT_DIR ]] && mkdir -p $SCREENSHOT_DIR
-    defaults write com.apple.screencapture location $SCREENSHOT_DIR
-    killall SystemUIServer
+    if [[ -n $SCREENSHOT_DIR ]]; then
+        log "Changing Screenshot directory to $SCREENSHOT_DIR"
+        [[ -d $SCREENSHOT_DIR ]] || mkdir -p $SCREENSHOT_DIR
+        defaults write com.apple.screencapture location $SCREENSHOT_DIR
+        killall SystemUIServer
+    else
+        log "SCREENSHOT_DIR not set."
+    fi
 
     log "Installing xcode command line tools"
     xcode-select --install
@@ -66,7 +73,10 @@ clone_github_stuff() {
 
     if (( ${#GIT_REPOS[@]} == 0 )); then
         log 'No git repos to install.'
-        return
+        return 1
+    elif [[ -z $REPO_DIR ]]; then
+        log "REPO_DIR not set. Script doesn't know where to clone repos."
+        return 1
     fi
 
     for repo in "${GIT_REPOS[@]}"; do
@@ -95,7 +105,7 @@ install_ruby_gems() {
 
     if (( ${#GEMS[@]} == 0 )); then
         log 'No git repos to install.'
-        return
+        return 1
     fi
 
     # TODO probably create a Gemfile instad of this and run bundle install?

@@ -71,17 +71,24 @@ git_directory_is_clean() {
 }
 
 validate_constants() {
-
     local not_set=()
     local const
+
     for const in ${CONSTANTS[@]}; do
-        if [[ -z ${!const} ]]; then
-            not_set+=($const)
-        fi
+        [[ -z ${!const} ]] && not_set+=($const)
     done
 
-    if (( ${#not_set[@]} != 0 )); then
-        abort "${not_set[@]} must be set in 'config/constants.sh'"
+    if (( ${#not_set[@]} == 0 )); then
+        return 0
     fi
+    log "${not_set[@]} must all be set in '$INSTALL_PATH/config/constants.sh'" \
+        ' for all features to work properly!'
+    printf "Continue anyway? (y/n): "
+    read
+    case $REPLY in
+        y|Y) log 'User chose to continue.'   ;;
+        n|N) exit                            ;;
+        *)   abort 'Invalid input. Exiting.' ;;
+    esac
 }
 

@@ -15,6 +15,7 @@ source $INSTALL_PATH/lib/constants.sh
 source $INSTALL_PATH/lib/logging.sh
 source $INSTALL_PATH/lib/dotfiles.sh
 source $INSTALL_PATH/lib/externals.sh
+
 readonly USAGE="USAGE: ${0##*/} [OPTIONS]"
 readonly LOGFILE="$INSTALL_PATH/log/dotfiles.${LOGFILE_DATESTAMP}.log"
 readonly BREW='https://raw.githubusercontent.com/Homebrew/install/master/install'
@@ -159,6 +160,10 @@ if $ENABLE_ITALICS; then
 fi
 
 if $INSTALL_VIM; then
+    if [[ -z $VIM_REPO ]]; then
+        log '$VIM_REPO is not set. Nothing to do.'
+        return 1
+    fi
     if [[ -d $HOME/.vim ]]; then
         if [[ -n $EXTENSION ]]; then
             log "$HOME/.vim exists; moving to $HOME/.vim.$EXTENSION"
