@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+# vi: set ft=sh :
 
 PATH=$PATH:\
 ~/workflow/vagrant-ique/src/selection-CLUs/bash:\
