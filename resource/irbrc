@@ -1,6 +1,5 @@
 # ruby 1.8.7 compatible
 # vi: set filetype=ruby :
-require 'rubygems'
 
 # load .irbrc_rails in rails environments
 railsrc_path = File.expand_path('~/.irbrc_rails')
@@ -23,8 +22,12 @@ class Object
 end
 
 if defined?(IRB)
-  require 'irb/ext/save-history'
-  require 'irb/completion'
+  begin
+    require 'irb/ext/save-history'
+    require 'irb/completion'
+    require 'pry-editline' # pry automatically loads this.
+  rescue LoadError
+  end
   IRB.conf[:SAVE_HISTORY] = 1000
   IRB.conf[:HISTORY_FILE] = File.join(ENV['HOME'], '.irb_history')
   local_irbrc = File.join(ENV['HOME'], '.irbrc.local')
@@ -32,17 +35,18 @@ if defined?(IRB)
 end
 
 if defined?(Pry)
-  begin
-    require 'pry-editline'
-  rescue LoadError
-  end
-  Pry.config.history.file = File.join(ENV['HOME'], '.irb_history')
-  Pry.config.coolline_paren_matching = false
+  Pry.config.prompt = [
+    proc { |obj, nest_level, _| "#{obj}:#{nest_level}=> " },
+    proc { |obj, nest_level, _| "#{obj}:#{nest_level}?> " }
+  ]
   Pry.config.editor = ENV['VISUAL']
+  Pry.config.history.file = File.join(ENV['HOME'], '.irb_history')
+  Pry.config.theme = 'zenburn'
+  Pry.config.pager = false
+  # Coolline
+  Pry.config.coolline_paren_matching = false
   Pry.config.coolline_matched_paren    = "\e[42m"
   Pry.config.coolline_mismatched_paren = "\e[41m"
-  Pry.config.theme = "zenburn"
-  Pry.config.pager = false
 
   local_pryrc = File.join(ENV['HOME'], '.pryrc.local')
   load local_pryrc if File.exist?(local_pryrc)

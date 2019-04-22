@@ -3,5 +3,7 @@
 - git
 - git-lfs
 - the_silver_searcher
+- readline
+- gnupg
 - --HEAD universal-ctags/universal-ctags/universal-ctags
 

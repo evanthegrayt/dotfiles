@@ -1,12 +1,14 @@
-# Gems I want installed for ruby. This isn't supported yet. Probably should
-# make a Gemfile. Haven't decided.
+# Gems I want installed for ruby.
 - bundler
 - rake
 - rspec
 - ripper-tags
 - rubocop
-- pry
 - rdoc
 - rubylexer
 - vim
+- pry
+- pry-theme
+- pry-coolline
+- pry-editline
 
