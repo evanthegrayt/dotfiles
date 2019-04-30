@@ -64,7 +64,7 @@ extension, that file will be sourced *after* the file from the repository is
 loaded. This allows for overriding settings from the files in the repository.
 You can keep these locally, or store them in a private repository, which is what
 I've done. Currently, only one "local" counterpart is supported for each
-dotfile; that is, one `.bashrc.local` for your `.bashrc`. you can find which
+dotfile; that is, one `.bashrc.local` for your `.bashrc`. You can find which
 files will source "local" counterparts in the [config
 folder](config/local_files.yml).
 
