@@ -104,7 +104,7 @@ install_ruby_gems() {
     local gem
 
     if (( ${#GEMS[@]} == 0 )); then
-        log 'No git repos to install.'
+        log 'No gems to install.'
         return 1
     fi
 
