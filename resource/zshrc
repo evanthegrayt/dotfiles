@@ -8,6 +8,7 @@ export HIST_STAMPS="yyyy-mm-dd"
 setopt HIST_IGNORE_ALL_DUPS
 setopt SH_FILE_EXPANSION
 setopt EXTENDEDGLOB
+setopt CSHNULLGLOB
 
 autoload -U zmv
 
