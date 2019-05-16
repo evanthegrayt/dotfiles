@@ -2,7 +2,7 @@
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
-export MY_CONFIG_FILES=(
+MY_CONFIG_FILES=(
 $HOME/.aliases
 $HOME/.colors
 $HOME/.rvm/scripts/rvm
@@ -12,8 +12,18 @@ $HOME/.slack_config
 for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 # Environmental variables
-export CLICOLOR=1
-export LSCOLORS="ExGxcxcxcxexexcxcxexex"
+
+if which most >/dev/null; then
+    export MANPAGER='most'
+else
+    export MANPAGER='less'
+fi
+
+if [[ $( uname -s ) == 'Darwin' ]]; then
+    export CLICOLOR=1
+    export LSCOLORS="ExGxcxcxcxexexcxcxexex"
+fi
+
 export EDITOR="/bin/vi -x"
 export VISUAL="vim"
 export FCEDIT=$VISUAL
@@ -30,7 +40,6 @@ export IRC_CLIENT='irssi'
 export TODO="t"
 export SCM_CHECK=true
 export PAGER='less'
-export MANPAGER='less'
 export PATH=\
 .:\
 /usr/local/bin:\
@@ -68,6 +77,10 @@ squash() {
 
     git rebase -i HEAD~$number_of_commits
 }
+
+if [[ -f /Users/erg/.ghcup/env ]]; then
+    source /Users/erg/.ghcup/env
+fi
 
 if [[ -d $HOME/.rvm/bin ]]; then
     export PATH="$HOME/.rvm/bin:$PATH"
