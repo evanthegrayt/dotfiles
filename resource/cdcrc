@@ -1,8 +1,14 @@
 # vi: set ft=sh :
 
 CDC_DIRS=(
-    $HOME/workflow
-    $HOME/workflow/vagrant-ique/src
-    $HOME/workflow/vagrant-dotcom/src
+$HOME/workflow
+$HOME/workflow/vagrant-ique/src
+$HOME/workflow/vagrant-dotcom/src
+)
+
+CDC_IGNORE=(
+training
+hold
+save
 )
 
