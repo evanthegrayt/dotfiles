@@ -22,9 +22,7 @@ if which ag &> /dev/null; then
     --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-if [[ "$OS" == 'Darwin' ]]; then
-    alias ls='ls -G'
-elif [[ "$OS" == 'Linux' ]]; then
+if [[ "$OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
 fi
 
