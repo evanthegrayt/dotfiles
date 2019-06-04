@@ -29,7 +29,6 @@ export VISUAL="vim"
 export FCEDIT=$VISUAL
 export GEM_OPEN_EDITOR=$VISUAL
 export MANPATH=$HOME/scripts/man:$MANPATH
-export GREP_OPTIONS="-i --color=tty"
 export GREP_COLOR='07;38;5;74'
 export LANG=en_US.UTF-8
 export LESS="-JmNirU"

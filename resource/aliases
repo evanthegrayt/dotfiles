@@ -5,17 +5,18 @@ OS="$( uname -s )"
 
 alias lrt='ls -lArth'
 
-alias vbrc="vim $HOME/.bashrc"
 alias vzrc="vim $HOME/.zshrc"
-alias vsrc="vim $HOME/.shellrc"
+alias vbrc="vim $HOME/.bashrc"
 alias val="vim $HOME/.aliases"
+alias vsrc="vim $HOME/.shellrc"
 alias vvrc="vim $HOME/.vim/vimrc"
 
-alias diff='colordiff'
-alias untar='tar -zxvf'
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
+alias diff='colordiff'
+alias untar='tar -zxvf'
+alias grep='grep -i --color=tty'
 
 if which ag &> /dev/null; then
     alias ag="ag --color-line-number='07;01;38;5;131' \
