@@ -1,4 +1,5 @@
 # Gems I want installed for ruby.
+- rails
 - bundler
 - rake
 - rspec
