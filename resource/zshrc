@@ -1,7 +1,7 @@
 # zshrc
 
 export DISABLE_AUTO_UPDATE="true"
-export ENABLE_CORRECTION="true"
+export ENABLE_CORRECTION="false"
 export COMPLETION_WAITING_DOTS="true"
 export HIST_STAMPS="yyyy-mm-dd"
 

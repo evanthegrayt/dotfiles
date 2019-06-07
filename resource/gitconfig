@@ -2,7 +2,7 @@
 	sslVerify = false
 [user]
 	name = Evan Gray
-	email = egray1985@gmail.com
+	email = evanthegrayt@vivaldi.net
 [core]
 	pager = diff-so-fancy | less --tabs=4 -nRFX
 [diff]
