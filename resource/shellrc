@@ -5,7 +5,6 @@
 MY_CONFIG_FILES=(
 $HOME/.aliases
 $HOME/.colors
-$HOME/.rvm/scripts/rvm
 $HOME/.slack_config
 )
 
@@ -82,7 +81,7 @@ if [[ -f /Users/erg/.ghcup/env ]]; then
 fi
 
 if [[ -d $HOME/.rvm/bin ]]; then
-    export PATH="$HOME/.rvm/bin:$PATH"
+    export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
 if [[ -e $HOME/.shellrc.local ]]; then

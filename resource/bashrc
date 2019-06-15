@@ -1,6 +1,5 @@
 # bashrc
 
-[[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
 case $current_host in
@@ -36,5 +35,6 @@ export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend histverify
 
+[[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 

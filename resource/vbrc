@@ -2,3 +2,9 @@
 VB_BOXES_LOCATION=$HOME/workflow
 VB_BOXES=(vagrant-{ique,dotcom})
 
+# The following lines can be used to alter the output color.
+VB_COLOR=true                 # Default: true. Setting to false disables color.
+VB_SUCCESS_COLOR='\e[1;92m'   # Makes green bold.
+VB_WARNING_COLOR='\e[1;93m'   # Makes yellow bold.
+VB_ERROR_COLOR='\e[1;91m'     # Makes red bold.
+
