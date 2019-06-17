@@ -11,6 +11,7 @@
 	prompt = false
 [alias]
 	d = difftool
+	tree = log --graph --decorate --oneline
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
