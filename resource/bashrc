@@ -1,4 +1,5 @@
 # bashrc
+[[ -f /usr/local/bin/colors.sh ]] && source colors.sh
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 

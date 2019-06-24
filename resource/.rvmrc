@@ -1,0 +1,4 @@
+# vi: set ft=sh :
+rvm_project_rvmrc_default=1
+rvm_autoinstall_bundler_flag=0
+
