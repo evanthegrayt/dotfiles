@@ -23,4 +23,9 @@ files in your home directory.
 git clone https://github.com/evanthegrayt/dotfiles.git
 for i in $PWD/dotfiles/resource/*; do ln -s "$i" $HOME/."${i##*/}"; done
 ```
+## FAQ
+#### Where's your vimrc?
+Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
+have a separate repository for all my `vim` files. You can see them
+[here](https://github.com/evanthegrayt/vimfiles).
 
