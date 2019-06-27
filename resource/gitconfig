@@ -5,6 +5,7 @@
 	email = evanthegrayt@vivaldi.net
 [core]
 	pager = diff-so-fancy | less --tabs=4 -nRFX
+	excludesfile = ~/.gitignore
 [diff]
 	tool = vimdiff
 [difftool]
