@@ -1,6 +1,5 @@
 # vi: set ft=yaml :
 
-use_color:    true       # Change to `false` to disable all color.
-match_color: "\e[1;92m"  # The color used when showing matches (default: green)
-error_color: "\e[1;91m"  # The color used when showing errors (default: red)
+use_color: true        # Change to `false` to disable all color.
+color:     "\e[0;92m"  # The color used when showing matches (default: green)
 
