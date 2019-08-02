@@ -2,7 +2,7 @@
 These are my personal configuration files. Here be dragons.
 
 If you're looking for my old dotfiles install script, it's been moved to
-[cli-env-manager](https://github.com/evanthegrayt/cli-env-manager). Sorry for
+[yadem](https://github.com/evanthegrayt/yadem). Sorry for
 any inconvenience!
 
 ## Installation
@@ -12,16 +12,16 @@ although I don't have much set up for it). I doubt you'd want to clone this
 entire repository just for my files, but if you do, feel free to do so.
 Otherwise, just copy the lines you want and paste them into your dotfiles.
 
-If you want the whole enchilada, I recommend installing my
-[cli-env-manager](https://github.com/evanthegrayt/cli-env-manager) and following
+If you want the whole enchilada, I recommend installing
+[yadem](https://github.com/evanthegrayt/yadem) and following
 the
-[README](https://github.com/evanthegrayt/cli-env-manager/blob/master/README.md).
+[README](https://github.com/evanthegrayt/yadem/blob/master/README.md).
 
 If you don't want the manager script, just clone the repository and link the
 files in your home directory.
 ```sh
 git clone https://github.com/evanthegrayt/dotfiles.git
-for i in $PWD/dotfiles/resource/*; do ln -s "$i" "$HOME/.${i##*/}"; done
+for i in $PWD/dotfiles/dotfiles/*; do ln -s "$i" "$HOME/.${i##*/}"; done
 ```
 ### "Local" Config Files
 Somthing I did that people might find interesting: There are settings I have
@@ -34,9 +34,9 @@ them in a private repository, which is what I've done. Currently, only one
 "local" counterpart is supported for each dotfile; that is, one `.bashrc.local`
 for your `.bashrc`. You can find which files will source "local" counterparts in
 the [config
-folder](https://github.com/evanthegrayt/cli-env-manager/blob/master/config/local_files.yml)
+folder](https://github.com/evanthegrayt/yadem/blob/master/config/local_files.yml)
 of my [CLI environment manager
-script](https://github.com/evanthegrayt/cli-env-manager.git).
+script](https://github.com/evanthegrayt/yadem.git).
 
 ## FAQ
 #### Where's your vimrc?

@@ -3,7 +3,7 @@
 # You can then store it in a repo.
 
 # DOTFILE_DIR: Directory where actual dotfiles are located.
-readonly DOTFILE_DIR="$HOME/workflow/dotfiles/resource"
+readonly DOTFILE_DIR="$HOME/workflow/dotfiles/dotfiles"
 
 # VIM_REPO: The `vim` repository to install.
 readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
