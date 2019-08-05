@@ -2,8 +2,6 @@
 
 CDC_DIRS=(
 $HOME/workflow
-$HOME/workflow/vagrant-ique/src
-$HOME/workflow/vagrant-dotcom/src
 $HOME/.oh-my-zsh/custom/plugins
 )
 
