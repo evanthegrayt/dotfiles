@@ -1,45 +1,35 @@
-# You can copy this file as `~/.clirc`, and change the values.
-# That file will override this one so you don't have to edit this file directly.
-# You can then store it in a repo.
+# You can copy this file as `~/.yademrc`, and change the values.
+# That file will override this one.
 
-# DOTFILE_DIR: Directory where actual dotfiles are located.
-readonly DOTFILE_DIR="$HOME/workflow/dotfiles/dotfiles"
+# DOTFILE_DIR: Directory where actual dotfiles are.
+DOTFILE_DIR="$HOME/workflow/dotfiles/dotfiles"
 
 # VIM_REPO: The `vim` repository to install.
-readonly VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
+VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
 
 # ZSH_CUSTOM_REPO: The `custom` directory repository for `oh-my-zsh`.
-readonly ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
+ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
 
 # BASH_CUSTOM_REPO: The `custom` directory repository for `bash_it`.
-readonly BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
+BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
 
 # REPO_DIR: Directory to clone git repos into.
-readonly REPO_DIR="$HOME/workflow"
+REPO_DIR="$HOME/workflow"
 
 # SCREENSHOT_DIR: On mac, where you'd like screenshots to be placed.
-readonly SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 
 # LOGFILE_TIMESTAMP: Timestamp used by log() function when adding messages.
-readonly LOGFILE_TIMESTAMP="$( date "+%Y-%m-%d %H:%M:%S" )"
+LOGFILE_TIMESTAMP="$( date "+%Y-%m-%d %H:%M:%S" )"
 
 # LOGFILE_DATESTAMP: Datestamp that will be used for log file names.
-readonly LOGFILE_DATESTAMP="$( date "+%Y-%m-%d" )"
-
-# Programs to install using `brew cask install`.
-readonly BREW_CASKS=(
-virtualbox
-vagrant
-tunnelblick
-iterm2
-firefox
-alfred
-mattermost
-macvim
-)
+LOGFILE_DATESTAMP="$( date "+%Y-%m-%d" )"
 
 # Programs to install using `brew install`.
-readonly BREW_TAPS=(
+BREW_TAPS=(
+php
+zsh
+bash
 vim
 git
 git-lfs
@@ -47,15 +37,28 @@ the_silver_searcher
 readline
 gnupg
 tree
---HEAD universal-ctags/universal-ctags/universal-ctags
+'--HEAD universal-ctags/universal-ctags/universal-ctags'
 evince
 most
 diff-so-fancy
+python
 ipython
 )
 
+# Programs to install using `brew cask install`.
+BREW_CASKS=(
+slack
+virtualbox
+vagrant
+iterm2
+firefox
+alfred
+mattermost
+macvim
+)
+
 # Ruby gems to install.
-readonly RUBY_GEMS=(
+RUBY_GEMS=(
 rails
 bundler
 rake
@@ -72,7 +75,7 @@ pry-editline
 )
 
 # Files that support sourcing a `[FILE].local`.
-readonly LOCAL_FILES=(
+LOCAL_FILES=(
 inputrc
 bashrc
 shellrc
@@ -86,14 +89,14 @@ bash_profile
 )
 
 # Files to not install as a dotfile.
-readonly IGNORE=(
+IGNORE=(
 README.md
 LICENSE
 xterm-256color.terminfo
 )
 
 # Git repos to clone.
-readonly GIT_REPOS=(
+GIT_REPOS=(
 https://github.com/evanthegrayt/dotfiles
 https://github.com/evanthegrayt/list-and-grep
 https://github.com/evanthegrayt/list-and-count

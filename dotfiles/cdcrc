@@ -3,6 +3,7 @@
 CDC_DIRS=(
 $HOME/workflow
 $HOME/.oh-my-zsh/custom/plugins
+$HOME/workflow/vagrant-psi-loco/src
 )
 
 CDC_IGNORE=(
