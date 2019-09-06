@@ -4,7 +4,7 @@
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
 case $USER in
-    vagrant) COLOR="$BRED" ;;
+    vagrant) Color="$RRED" ;;
     *) Color="$RBLUE" ;;
 esac
 Color2="$BBLACK"
