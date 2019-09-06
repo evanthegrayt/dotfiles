@@ -72,15 +72,16 @@ squash() {
     git rebase -i HEAD~$number_of_commits
 }
 
-if [[ -f /Users/erg/.ghcup/env ]]; then
-    source /Users/erg/.ghcup/env
-fi
-
-if [[ -d $HOME/.rvm/bin ]]; then
-    export PATH="$PATH:$HOME/.rvm/bin"
+if [[ -f $HOME/.ghcup/env ]]; then
+    source $HOME/.ghcup/env
 fi
 
 if [[ -e $HOME/.shellrc.local ]]; then
     source $HOME/.shellrc.local
+fi
+
+if [[ -d $HOME/.rvm/bin ]]; then
+    export PATH="$PATH:$HOME/.rvm/bin"
+    source $HOME/.rvm/scripts/rvm
 fi
 
