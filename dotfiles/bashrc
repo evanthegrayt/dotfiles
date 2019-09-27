@@ -33,6 +33,9 @@ export HISTSIZE=100000
 export HISTTIMEFORMAT="[%m/%d][%R] "
 shopt -s histappend histverify
 
+[[ -f $HOME/workflow/cdc/cdc.plugin.bash ]] && \
+    source $HOME/workflow/cdc/cdc.plugin.bash
+
 [[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
 

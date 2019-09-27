@@ -3,8 +3,6 @@
 
 OS="$( uname -s )"
 
-alias lrt='ls -lArth'
-
 alias vzrc="vim $HOME/.zshrc"
 alias vbrc="vim $HOME/.bashrc"
 alias val="vim $HOME/.aliases"
@@ -23,8 +21,13 @@ if which ag &> /dev/null; then
     --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-if [[ "$OS" == 'Linux' ]]; then
+# https://the.exa.website/
+if which exa &> /dev/null; then
+    alias ls='exa'
+    alias lrt='ls -lart'
+elif [[ "$OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
+    alias lrt='ls -lArth'
 fi
 
 if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
