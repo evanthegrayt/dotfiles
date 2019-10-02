@@ -24,7 +24,7 @@ fi
 # https://the.exa.website/
 if which exa &> /dev/null; then
     alias ls='exa'
-    alias lrt='ls -lart'
+    alias lrt='ls -lart modified'
 elif [[ "$OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
     alias lrt='ls -lArth'
