@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Quick and dirty install script. No validations; just tries to link them.
+# For better control over what happens, install yadem:
+# https://github.com/evanthegrayt/yadem
+
+readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
+
+for file in $INSTALL_PATH/dotfiles/*; do
+    ln -s $file $HOME/.${file##*/}
+done
+

@@ -14,10 +14,10 @@ for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 if [[ $( uname -s ) == 'Darwin' ]]; then
     export CLICOLOR=1
-    export LSCOLORS="ExGxcxcxcxexexcxcxexex"
+    export LSCOLORS='ExGxcxcxcxexexcxcxexex'
 fi
 
-export EDITOR="vim"
+export EDITOR='vim'
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
 export GEM_OPEN_EDITOR=$EDITOR
@@ -26,12 +26,11 @@ export GREP_COLOR='07;38;5;74'
 export LANG=en_US.UTF-8
 export LESSPIPE=$( which src-hilite-lesspipe.sh )
 export LESSOPEN="| ${LESSPIPE} %s"
-export LESS="-JmNirU"
+export LESS='-JmNirU'
 export MANPAGER='less'
 export GIT_EDITOR=$EDITOR
-export SIMPLE_BACKUP_SUFFIX=".sav"
+export SIMPLE_BACKUP_SUFFIX='.sav'
 export IRC_CLIENT='irssi'
-export TODO="t"
 export SCM_CHECK=true
 export PAGER='less'
 export PATH=\
@@ -54,9 +53,7 @@ mcd() {
 
     [[ -z $dir ]] && return 1
 
-    if [[ ! -d $dir ]]; then
-        mkdir -p "$dir"
-    fi
+    [[ -d $dir ]] || mkdir -p "$dir"
 
     cd "$dir"
 }
@@ -65,7 +62,7 @@ squash() {
     local number_of_commits=$1
 
     if [[ -z $number_of_commits ]] || (( $number_of_commits == 0 )); then
-        echo "Pass how many commits to squash"
+        echo 'Pass how many commits to squash'
         return 1
     fi
 
