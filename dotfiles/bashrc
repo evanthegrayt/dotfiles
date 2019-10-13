@@ -3,8 +3,9 @@
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
-case $USER in
-    vagrant) Color="$RRED" ;;
+case $current_host in
+    homestead) Color="$RGREEN" ;;
+    ofa) Color="$RRED" ;;
     *) Color="$RBLUE" ;;
 esac
 Color2="$BBLACK"
@@ -28,9 +29,10 @@ unset Color Color2 Color3 current_host
 
 # History Management
 export HISTCONTROL=ignoreboth:erasedups
-export HISTIGNORE="pwd"
+export HISTIGNORE='pwd'
 export HISTSIZE=100000
-export HISTTIMEFORMAT="[%m/%d][%R] "
+export HISTTIMEFORMAT='[%m/%d][%R] '
+export QUOTING_STYLE=literal
 shopt -s histappend histverify
 
 [[ -f $HOME/workflow/cdc/cdc.plugin.bash ]] && \

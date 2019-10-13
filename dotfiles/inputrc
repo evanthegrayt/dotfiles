@@ -5,11 +5,10 @@ $include /etc/inputrc
 #>  http://man7.org/linux/man-pages/man3/readline.3.html <= the actual man pages
 #>  http://brettterpstra.com/2015/07/09/shell-tricks-inputrc-binding-fun/
 #>  http://www.gnu.org/software/bash/manual/bashref.html#Command-Line-Editing
-# This makes auto-completion ignore case
-set completion-ignore-case on
-set completion-query-items 150
+
 # This makes the editing mode vi instead of emacs
 # set editing-mode vi
+
 # History. Start tying, hit up, and only previous commands starting with
 # input will be populated
 "\C-p":history-search-backward
@@ -17,7 +16,7 @@ set completion-query-items 150
 "\e[A":history-search-backward
 "\e[B":history-search-forward
 
-#-- this maps the up and down arrow to searching
+#-- Add emacs-style bindings when in insert mode of Vi mode.
 $if mode=vi
     $if Bash
         "\C-w": unix-filename-rubout
@@ -47,6 +46,9 @@ set colored-stats on
 # Perform partial completion on the first Tab press,
 # only start cycling full results on the second Tab press
 set menu-complete-display-prefix on
+# Auto-completion ignore case
+set completion-query-items 150
+set completion-ignore-case on
 
 # Source local inputrc if it exists
 $include ~/.inputrc.local

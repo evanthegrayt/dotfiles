@@ -1,6 +1,6 @@
 # vi: set ft=sh :
 VB_BOXES_LOCATION=$HOME/workflow
-VB_BOXES=(vagrant-ofa)
+VB_BOXES=(vagrant-ofa laravel-homestead)
 
 # The following lines can be used to alter the output color.
 # Un-comment the lines to use the settings.

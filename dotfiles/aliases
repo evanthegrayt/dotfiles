@@ -28,6 +28,9 @@ if which exa &> /dev/null; then
 elif [[ "$OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
     alias lrt='ls -lArth'
+elif [[ "$OS" == 'Darwin' ]]; then
+    alias ls='ls -G'
+    alias lrt='ls -lArth'
 fi
 
 if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
