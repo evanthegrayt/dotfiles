@@ -1,11 +1,20 @@
 # vi: set ft=sh :
-VB_BOXES_LOCATION=$HOME/workflow
-VB_BOXES=(vagrant-ofa laravel-homestead)
 
-# The following lines can be used to alter the output color.
-# Un-comment the lines to use the settings.
-#VB_COLOR=false # Default: true. Setting to false disables color.
-#VB_SUCCESS_COLOR='\e[1;92m'   # Makes green bold.
-#VB_WARNING_COLOR='\e[1;93m'   # Makes yellow bold.
-#VB_ERROR_COLOR='\e[1;91m'     # Makes red bold.
+VB_BOXES_LOCATION=$HOME/workflow
+
+if [[ $HOST == 'erg-mbp.local' ]]; then
+    VB_BOXES=(vagrant-dotcom vagrant-ique)
+else
+    VB_BOXES=(vagrant-ofa laravel-homestead)
+fi
+
+##
+# NOTE: This is already the default for VB_CACHE.
+# VB_CACHE="${ZSH_CACHE_DIR:-"$HOME/.cache/vb"}/vb.cache"
+
+# NOTE: The following lines can be used to alter the output color.
+VB_COLOR=true                   # Set to false to disable color.
+# VB_SUCCESS_COLOR='\e[1;92m'   # Makes green bold.
+# VB_WARNING_COLOR='\e[1;93m'   # Makes yellow bold.
+# VB_ERROR_COLOR='\e[1;91m'     # Makes red bold.
 
