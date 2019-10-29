@@ -11,9 +11,9 @@ return [
     // PsySH uses symfony/var-dumper's casters for presenting scalars,
     // resources, arrays and objects. You can enable additional casters, or
     // write your own!
-    'casters' => [
-        'MyFooClass' => 'MyFooClassCaster::castMyFooObject',
-    ],
+    // 'casters' => [
+        // 'MyFooClass' => 'MyFooClassCaster::castMyFooObject',
+    // ],
 
     // By default, output contains colors if support for them is detected. To
     // override, use:
@@ -21,18 +21,18 @@ return [
     //   \Psy\Configuration::COLOR_MODE_FORCED to force colors
     //   \Psy\Configuration::COLOR_MODE_DISABLED to disable colors
     //   \Psy\Configuration::COLOR_MODE_AUTO to detect terminal support
-    'colorMode' => \Psy\Configuration::COLOR_MODE_FORCED,
+    'colorMode' => \Psy\Configuration::COLOR_MODE_AUTO,
 
     // While PsySH ships with a bunch of great commands, it's possible to add
     // your own for even more awesome. Any Psy command added here will be
     // available in your Psy shell sessions.
-    'commands' => [
+    // 'commands' => [
         // The `parse` command is a command used in the development of PsySH.
         // Given a string of PHP code, it pretty-prints the PHP Parser parse
         // tree. It prolly won't be super useful for most of you, but it's there
         // if you want to play :)
-        new \Psy\Command\ParseCommand,
-    ],
+        // new \Psy\Command\ParseCommand,
+    // ],
 
     // "Default includes" will be included once at the beginning of every PsySH
     // session. This is a good place to add autoloaders for your favorite
@@ -42,7 +42,7 @@ return [
     // If set to true, the history will not keep duplicate entries. Newest
     // entries override oldest. This is the equivalent of the
     // `HISTCONTROL=erasedups` setting in bash.
-    'eraseDuplicates' => false,
+    'eraseDuplicates' => true,
 
     // While PsySH respects the current `error_reporting` level, and doesn't
     // throw exceptions for all errors, it does log all errors regardless of
@@ -56,14 +56,14 @@ return [
 
     // Sets the maximum number of entries the history can contain. If set to
     // zero, the history size is unlimited.
-    'historySize' => 0,
+    'historySize' => 10000,
 
     // If this is not set, it falls back to `less`. It is recommended that you
     // set up `cli.pager` in your `php.ini` with your preferred output pager.
-    'pager' => 'more',
+    'pager' => 'less',
 
     // Specify a custom prompt.
-    'prompt' => '>>>',
+    'prompt' => 'php >',
 
     // PsySH automatically inserts semicolons at the end of input if a statement
     // is missing one. To disable this, set `requireSemicolons` to true.
@@ -72,7 +72,7 @@ return [
     // Display an additional startup message. You can color and style the
     // message thanks to the Symfony Console tags. See
     // https://symfony.com/doc/current/console/coloring.html for more details.
-    'startupMessage' => sprintf('<info>%s</info>', shell_exec('uptime')),
+    // 'startupMessage' => sprintf('<info>%s</info>', shell_exec('uptime')),
 
     // You can disable tab completion if you want to. Not sure why you'd
     // want to.
@@ -89,7 +89,7 @@ return [
     // Valid options are "always", "daily", "weekly", and "monthly".
     //
     // To disable update checks entirely, set to "never".
-    'updateCheck' => 'daily',
+    'updateCheck' => 'monthly',
 
     // Enable bracketed paste support. If you use PHP built with readline
     // (not libedit) and a relatively modern terminal, enable this.
