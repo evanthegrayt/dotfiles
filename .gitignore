@@ -1,0 +1,6 @@
+tags
+/dotfiles/config/*
+!/dotfiles/config/psysh/
+/dotfiles/config/psysh/*
+!/dotfiles/config/psysh/config.php
+
