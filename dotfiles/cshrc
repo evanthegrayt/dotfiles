@@ -1,30 +1,41 @@
 # vi: set ft=csh:
-#==================================================
+#=================================================================
 #         File:   .cshrc
 #
-#  Description:   This customizes your C-shell
+#  Description:   csh config file.
 #       Author:   erg
 #
-#==============================================================
+# NOTE: Csh doesn't have functions; you have to use aliases.
+# NOTE: You really should never use csh as your shell, but I just
+#       like learning (read: customizing) things.
+#=================================================================
 
+##
+# Set the prompt
+set white="%{\033[0;97m%}"
+set black="%{\033[0;90m%}"
+set   end="%{\033[0m%}"
 set host = `echo $HOST| cut -d. -f1`
-alias setprompt 'set prompt=" (${user}@${host}) ${cwd}\n $ "'
+alias setprompt 'set prompt=" ${white}(${black}${user}${white}@${black}${host}${white}) ${black}${cwd}\n ${white}(${black}`date +%H:%M`${white})=>${end} "'
 setprompt           # to set the initial prompt
 alias cd 'chdir \!* && setprompt'
-#=====================================
+
+##
 #  This sets the tab auto-fill
-#=====================================
 set filec
 set autolist=ambiguous
 
+##
+# aliases
 if ( -x /usr/bin/dircolors || -x /usr/local/bin/dircolors ) then
     set ls_colors = `dircolors -c $HOME/.dir_colors|cut -d"'" -f 2`
     alias ls "env LS_COLORS=\"$ls_colors\" ls -hF --color=auto"
 else
     alias ls 'env CLICOLOR=1 LSCOLORS=ExGxFxdxCxfxDxxbadacad ls -hFG'
 endif
+eval `grep '^alias' $HOME/.aliases | sed -e 's/=/ /' -e 's/$/;/'`
 
-eval `grep '^alias' $HOME/workflow/dotfiles/aliases.sh | sed -e 's/=/ /' -e 's/$/;/'`
-
+##
+# Source local cshrc
 if ( -f $HOME/.cshrc.local ) source $HOME/.cshrc.local
 
