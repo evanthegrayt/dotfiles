@@ -2,10 +2,13 @@
 
 if [[ $USER == 'vagrant' ]]; then
     CDC_DIRS=($HOME/workflow /vagrant/src)
+elif [[ $USER == 'erg' ]]; then
+    CDC_DIRS=($HOME/.oh-my-zsh/custom/plugins $HOME/workflow)
 else
-    CDC_DIRS=($HOME/workflow $HOME/.oh-my-zsh/custom/plugins
+    CDC_DIRS=($HOME/.oh-my-zsh/custom/plugins $HOME/workflow
         $HOME/workflow/vagrant-ofa/src)
 fi
 
 CDC_IGNORE=(training hold save)
+CDC_AUTO_PUSH=true
 
