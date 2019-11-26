@@ -1,5 +1,5 @@
 # bashrc
-[[ -f /usr/local/bin/color.sh ]] && source color.sh
+[[ -f /usr/local/bin/color.sh || -f $HOME/bin/color.sh ]] && source color.sh
 
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 

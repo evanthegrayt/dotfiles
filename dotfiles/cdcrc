@@ -11,4 +11,9 @@ fi
 
 CDC_IGNORE=(training hold save)
 CDC_AUTO_PUSH=true
+CDC_REPOS_ONLY=true
+CDC_COLOR=true
+CDC_SUCCESS_COLOR='\e[0;92m'
+CDC_WARNING_COLOR='\e[0;93m'
+CDC_ERROR_COLOR='\e[0;91m'
 
