@@ -1,15 +1,14 @@
 # bashrc
-[[ -f /usr/local/bin/color.sh || -f $HOME/bin/color.sh ]] && source color.sh
-
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
 case $current_host in
-    homestead) Color="$RGREEN" ;;
-    ofa) Color="$RRED" ;;
-    *) Color="$RBLUE" ;;
+    homestead) Color='\e[0;92m' ;;
+    ofa)       Color='\e[0;91m' ;;
+    *)         Color='\e[0;94m' ;;
 esac
-Color2="$BBLACK"
-Color3="$UBLACK"
+Color2='\e[1;90m'
+Color3='\e[4;90m'
+Reset='\e[0m'
 
 if [[ -d $HOME/.bash_it ]]; then
     export BASH_IT="$HOME/.bash_it"
@@ -18,14 +17,14 @@ fi
 
 export PS1=" \[$Color\](\[$Color2\]\u\[$Color\]@\[$Color2\]${current_host%%.*}"\
 "\[$Color|${Color2}bash\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e "\
-"'s/* \(.*\)/\[$Color\]|\[$Color3\]\1/')\[$RESET\]\[$Color\])\[$RESET\] "\
-"\[$Color3\]\w\[$RESET\]\n \[$Color\](\[$Color2\]\A\[$Color\])=>\[$RESET\]"\
+"'s/* \(.*\)/\[$Color\]|\[$Color3\]\1/')\[$Reset\]\[$Color\])\[$Reset\] "\
+"\[$Color3\]\w\[$Reset\]\n \[$Color\](\[$Color2\]\A\[$Color\])=>\[$Reset\]"\
 '${PS2c##*[$((PS2c=0))-9]} '
 
-export PS2="\[$Color2\] Line \[$RESET\]\[$Color2\]"'$((PS2c=PS2c+1))'\
-"\[$Color\])=>\[$RESET\] "
-export PS4=" \[$Color2\]"'${LINENO}'"\[$Color\])=>\[$RESET\] "
-unset Color Color2 Color3 current_host
+export PS2="\[$Color2\] Line \[$Reset\]\[$Color2\]"'$((PS2c=PS2c+1))'\
+"\[$Color\])=>\[$Reset\] "
+export PS4=" \[$Color2\]"'${LINENO}'"\[$Color\])=>\[$Reset\] "
+unset Reset Color Color2 Color3 current_host
 
 # History Management
 export HISTCONTROL=ignoreboth:erasedups
