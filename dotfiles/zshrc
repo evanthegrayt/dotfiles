@@ -15,7 +15,7 @@ autoload -U zmv
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
     plugins=(omz-git vb cdc sudo zsh-autosuggestions per-directory-history
         history-substring-search fast-syntax-highlighting docker
-        history-search-multi-word)
+        history-search-multi-word zsh-completions)
     export ZSH="$HOME/.oh-my-zsh"
     export GRAYT_PROMPT_COLOR='blue'
     export ZSH_THEME="grayt"
