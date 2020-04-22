@@ -1,1 +1,4 @@
 directory: '~/workflow/standups'
+current_header: Today
+current_entry_tasks:
+  - 'project: [task](link)'
