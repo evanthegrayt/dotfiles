@@ -35,18 +35,23 @@ if defined?(IRB)
 end
 
 if defined?(Pry)
-  Pry.config.prompt = [
-    proc { |obj, nest_level, _| "#{obj}:#{nest_level}=> " },
-    proc { |obj, nest_level, _| "#{obj}:#{nest_level}?> " }
-  ]
-  Pry.config.editor = ENV['VISUAL']
-  Pry.config.history.file = File.join(ENV['HOME'], '.irb_history')
-  Pry.config.theme = 'zenburn'
+  Pry.config.color = true
   Pry.config.pager = false
-  # Coolline
-  Pry.config.coolline_paren_matching = false
-  Pry.config.coolline_matched_paren    = "\e[42m"
-  Pry.config.coolline_mismatched_paren = "\e[41m"
+  Pry.config.auto_indent = false
+  Pry.config.correct_indent = true
+  Pry.config.history_should_load = true
+  Pry.config.history_should_save = true
+  Pry.config.history_file = File.join(ENV['HOME'], '.irb_history')
+  Pry.config.editor = ENV['EDITOR']
+  Pry.config.memory_size = 100
+  Pry.config.prompt = Pry::Prompt.new(
+    "custom",
+    "my custom prompt",
+    [proc { |obj, nest_level, _| "#{obj}:#{nest_level}> " }]
+  )
+  Pry.config.should_load_plugins = true
+  Pry.config.exception_whitelist = [SystemExit, SignalException]
+  Pry.config.default_window_size = 5
 
   local_pryrc = File.join(ENV['HOME'], '.pryrc.local')
   load local_pryrc if File.exist?(local_pryrc)
