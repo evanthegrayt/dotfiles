@@ -6,7 +6,7 @@ elif [[ $USER == 'erg' ]]; then
     CDC_DIRS=($HOME/.oh-my-zsh/custom/plugins $HOME/workflow)
 else
     CDC_DIRS=($HOME/.oh-my-zsh/custom/plugins $HOME/workflow
-        $HOME/workflow/vagrant-ofa/src $HOME/.vim/pack/public-strategies/start)
+        $HOME/workflow/vagrant-ofa/src $HOME/.vim/pack/evanthegrayt/start)
 fi
 
 CDC_IGNORE=(training hold save)
