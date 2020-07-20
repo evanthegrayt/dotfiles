@@ -52,30 +52,36 @@ rails() {
     local commands=($@)
 
     if [[ -f ./docker-compose.yml ]]; then
-        docker-compose run web bundle exec rails ${commands[@]}
+        docker-compose run web bundle exec rails "${commands[@]}"
     elif which bundle >/dev/null && [[ -f ./Gemfile && -d ./.bundle ]]; then
-        bundle exec rails ${commands[@]}
+        bundle exec rails "${commands[@]}"
+    elif [[ -x $HOME/.rbenv/shims/rails ]]; then
+        $HOME/.rbenv/shims/rails "${commands[@]}"
     else
-        command rails ${commands[@]}
+        command rails "${commands[@]}"
     fi
 }
 
 mcd() {
     local dir="$1"
 
-    [[ -z $dir ]] && return 1
-
-    [[ -d $dir ]] || mkdir -p "$dir"
+    if [[ -z $dir ]]; then
+        echo "Usage: mcd [DIRECTORY]" >&2
+        return 1
+    elif [[ ! -d $dir ]]; then
+        echo "Creating directory '$dir'"
+        mkdir -p "$dir"
+    fi
 
     cd "$dir"
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
-    source $HOME/.ghcup/env
+    source "$HOME/.ghcup/env"
 fi
 
 if [[ -e $HOME/.shellrc.local ]]; then
-    source $HOME/.shellrc.local
+    source "$HOME/.shellrc.local"
 fi
 
 if [[ -d $HOME/.rbenv/shims ]]; then
