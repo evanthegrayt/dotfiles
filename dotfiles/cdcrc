@@ -9,11 +9,10 @@ else
         $HOME/workflow/vagrant-ofa/src $HOME/.vim/pack/evanthegrayt/start)
 fi
 
-CDC_IGNORE=(training hold save fast-syntax-highlighting)
+CDC_IGNORE=(training hold save)
 CDC_AUTO_PUSH=true
 CDC_REPOS_ONLY=true
 CDC_COLOR=true
 CDC_SUCCESS_COLOR='\033[0;92m'
 CDC_WARNING_COLOR='\033[0;93m'
 CDC_ERROR_COLOR='\033[0;91m'
-
