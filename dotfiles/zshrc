@@ -15,7 +15,7 @@ autoload -U zmv
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
     plugins=(omz-git vb cdc sudo zsh-autosuggestions per-directory-history
         history-substring-search fast-syntax-highlighting docker
-        history-search-multi-word zsh-completions)
+        history-search-multi-word zsh-completions rbenv)
     export ZSH="$HOME/.oh-my-zsh"
     export GRAYT_PROMPT_COLOR='blue'
     export ZSH_THEME="grayt"
@@ -36,18 +36,3 @@ fi
 } $HOME/.opam/opam-init/init.zsh $HOME/.shellrc
 
 [[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
-
-_rbenv() {
-  local words completions
-  read -cA words
-
-  if [ "${#words}" -eq 2 ]; then
-    completions="$(rbenv commands)"
-  else
-    completions="$(rbenv completions ${words[2,-2]})"
-  fi
-
-  reply=("${(ps:\n:)completions}")
-}
-
-compctl -K _rbenv rbenv
