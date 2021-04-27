@@ -2,6 +2,13 @@
 # This file is shared between zshrc and bashrc. Only put
 # options that both languages can use in this file.
 
+if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
+    [[ $HOST != 'evan-psi-mbp.local' ]]; then
+    echo 'You are probably using the wrong git configuration.'
+    echo 'Please update the user name and email address in ~/.gitconfig'
+    echo '...unless you want to give evanthegrayt credit for your work.'
+fi
+
 MY_CONFIG_FILES=(
 $HOME/.aliases
 $HOME/.colors
