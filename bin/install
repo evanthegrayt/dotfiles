@@ -1,12 +1,30 @@
 #!/usr/bin/env bash
 
-# Quick and dirty install script. No validations; just tries to link them.
+# Quick and dirty install script. Very weak validations.
 # For better control over what happens, install yadem:
 # https://github.com/evanthegrayt/yadem
 
 readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
+installed=()
+not_installed=()
 
 for file in $INSTALL_PATH/dotfiles/*; do
+    if [[ -e $HOME/.${file##*/} ]]; then
+        not_installed+=(${file##*/})
+        continue
+    fi
     ln -s $file $HOME/.${file##*/}
+    installed+=(${file##*/})
 done
 
+echo 'Installed:'
+echo '----------'
+for file in "${installed[@]}"; do
+    echo $file
+done
+
+echo 'NOT Installed:'
+echo '--------------'
+for file in "${not_installed[@]}"; do
+    echo $file
+done
