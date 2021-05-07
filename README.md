@@ -18,13 +18,16 @@ the
 [README](https://github.com/evanthegrayt/yadem/blob/master/README.md).
 
 If you don't want the manager script, just clone the repository and link the
-files in your home directory.
+files in your home directory. There exists an installation script in `bin/`, but
+all it does is try to link the files in your home directory. If the file already
+exists, this won't succeed. A list will print of what installed and what didn't.
 ```sh
 git clone https://github.com/evanthegrayt/dotfiles.git
-for i in $PWD/dotfiles/dotfiles/*; do ln -s "$i" "$HOME/.${i##*/}"; done
+cd dotfiles
+bash bin/install
 ```
 ### "Local" Config Files
-Somthing I did that people might find interesting: There are settings I have
+Something I did that people might find interesting: There are settings I have
 that are specifically for work that I didn't want to publicly commit, so I have
 added a feature to deal with this issue. If a file exists in your home directory
 with the same name, but has a `.local` extension, that file will be sourced
