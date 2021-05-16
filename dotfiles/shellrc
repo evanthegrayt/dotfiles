@@ -1,6 +1,6 @@
 # vi: set ft=sh:
-# This file is shared between zshrc and bashrc. Only put
-# options that both languages can use in this file.
+# This file is shared between my zshrc and bashrc.
+# Only put options that both languages can use in this file.
 
 if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
     [[ $HOST != 'evan-psi-mbp.local' ]]; then
@@ -69,17 +69,28 @@ rails() {
 }
 
 mcd() {
-    local dir="$1"
+    local dir
+    local OPTIND
+    local verbose=false
+
+    while getopts 'v' opts; do
+        case $opts in
+            v) verbose=true ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+
+    dir="$1"
 
     if [[ -z $dir ]]; then
-        echo "Usage: mcd [DIRECTORY]" >&2
+        echo >&2 "Usage: mcd [DIRECTORY]"
         return 1
-    elif [[ ! -d $dir ]]; then
-        echo "Creating directory '$dir'"
-        mkdir -p "$dir"
+    elif [[ -d $dir ]]; then
+        cd "$dir"
+    else
+        $verbose && echo "Creating directory '$dir'"
+        mkdir -p "$dir" && cd "$dir"
     fi
-
-    cd "$dir"
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
