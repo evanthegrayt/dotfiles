@@ -1,7 +1,7 @@
-# Aliases for bash/zsh
+# My aliases for bash/zsh
 # vi: set syntax=sh :
 
-OS="$( uname -s )"
+_evanthegrayt_OS="$( uname -s )"
 
 alias vzrc="vim $HOME/.zshrc"
 alias vbrc="vim $HOME/.bashrc"
@@ -12,23 +12,24 @@ alias vvrc="vim $HOME/.vim/vimrc"
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
-alias diff='colordiff'
-alias untar='tar -zxvf'
 alias grep='grep -i --color=tty'
+if which colordiff &> /dev/null; then
+    alias diff='colordiff'
+fi
 
 if which ag &> /dev/null; then
     alias ag="ag --color-line-number='07;01;38;5;131' \
-    --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
+        --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
 # https://the.exa.website/
 if which exa &> /dev/null; then
     alias ls='exa'
     alias lrt='exa -la -snew --git'
-elif [[ "$OS" == 'Linux' ]]; then
+elif [[ "$_evanthegrayt_OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
     alias lrt='ls -lArth'
-elif [[ "$OS" == 'Darwin' ]]; then
+elif [[ "$_evanthegrayt_OS" == 'Darwin' ]]; then
     alias ls='ls -G'
     alias lrt='ls -lArth'
 fi
@@ -38,7 +39,7 @@ if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
     alias -s out='vim'
     alias -s txt='vim'
 
-    if [[ "$OS" == 'Darwin' ]]; then
+    if [[ "$_evanthegrayt_OS" == 'Darwin' ]]; then
         alias -s xls='open -a LibreOffice'
         alias -s xlsx='open -a LibreOffice'
         alias -s ods='open -a LibreOffice'
@@ -48,5 +49,4 @@ fi
 
 [[ -e $HOME/.aliases.local ]] && source $HOME/.aliases.local
 
-unset OS
-
+unset _evanthegrayt_OS
