@@ -3,7 +3,7 @@
 # Only put options that both languages can use in this file.
 
 if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
-    [[ $HOST != 'evan-psi-mbp.local' ]]; then
+    [[ ! $( hostname | tr '[:upper:]' '[:lower:]' ) =~ 'evan' ]]; then
     echo 'You are probably using the wrong git configuration.'
     echo 'Please update the user name and email address in ~/.gitconfig'
     echo '...unless you want to give evanthegrayt credit for your work.'
@@ -106,3 +106,5 @@ if [[ -d $HOME/.rbenv/shims ]]; then
 elif [[ -d $HOME/.rvm/bin ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
