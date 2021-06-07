@@ -10,12 +10,9 @@ if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
 fi
 
 MY_CONFIG_FILES=(
-$HOME/.aliases
-$HOME/.colors
-$HOME/.slack_config
+    $HOME/.aliases
+    $HOME/.colors
 )
-
-for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 # Environmental variables
 
@@ -41,6 +38,7 @@ export SCM_CHECK=true
 export PAGER='less'
 export PATH=\
 .:\
+/opt/homebrew/bin:\
 /usr/local/bin:\
 /usr/bin:\
 /bin:\
@@ -51,6 +49,8 @@ $HOME/bin:\
 $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
+
+for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 unset MAILCHECK file
 
