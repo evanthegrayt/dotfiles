@@ -97,8 +97,8 @@ if [[ -f $HOME/.ghcup/env ]]; then
     source "$HOME/.ghcup/env"
 fi
 
-if [[ -e $HOME/.shellrc.local ]]; then
-    source "$HOME/.shellrc.local"
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$( /opt/homebrew/bin/brew shellenv )"
 fi
 
 if [[ -d $HOME/.rbenv/shims ]]; then
@@ -107,4 +107,6 @@ elif [[ -d $HOME/.rvm/bin ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -e $HOME/.shellrc.local ]]; then
+    source "$HOME/.shellrc.local"
+fi
