@@ -56,6 +56,14 @@ unset MAILCHECK file
 
 rails() {
     local commands=($@)
+    local container='web'
+    local OPTIND
+
+    while getopts "c:" opt; do
+        case $opt in
+            c) container=$OPTARG ;;
+        esac
+    done
 
     if [[ -f ./docker-compose.yml ]]; then
         docker-compose run web bundle exec rails "${commands[@]}"

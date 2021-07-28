@@ -44,11 +44,11 @@ if defined?(Pry)
   Pry.config.history_file = File.join(ENV['HOME'], '.irb_history')
   Pry.config.editor = ENV['EDITOR']
   Pry.config.memory_size = 100
-  Pry.config.prompt = Pry::Prompt.new(
-    "custom",
-    "my custom prompt",
-    [proc { |obj, nest_level, _| "#{obj}:#{nest_level}> " }]
-  )
+  # Pry.config.prompt = Pry::Prompt.new(
+  #   "custom",
+  #   "my custom prompt",
+  #   [proc { |obj, nest_level, _| "#{obj}:#{nest_level}> " }]
+  # )
   Pry.config.should_load_plugins = true
   Pry.config.exception_whitelist = [SystemExit, SignalException]
   Pry.config.default_window_size = 5
