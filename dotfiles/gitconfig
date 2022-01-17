@@ -14,7 +14,7 @@
 [alias]
 	d = difftool
 	tree = log --graph --decorate --oneline
-	cleanup = "!f() { git branch --merged ${1:-master} | egrep -v \"(^\\*|main|staging|master)\" | xargs -r git branch -d; };f"
+	cleanup = "!f() { git branch --merged ${1:-master} | egrep -v \"(^\\*|main|staging|master|development|beta)\" | xargs -r git branch -d; };f"
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
