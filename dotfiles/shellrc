@@ -3,7 +3,7 @@
 # Only put options that both languages can use in this file.
 
 if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
-    [[ ! $( hostname | tr '[:upper:]' '[:lower:]' ) =~ 'evan' ]]; then
+    [[ ! $( hostname | tr '[:upper:]' '[:lower:]' ) =~ 'gray' ]]; then
     echo 'You are probably using the wrong git configuration.'
     echo 'Please update the user name and email address in ~/.gitconfig'
     echo '...unless you want to give evanthegrayt credit for your work.'
@@ -54,20 +54,20 @@ for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
 
 unset MAILCHECK file
 
-rails() {
-    local commands=($@)
-    local container=${CONTAINER:-web}
+# rails() {
+#     local commands=($@)
+#     local container=${CONTAINER:-app}
 
-    if [[ -f ./docker-compose.yml ]]; then
-        docker-compose run $container bundle exec rails "${commands[@]}"
-    elif which bundle >/dev/null && [[ -f ./Gemfile && -d ./.bundle ]]; then
-        bundle exec rails "${commands[@]}"
-    elif [[ -x $HOME/.rbenv/shims/rails ]]; then
-        $HOME/.rbenv/shims/rails "${commands[@]}"
-    else
-        command rails "${commands[@]}"
-    fi
-}
+#     if [[ -f ./docker-compose.yml ]]; then
+#         docker-compose run $container bundle exec rails "${commands[@]}"
+#     elif which bundle >/dev/null && [[ -f ./Gemfile && -d ./.bundle ]]; then
+#         bundle exec rails "${commands[@]}"
+#     elif [[ -x $HOME/.rbenv/shims/rails ]]; then
+#         $HOME/.rbenv/shims/rails "${commands[@]}"
+#     else
+#         command rails "${commands[@]}"
+#     fi
+# }
 
 mcd() {
     local dir="$1"
@@ -93,9 +93,14 @@ fi
 if [[ -d $HOME/.rbenv/shims ]]; then
     eval "$( rbenv init - )"
 elif [[ -d $HOME/.rvm/bin ]]; then
-    export PATH="$PATH:$HOME/.rvm/bin"
+    export PATH="$HOME/.rvm/bin:$PATH"
 fi
 
 if [[ -e $HOME/.shellrc.local ]]; then
     source "$HOME/.shellrc.local"
+fi
+
+if [[ -d "$HOME/.nvm" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  [[ -s $NVM_DIR/nvm.sh ]] && source "$NVM_DIR/nvm.sh"
 fi

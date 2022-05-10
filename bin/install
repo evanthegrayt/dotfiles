@@ -17,14 +17,12 @@ for file in $INSTALL_PATH/dotfiles/*; do
     installed+=(${file##*/})
 done
 
+echo '=============='
 echo 'Installed:'
-echo '----------'
-for file in "${installed[@]}"; do
-    echo $file
-done
-
+echo '--------------'
+printf "%s\n" "${installed[@]}"
+echo
+echo '=============='
 echo 'NOT Installed:'
 echo '--------------'
-for file in "${not_installed[@]}"; do
-    echo $file
-done
+printf "%s\n" "${not_installed[@]}"
