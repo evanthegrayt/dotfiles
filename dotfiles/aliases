@@ -8,6 +8,7 @@ alias vbrc="vim $HOME/.bashrc"
 alias val="vim $HOME/.aliases"
 alias vsrc="vim $HOME/.shellrc"
 alias vvrc="vim $HOME/.vim/vimrc"
+alias reset_vpn='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
 
 alias rm='rm -v'
 alias cp='cp -v'
