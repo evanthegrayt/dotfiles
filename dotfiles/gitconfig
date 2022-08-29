@@ -2,7 +2,7 @@
 	sslVerify = false
 [user]
 	name = Evan Gray
-	email = evanthegra"yt@vi"val"di.ne"t
+	email = evanthe"grayt@vi"val"di.ne"t
 [core]
 	pager = diff-so-fancy | less --tabs=4 -nRFX
 	excludesfile = ~/.cvsignore
