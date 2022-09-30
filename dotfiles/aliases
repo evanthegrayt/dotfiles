@@ -14,7 +14,7 @@ alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
 alias grep='grep -i --color=tty'
-if which colordiff &> /dev/null; then
+if which colordiff > /dev/null; then
     alias diff='colordiff'
 fi
 
@@ -24,7 +24,7 @@ if which ag &> /dev/null; then
 fi
 
 # https://the.exa.website/
-if which exa &> /dev/null; then
+if which exa > /dev/null; then
     alias ls='exa'
     alias lrt='exa -la -snew --git'
 elif [[ "$_evanthegrayt_OS" == 'Linux' ]]; then
