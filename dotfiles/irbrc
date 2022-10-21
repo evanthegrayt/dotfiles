@@ -1,36 +1,26 @@
 # ruby 1.8.7 compatible
 # vi: set filetype=ruby :
 
-# load .irbrc_rails in rails environments
-railsrc_path = File.expand_path('~/.irbrc_rails')
-if (ENV['RAILS_ENV'] || defined? Rails) && File.exist?(railsrc_path)
-  begin
-    load railsrc_path
-  rescue LoadError
-    warn "Could not load: #{railsrc_path} because of #{$!.message}"
-  end
-end
-
 class Object
   def interesting_methods
     case self.class
-    when Class then self.public_methods.sort - Object.public_methods
-    when Module then self.public_methods.sort - Module.public_methods
-    else self.public_methods.sort - Object.new.public_methods
+    when Class then public_methods.sort - Object.public_methods
+    when Module then public_methods.sort - Module.public_methods
+    else public_methods.sort - Object.new.public_methods
     end
   end
 end
 
 if defined?(IRB)
   begin
-    require 'irb/ext/save-history'
-    require 'irb/completion'
-    require 'pry-editline' # pry automatically loads this.
+    require "irb/ext/save-history"
+    require "irb/completion"
+    require "pry-editline" # pry automatically loads this.
   rescue LoadError
   end
   IRB.conf[:SAVE_HISTORY] = 1000
-  IRB.conf[:HISTORY_FILE] = File.join(ENV['HOME'], '.irb_history')
-  local_irbrc = File.join(ENV['HOME'], '.irbrc.local')
+  IRB.conf[:HISTORY_FILE] = File.join(ENV["HOME"], ".irb_history")
+  local_irbrc = File.join(ENV["HOME"], ".irbrc.local")
   load local_irbrc if File.exist?(local_irbrc)
 end
 
@@ -41,9 +31,9 @@ if defined?(Pry)
   Pry.config.correct_indent = true
   Pry.config.history_should_load = true
   Pry.config.history_should_save = true
-  Pry.config.history_file = File.join(ENV['HOME'], '.irb_history')
-  Pry.config.editor = ENV['EDITOR']
-  Pry.config.memory_size = 100
+  Pry.config.history_file = File.join(ENV["HOME"], ".irb_history")
+  Pry.config.editor = ENV["EDITOR"]
+  Pry.config.memory_size = 1000
   # Pry.config.prompt = Pry::Prompt.new(
   #   "custom",
   #   "my custom prompt",
@@ -53,7 +43,12 @@ if defined?(Pry)
   Pry.config.exception_whitelist = [SystemExit, SignalException]
   Pry.config.default_window_size = 5
 
-  local_pryrc = File.join(ENV['HOME'], '.pryrc.local')
+  local_pryrc = File.join(ENV["HOME"], ".pryrc.local")
   load local_pryrc if File.exist?(local_pryrc)
 end
 
+def time(precision: 2)
+  starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  yield
+  (Process.clock_gettime(Process::CLOCK_MONOTONIC) - starting).round(precision)
+end
