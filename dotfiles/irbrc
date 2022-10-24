@@ -1,4 +1,3 @@
-# ruby 1.8.7 compatible
 # vi: set filetype=ruby :
 
 class Object
@@ -34,11 +33,6 @@ if defined?(Pry)
   Pry.config.history_file = File.join(ENV["HOME"], ".irb_history")
   Pry.config.editor = ENV["EDITOR"]
   Pry.config.memory_size = 1000
-  # Pry.config.prompt = Pry::Prompt.new(
-  #   "custom",
-  #   "my custom prompt",
-  #   [proc { |obj, nest_level, _| "#{obj}:#{nest_level}> " }]
-  # )
   Pry.config.should_load_plugins = true
   Pry.config.exception_whitelist = [SystemExit, SignalException]
   Pry.config.default_window_size = 5
@@ -47,8 +41,73 @@ if defined?(Pry)
   load local_pryrc if File.exist?(local_pryrc)
 end
 
-def time(precision: 2)
-  starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-  yield
-  (Process.clock_gettime(Process::CLOCK_MONOTONIC) - starting).round(precision)
+module Debug
+  class Timer
+    Result = Struct.new(:execution_result, :elapsed_time)
+
+    def self.time(...)
+      new(...).time
+    end
+
+    def initialize(&block)
+      @code = block.to_proc
+    end
+
+    def time
+      start = mark_time
+      execution_result = @code.call
+      elapsed_time = mark_time - start
+      @result = Result.new(execution_result, elapsed_time)
+    end
+
+    def result
+      @result || raise("No results recorded. Have you called `.time'?")
+    end
+
+    private
+
+    def mark_time
+      Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    end
+  end
+
+  module_function
+
+  ##
+  # Easy way of benchmarking methods. Arguments will be passed to all methods.
+  #
+  # @param [String, Symbol], *meths
+  #
+  # @kwarg [Array], arguments
+  #
+  # @kwarg [Integer], times
+  #
+  # @example
+  #   Debug.compare :pp, :printf, times: 100_000
+  #   Rehearsal ------------------------------------------
+  #       pp   0.027888   0.000536   0.028424 (  0.028426)
+  #   printf   0.009939   0.000042   0.009981 (  0.009980)
+  #   --------------------------------- total: 0.038405sec
+  #
+  #                user     system      total        real
+  #       pp   0.015730   0.000109   0.015839 (  0.015847)
+  #   printf   0.007545   0.000049   0.007594 (  0.007612)
+  def compare(*meths, arguments: [], times: 10_000)
+    require "benchmark"
+
+    unless meths.all? { [String, Symbol].include?(_1.class) }
+      raise ArgumentError, "methods must all be a string or symbol"
+    end
+    raise ArgumentError, "arguments must be an array" unless arguments.is_a?(Array)
+    raise ArgumentError, "times must be an integer" unless times.is_a?(Integer)
+
+    longest_method_name = meths.max_by { _1.size }.size
+    Benchmark.bmbm do |benchmark|
+      meths.each do |m|
+        benchmark.report(sprintf("%#{longest_method_name}s", m)) do
+          times.times { send(m, *arguments) }
+        end
+      end
+    end
+  end
 end
