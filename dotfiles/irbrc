@@ -1,15 +1,5 @@
 # vi: set filetype=ruby :
 
-class Object
-  def interesting_methods
-    case self.class
-    when Class then public_methods.sort - Object.public_methods
-    when Module then public_methods.sort - Module.public_methods
-    else public_methods.sort - Object.new.public_methods
-    end
-  end
-end
-
 if defined?(IRB)
   begin
     require "irb/ext/save-history"
@@ -39,6 +29,16 @@ if defined?(Pry)
 
   local_pryrc = File.join(ENV["HOME"], ".pryrc.local")
   load local_pryrc if File.exist?(local_pryrc)
+end
+
+class Object
+  def interesting_methods
+    case self.class
+    when Class then public_methods.sort - Object.public_methods
+    when Module then public_methods.sort - Module.public_methods
+    else public_methods.sort - Object.public_instance_methods
+    end
+  end
 end
 
 module Debug
@@ -92,7 +92,7 @@ module Debug
   #                user     system      total        real
   #       pp   0.015730   0.000109   0.015839 (  0.015847)
   #   printf   0.007545   0.000049   0.007594 (  0.007612)
-  def compare(*meths, arguments: [], times: 10_000)
+  def compare_methods(*meths, arguments: [], times: 10_000)
     require "benchmark"
 
     unless meths.all? { [String, Symbol].include?(_1.class) }
@@ -101,11 +101,49 @@ module Debug
     raise ArgumentError, "arguments must be an array" unless arguments.is_a?(Array)
     raise ArgumentError, "times must be an integer" unless times.is_a?(Integer)
 
-    longest_method_name = meths.max_by { _1.size }.size
+    format_string = "%#{meths.max_by { _1.size }.size}s"
     Benchmark.bmbm do |benchmark|
       meths.each do |m|
-        benchmark.report(sprintf("%#{longest_method_name}s", m)) do
+        benchmark.report(sprintf(format_string, m)) do
           times.times { send(m, *arguments) }
+        end
+      end
+    end
+  end
+
+  ##
+  # Easy way of benchmarking procs. Arguments will be passed to all procs.
+  #
+  # @param [String, Symbol], *meths
+  #
+  # @kwarg [Array], arguments
+  #
+  # @kwarg [Integer], times
+  #
+  # @example
+  #   Debug.compare -> { pp }, -> { printf }, times: 100_000
+  #   Rehearsal ------------------------------------------
+  #       pp   0.027888   0.000536   0.028424 (  0.028426)
+  #   printf   0.009939   0.000042   0.009981 (  0.009980)
+  #   --------------------------------- total: 0.038405sec
+  #
+  #                user     system      total        real
+  #       pp   0.015730   0.000109   0.015839 (  0.015847)
+  #   printf   0.007545   0.000049   0.007594 (  0.007612)
+  def compare_procs(*procs, arguments: [], times: 10_000)
+    require "benchmark"
+
+    unless procs.all? { _1.is_a?(Proc) }
+      raise ArgumentError, "methods must all be a string or symbol"
+    end
+    raise ArgumentError, "arguments must be an array" unless arguments.is_a?(Array)
+    raise ArgumentError, "times must be an integer" unless times.is_a?(Integer)
+
+    format_string = "%#{(procs.size + 1).to_s.size}s"
+    Benchmark.bmbm do |benchmark|
+      procs.each_with_index do |m, index|
+        benchmark.report(sprintf(format_string, "Proc #{index}:")) do
+          times.times { m.call(*arguments) }
         end
       end
     end
