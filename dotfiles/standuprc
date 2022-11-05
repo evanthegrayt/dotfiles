@@ -1,6 +1,8 @@
-# vi: set ft=ruby :
+# frozen_string_literal: true
 
 StandupMD.configure do |s|
   s.cli.editor = 'vim'
   s.file.current_header = 'Today'
 end
+
+# vi: set ft=ruby :
