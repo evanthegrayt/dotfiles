@@ -26,6 +26,7 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$( /opt/homebrew/bin/brew shellenv )"
 fi
 
+export GOPATH="$HOME/go"
 export EDITOR='vim'
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
@@ -48,6 +49,7 @@ export PATH=\
 /sbin:\
 /opt/X11/bin:\
 $HOME/bin:\
+$GOPATH/bin:\
 $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
@@ -71,6 +73,10 @@ mcd() {
     else
         mkdir -p "$dir" && cd "$dir"
     fi
+}
+
+reset_calendar() {
+    launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
