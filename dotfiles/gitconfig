@@ -17,6 +17,7 @@
 	purge = "!f() { git branch --merged ${1:-master} | egrep -v \"(^\\*|main|staging|master|development|beta)\" | xargs -r git branch -d; };f"
 	reauthor = commit --amend --reset-author -CHEAD
 	squash = commit --no-edit --amend
+	upsub = submodule update --recursive --remote
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

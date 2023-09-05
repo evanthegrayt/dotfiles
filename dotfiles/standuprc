@@ -5,4 +5,4 @@ StandupMD.configure do |s|
   s.file.current_header = 'Today'
 end
 
-# vi: set ft=ruby :
+#  vim: ft=ruby ts=2 sw=2 tw=0 et :
