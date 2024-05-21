@@ -23,10 +23,10 @@ if which ag &> /dev/null; then
         --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-# https://the.exa.website/
-if which exa > /dev/null; then
-    alias ls='exa'
-    alias lrt='exa -la -snew --git'
+# https://the.eza.website/
+if which eza > /dev/null; then
+    alias ls='eza'
+    alias lrt='eza -la -snew --git'
 elif [[ "$_evanthegrayt_OS" == 'Linux' ]]; then
     alias ls='ls --color=auto'
     alias lrt='ls -lArth'

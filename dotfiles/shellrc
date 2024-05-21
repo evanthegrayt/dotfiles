@@ -19,7 +19,7 @@ MY_CONFIG_FILES=(
 
 if [[ $( uname -s ) == 'Darwin' ]]; then
     export CLICOLOR=1
-    export LSCOLORS='ExGxcxcxcxexexcxcxexex'
+    export LS_COLORS='ExGxcxcxcxexexcxcxexex'
 fi
 
 if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -54,7 +54,7 @@ $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
 
-if [[ -d $HOME/.rbenv/shims ]]; then
+if which rbenv > /dev/null; then
     eval "$( rbenv init - )"
 fi
 
