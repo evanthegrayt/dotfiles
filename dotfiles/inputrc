@@ -1,6 +1,7 @@
 #.inputrc
 $include /etc/inputrc
 # To see bindings, run `bind -p` from the command line
+# To "source" this file, run `bind -f ~/.inputrc`
 # Resources:
 #>  http://man7.org/linux/man-pages/man3/readline.3.html <= the actual man pages
 #>  http://brettterpstra.com/2015/07/09/shell-tricks-inputrc-binding-fun/

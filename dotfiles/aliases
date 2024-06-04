@@ -1,5 +1,5 @@
 # My aliases for bash/zsh
-# vi: set syntax=sh :
+# vi: set ft=sh :
 
 _evanthegrayt_OS="$( uname -s )"
 
@@ -23,24 +23,28 @@ if which ag &> /dev/null; then
         --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-# https://the.eza.website/
-if which eza > /dev/null; then
+if which eza > /dev/null; then # exa is deprecated. Use eza.
     alias ls='eza'
-    alias lrt='eza -la -snew --git'
-elif [[ "$_evanthegrayt_OS" == 'Linux' ]]; then
-    alias ls='ls --color=auto'
+    if [[ $_evanthegrayt_OS == 'Linux' ]]; then
+        alias lrt='eza -la -snew' # --git didn't work on the Ubuntu distro!
+    elif [[ $_evanthegrayt_OS == 'Darwin' ]]; then
+        alias lrt='eza -la -snew --git'
+    fi
+else
     alias lrt='ls -lArth'
-elif [[ "$_evanthegrayt_OS" == 'Darwin' ]]; then
-    alias ls='ls -G'
-    alias lrt='ls -lArth'
+    if [[ $_evanthegrayt_OS == 'Linux' ]]; then
+        alias ls='ls --color=auto'
+    elif [[ $_evanthegrayt_OS == 'Darwin' ]]; then
+        alias ls='ls -G'
+    fi
 fi
 
-if [[ -n "$ZSH_NAME" ]]; then # ZSH ONLY ALIASES
-    alias    zzmv='noglob zmv -W'
+if [[ -n $ZSH_NAME ]]; then # ZSH ONLY ALIASES
+    alias zzmv='noglob zmv -W'
     alias -s out='vim'
     alias -s txt='vim'
 
-    if [[ "$_evanthegrayt_OS" == 'Darwin' ]]; then
+    if [[ $_evanthegrayt_OS == 'Darwin' ]]; then
         alias -s xls='open -a LibreOffice'
         alias -s xlsx='open -a LibreOffice'
         alias -s ods='open -a LibreOffice'
