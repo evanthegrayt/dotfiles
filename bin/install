@@ -8,7 +8,25 @@ readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
 installed=()
 not_installed=()
 
+while getopts "t" opts; do
+    case $opts in
+        t)
+            test="true"
+            ;;
+    esac
+done
+
 for file in $INSTALL_PATH/dotfiles/*; do
+    if [[ $test == "true" ]]; then
+        if [[ -L $HOME/.${file##*/} ]]; then
+            installed+=(${file##*/})
+            continue
+        else
+            not_installed+=(${file##*/})
+            continue
+        fi
+        break
+    fi
     if [[ -e $HOME/.${file##*/} ]]; then
         not_installed+=(${file##*/})
         continue
