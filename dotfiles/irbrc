@@ -9,8 +9,9 @@ if defined?(IRB)
   end
   IRB.conf[:SAVE_HISTORY] = 1000
   IRB.conf[:HISTORY_FILE] = File.join(ENV["HOME"], ".irb_history")
-  local_irbrc = File.join(ENV["HOME"], ".irbrc.local")
-  load local_irbrc if File.exist?(local_irbrc)
+  File.join(ENV["HOME"], ".irbrc.local").tap do |local_irbrc|
+    load local_irbrc if File.exist?(local_irbrc)
+  end
 end
 
 if defined?(Pry)
@@ -27,8 +28,9 @@ if defined?(Pry)
   Pry.config.exception_whitelist = [SystemExit, SignalException]
   Pry.config.default_window_size = 5
 
-  local_pryrc = File.join(ENV["HOME"], ".pryrc.local")
-  load local_pryrc if File.exist?(local_pryrc)
+  File.join(ENV["HOME"], ".pryrc.local").tap do |local_pryrc|
+    load local_pryrc if File.exist?(local_pryrc)
+  end
 end
 
 class Object
