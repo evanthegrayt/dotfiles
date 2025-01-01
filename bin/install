@@ -8,11 +8,14 @@ readonly INSTALL_PATH="$( cd $( dirname $0 )/../ && pwd -P )"
 installed=()
 not_installed=()
 
-while getopts "t" opts; do
+while getopts "th" opts; do
     case $opts in
         t)
             test="true"
             ;;
+        h)
+            echo "USAGE: ${0##*/} -[th]"
+            exit
     esac
 done
 
