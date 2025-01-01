@@ -15,8 +15,6 @@ MY_CONFIG_FILES=(
     $HOME/.shellrc.local
 )
 
-# Environmental variables
-
 if [[ $( uname -s ) == 'Darwin' ]]; then
     export CLICOLOR=1
     export LS_COLORS='ExGxcxcxcxexexcxcxexex'
@@ -53,20 +51,45 @@ $GOPATH/bin:\
 $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
+if [[ $USER == 'vagrant' ]]; then
+    CDC_DIRS=($HOME/workflow /vagrant/src)
+else
+    CDC_DIRS=(
+        $HOME/.oh-my-zsh/custom/plugins
+        $HOME/workflow
+        $HOME/workflow/vagrant-ofa/src
+        $HOME/.vim/pack/evanthegrayt/start
+        $HOME/.vim/pack/public-strategies/opt
+    )
+fi
+CDC_IGNORE=(training hold save)
+CDC_AUTO_PUSH=true
+CDC_REPOS_ONLY=true
+CDC_COLOR=true
+CDC_SUCCESS_COLOR='\033[0;92m'
+CDC_WARNING_COLOR='\033[0;93m'
+CDC_ERROR_COLOR='\033[0;91m'
 
 if which rbenv > /dev/null; then
     eval "$( rbenv init - )"
 fi
 
-for file in ${MY_CONFIG_FILES[@]}; do [[ -f $file ]] && source "$file"; done
+source_config_files() {
+    local file
 
-unset MAILCHECK file
+    for file in ${MY_CONFIG_FILES[@]}; do
+        [[ -f $file ]] && source "$file"
+    done
+}
+source_config_files
+
+unset MAILCHECK
 
 mcd() {
     local dir="$1"
 
     if [[ -z $dir ]]; then
-        echo >&2 "Usage: mcd [DIRECTORY]"
+        echo >&2 'Usage: mcd [DIRECTORY]'
         return 1
     elif [[ -d $dir ]]; then
         cd "$dir"
@@ -76,14 +99,23 @@ mcd() {
 }
 
 reset_calendar() {
-    launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent
+    local cmd
+
+    if [[ $( uname -s ) == 'Darwin' ]]; then
+        for cmd in 'stop' 'start'; do
+            launchctl $cmd com.apple.CalendarAgent
+        done
+    else
+        echo 'Not on a Mac.'
+        return 1
+    fi
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
     source "$HOME/.ghcup/env"
 fi
 
-if [[ -d "$HOME/.nvm" ]]; then
+if [[ -d $HOME/.nvm ]]; then
   export NVM_DIR="$HOME/.nvm"
   [[ -s $NVM_DIR/nvm.sh ]] && source "$NVM_DIR/nvm.sh"
 fi
