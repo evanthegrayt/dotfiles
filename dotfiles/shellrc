@@ -24,6 +24,21 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$( /opt/homebrew/bin/brew shellenv )"
 fi
 
+export CDC_DIRS=\
+$HOME/.oh-my-zsh/custom/plugins:\
+$HOME/workflow:\
+$HOME/workflow/vagrant-ofa/src:\
+$HOME/.vim/pack/evanthegrayt/start:\
+$HOME/.vim/pack/public-strategies/opt:\
+$HOME/.vim/pack/public-strategies/"hello world"
+export CDC_IGNORE=training:hold:save
+export CDC_AUTO_PUSH=true
+export CDC_REPOS_ONLY=true
+export CDC_COLOR=true
+export CDC_SUCCESS_COLOR='\033[0;92m'
+export CDC_WARNING_COLOR='\033[0;93m'
+export CDC_ERROR_COLOR='\033[0;91m'
+export BLAH=blah
 export GOPATH="$HOME/go"
 export EDITOR='vim'
 export VISUAL=$EDITOR
@@ -51,24 +66,6 @@ $GOPATH/bin:\
 $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
-if [[ $USER == 'vagrant' ]]; then
-    CDC_DIRS=($HOME/workflow /vagrant/src)
-else
-    CDC_DIRS=(
-        $HOME/.oh-my-zsh/custom/plugins
-        $HOME/workflow
-        $HOME/workflow/vagrant-ofa/src
-        $HOME/.vim/pack/evanthegrayt/start
-        $HOME/.vim/pack/public-strategies/opt
-    )
-fi
-CDC_IGNORE=(training hold save)
-CDC_AUTO_PUSH=true
-CDC_REPOS_ONLY=true
-CDC_COLOR=true
-CDC_SUCCESS_COLOR='\033[0;92m'
-CDC_WARNING_COLOR='\033[0;93m'
-CDC_ERROR_COLOR='\033[0;91m'
 
 if which rbenv > /dev/null; then
     eval "$( rbenv init - )"
