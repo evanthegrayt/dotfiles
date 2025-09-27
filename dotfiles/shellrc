@@ -9,7 +9,7 @@ if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
     echo '...unless you want to give evanthegrayt credit for your work.'
 fi
 
-MY_CONFIG_FILES=(
+EVANTHEGRAYT_CONFIG_FILES=(
     $HOME/.aliases
     $HOME/.colors
     $HOME/.shellrc.local
@@ -28,7 +28,6 @@ fi
 export CDC_DIRS=\
 $HOME/.oh-my-zsh/custom/plugins:\
 $HOME/workflow:\
-$HOME/workflow/vagrant-ofa/src:\
 $HOME/.vim/pack/evanthegrayt/start:\
 $HOME/.vim/pack/public-strategies/opt
 export CDC_IGNORE=training:hold:save
@@ -74,7 +73,7 @@ fi
 source_config_files() {
     local file
 
-    for file in ${MY_CONFIG_FILES[@]}; do
+    for file in ${EVANTHEGRAYT_CONFIG_FILES[@]}; do
         [[ -f $file ]] && source "$file"
     done
 }
@@ -98,14 +97,14 @@ mcd() {
 reset_calendar() {
     local cmd
 
-    if [[ $( uname -s ) == 'Darwin' ]]; then
-        for cmd in 'stop' 'start'; do
-            launchctl $cmd com.apple.CalendarAgent
-        done
-    else
+    if [[ $( uname -s ) != 'Darwin' ]]; then
         echo 'Not on a Mac.'
         return 1
     fi
+
+    for cmd in 'stop' 'start'; do
+        launchctl $cmd com.apple.CalendarAgent
+    done
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
