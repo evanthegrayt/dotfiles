@@ -99,16 +99,21 @@ mcd() {
 }
 
 reset_calendar() {
-    local cmd
-
     if [[ $( uname -s ) == 'Darwin' ]]; then
-        for cmd in 'stop' 'start'; do
-            launchctl $cmd com.apple.CalendarAgent
-        done
+        sudo mdutil -s /
+        sudo mdutil -i off /
+        sudo rm -rf /.Spotlight-V100
+        sudo mdutil -i on /
+        sudo mdutil -E /
+
+        echo "This requires a reboot. Restart now? (y/n)"
+        read
+        [[ $REPLY == 'y' ]] && reboot || echo "Reboot at your convenience."
     else
         echo 'Not on a Mac.'
         return 1
     fi
+
 }
 
 if [[ -f $HOME/.ghcup/env ]]; then
