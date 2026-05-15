@@ -17,7 +17,10 @@ EVANTHEGRAYT_CONFIG_FILES=(
 
 if [[ $( uname -s ) == 'Darwin' ]]; then
     export CLICOLOR=1
-    export LS_COLORS='ExGxcxcxcxexexcxcxexex'
+    export LSCOLORS='ExGxcxcxcxexexcxcxexex'
+    if which eza > /dev/null; then
+        export LS_COLORS='ExGxcxcxcxexexcxcxexex'
+    fi
 fi
 
 if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -28,6 +31,7 @@ fi
 export CDC_DIRS=\
 $HOME/.oh-my-zsh/custom/plugins:\
 $HOME/workflow:\
+$HOME/Documents/code:\
 $HOME/.vim/pack/evanthegrayt/start:\
 $HOME/.vim/pack/public-strategies/opt
 export CDC_IGNORE=training:hold:save
