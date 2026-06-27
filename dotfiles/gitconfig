@@ -43,3 +43,5 @@
 	rebase = false
 [credential]
 	helper = osxkeychain
+[includeIf "gitdir:~/yolk/code"]
+    path = ~/.gitconfig-yolk

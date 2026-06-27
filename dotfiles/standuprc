@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 StandupMD.configure do |s|
-  s.cli.editor = 'vim'
-  s.file.current_header = 'Today'
+  s.cli.editor = "vim"
+  s.file.current_header = "Today"
+  s.post.configure_adapter(
+    :slack,
+    channel: "C0BDF6DE3QB"
+  )
 end
 
 #  vim: ft=ruby ts=2 sw=2 tw=0 et :
