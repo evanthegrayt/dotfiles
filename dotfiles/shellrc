@@ -32,6 +32,7 @@ export CDC_DIRS=\
 $HOME/workflow:\
 $HOME/yolk/code:\
 $HOME/.oh-my-zsh/custom/plugins:\
+$HOME/Documents/code:\
 $HOME/.vim/pack/evanthegrayt/start:\
 $HOME/.vim/pack/public-strategies/opt
 export CDC_IGNORE=training:hold:save
