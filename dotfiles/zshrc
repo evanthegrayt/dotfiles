@@ -14,7 +14,6 @@ autoload -U zmv
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
     plugins=(
-      omz-git
       vb
       cdc
       sudo
