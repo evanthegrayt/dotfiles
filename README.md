@@ -48,8 +48,10 @@ Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
 have a separate repository for all my `vim` files. You can see them
 [here](https://github.com/evanthegrayt/vimfiles).
 
-## Self-Promotion
-I do these projects for fun, and I enjoy knowing that they're helpful to people.
-Consider starring [the repository](https://github.com/evanthegrayt/dotfiles) if
-you like it! If you love it, follow me [on
-github](https://github.com/evanthegrayt)!
+## Support this project
+I love knowing when people find my work useful. Any kind of support is very much
+appreciated!
+
+- ⭐️ Like the project? Star [the repository](https://github.com/evanthegrayt/dotfiles)!
+- ❤️ Love the project? Follow me [on GitHub](https://github.com/evanthegrayt)!
+- 💸 *Really* love it? Consider [buying me a tea](https://paypal.me/evanrgray)!
