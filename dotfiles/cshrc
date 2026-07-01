@@ -14,28 +14,66 @@
 # Set the prompt
 set white="%{\033[0;97m%}"
 set black="%{\033[0;90m%}"
-set   end="%{\033[0m%}"
-set host = `echo $HOST| cut -d. -f1`
-alias setprompt 'set prompt=" ${white}(${black}${user}${white}@${black}${host}${white}) ${black}${cwd}\n ${white}(${black}`date +%H:%M`${white})=>${end} "'
-setprompt           # to set the initial prompt
-alias cd 'chdir \!* && setprompt'
+set end="%{\033[0m%}"
+set prompt=" ${white}(${black}%n${white}@${black}%m${white}|${black}csh${white}) ${black}%~\n ${white}(${black}%T${white})=>${end} "
 
 ##
 #  This sets the tab auto-fill
 set filec
 set autolist=ambiguous
+set complete=enhance
+
+##
+# History management
+set history=100000
+set savehist=(100000 merge)
+set histdup=erase
+
+set dircolors_command=''
+if ( -x /opt/homebrew/bin/gdircolors ) then
+    set dircolors_command=/opt/homebrew/bin/gdircolors
+else if ( -x /usr/local/bin/gdircolors ) then
+    set dircolors_command=/usr/local/bin/gdircolors
+else if ( -x /usr/bin/dircolors ) then
+    set dircolors_command=/usr/bin/dircolors
+else if ( -x /usr/local/bin/dircolors ) then
+    set dircolors_command=/usr/local/bin/dircolors
+endif
+
+if ( "$dircolors_command" != '' ) then
+    if ( -r $HOME/.dir_colors ) then
+        eval `$dircolors_command -c $HOME/.dir_colors`
+    else
+        eval `$dircolors_command -c`
+    endif
+else if ( -x /opt/homebrew/bin/eza || -x /usr/local/bin/eza || -x /usr/bin/eza ) then
+    setenv LS_COLORS 'di=04;01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:ex=01;38;5;151:*.md=01;38;5;187:*.markdown=01;38;5;187:*.js=01;38;5;187:*.mjs=01;38;5;187:*.cjs=01;38;5;187'
+endif
+
+if ( -x /opt/homebrew/bin/eza || -x /usr/local/bin/eza || -x /usr/bin/eza ) then
+    alias ls eza
+    if ( `uname -s` == Darwin ) then
+        alias lrt 'eza -la -snew --git'
+    else
+        alias lrt 'eza -la -snew'
+    endif
+else
+    alias lrt 'ls -lArth'
+    if ( `uname -s` == Darwin ) then
+        alias ls 'env CLICOLOR=1 LSCOLORS=ExGxFxdaCxDaDaCxCxExExxx ls -hFG'
+    else
+        alias ls 'ls -hF --color=auto'
+    endif
+endif
+unset dircolors_command
 
 ##
 # aliases
-if ( -x /usr/bin/dircolors || -x /usr/local/bin/dircolors ) then
-    set ls_colors = `dircolors -c $HOME/.dir_colors|cut -d"'" -f 2`
-    alias ls "env LS_COLORS=\"$ls_colors\" ls -hF --color=auto"
-else
-    alias ls 'env CLICOLOR=1 LSCOLORS=ExGxFxdxCxfxDxxbadacad ls -hFG'
-endif
-eval `grep '^alias' $HOME/.aliases | sed -e 's/=/ /' -e 's/$/;/'`
+alias rm 'rm -v'
+alias cp 'cp -v'
+alias mv 'mv -v'
+alias grep 'grep -i --color=auto'
 
 ##
 # Source local cshrc
 if ( -f $HOME/.cshrc.local ) source $HOME/.cshrc.local
-

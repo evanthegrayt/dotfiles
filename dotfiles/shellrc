@@ -2,7 +2,8 @@
 # This file is shared between my zshrc and bashrc.
 # Only put options that both languages can use in this file.
 
-if grep -q 'evanthegra"yt@vi"val"di.ne"t' $HOME/.gitconfig && \
+if [[ -f $HOME/.gitconfig ]] && \
+    grep -q 'evanthegra"yt@vi"val"di.ne"t' "$HOME/.gitconfig" && \
     [[ ! $( hostname | tr '[:upper:]' '[:lower:]' ) =~ 'gray' ]]; then
     echo 'You are probably using the wrong git configuration.'
     echo 'Please update the user name and email address in ~/.gitconfig'
@@ -17,11 +18,34 @@ EVANTHEGRAYT_CONFIG_FILES=(
 
 if [[ $( uname -s ) == 'Darwin' ]]; then
     export CLICOLOR=1
-    export LSCOLORS='ExGxcxcxcxexexcxcxexex'
-    if which eza > /dev/null; then
-        export LS_COLORS='ExGxcxcxcxexexcxcxexex'
-    fi
+    export LSCOLORS='ExGxFxdaCxDaDaCxCxExExxx'
 fi
+
+configure_ls_colors() {
+    local candidate
+    local dircolors_command=''
+    local dircolors_file="$HOME/.dir_colors"
+
+    for candidate in dircolors gdircolors /opt/homebrew/bin/gdircolors /usr/local/bin/gdircolors; do
+        if command -v "$candidate" > /dev/null 2>&1; then
+            dircolors_command=$candidate
+            break
+        fi
+    done
+
+    if [[ -n $dircolors_command ]]; then
+        if [[ -r $dircolors_file ]]; then
+            eval "$( "$dircolors_command" -b "$dircolors_file" )"
+        else
+            eval "$( "$dircolors_command" -b )"
+        fi
+    elif command -v eza > /dev/null 2>&1 || \
+        [[ -x /opt/homebrew/bin/eza || -x /usr/local/bin/eza ]]; then
+        export LS_COLORS='di=04;01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:ex=01;38;5;151:*.md=01;38;5;187:*.markdown=01;38;5;187:*.js=01;38;5;187:*.mjs=01;38;5;187:*.cjs=01;38;5;187'
+    fi
+}
+configure_ls_colors
+unset -f configure_ls_colors
 
 if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$( /opt/homebrew/bin/brew shellenv )"
@@ -48,9 +72,10 @@ export EDITOR='vim'
 export VISUAL=$EDITOR
 export FCEDIT=$EDITOR
 export GEM_OPEN_EDITOR=$EDITOR
-export GREP_COLOR='07;38;5;74'
+export GREP_COLORS='mt=07;38;5;74'
+unset GREP_COLOR
 export LANG=en_US.UTF-8
-export MANPAGER=$( which bat >/dev/null && echo 'bat' || echo 'less' )
+export MANPAGER=$( command -v bat >/dev/null 2>&1 && echo 'bat' || echo 'less' )
 export GIT_EDITOR=$EDITOR
 export SIMPLE_BACKUP_SUFFIX='.sav'
 export IRC_CLIENT='irssi'
@@ -71,7 +96,7 @@ $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
 
-if which rbenv > /dev/null; then
+if command -v rbenv > /dev/null 2>&1; then
     eval "$( rbenv init - )"
 fi
 

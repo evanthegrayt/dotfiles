@@ -4,7 +4,7 @@
 	name = Evan Gray
 	email = evanthe"grayt@vi"val"di.ne"t
 [core]
-	pager = diff-so-fancy | less --tabs=4 -nRFX
+	pager = "sh -c 'if command -v diff-so-fancy >/dev/null 2>&1; then diff-so-fancy | less --tabs=4 -nRFX; else less --tabs=4 -nRFX; fi'"
 	excludesfile = ~/.cvsignore
 	editor = vim
 [diff]
@@ -14,7 +14,7 @@
 [alias]
 	d = difftool
 	tree = log --graph --decorate --oneline
-	purge = "!f() { git branch --merged ${1:-master} | egrep -v \"(^\\*|main|staging|master|development|beta)\" | xargs -r git branch -d; };f"
+	purge = "!f() { base=${1:-$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)}; if [ -z \"$base\" ]; then if git show-ref --verify --quiet refs/heads/main; then base=main; elif git show-ref --verify --quiet refs/heads/master; then base=master; else echo \"git purge: could not determine main branch; pass one explicitly\" >&2; return 1; fi; fi; protected=${base#origin/}; current=$(git branch --show-current 2>/dev/null); git branch --format='%(refname:short)' --merged \"$base\" | while IFS= read -r branch; do [ -n \"$branch\" ] || continue; [ \"$branch\" = \"$protected\" ] && continue; [ \"$branch\" = \"$current\" ] && continue; case \"$branch\" in main|master|staging|development|beta) continue ;; esac; git branch -D \"$branch\"; done; }; f"
 	reauthor = commit --amend --reset-author -CHEAD
 	squash = commit --no-edit --amend
 	upsub = submodule update --recursive --remote
@@ -43,5 +43,5 @@
 	rebase = false
 [credential]
 	helper = osxkeychain
-[includeIf "gitdir:~/yolk/code"]
-    path = ~/.gitconfig-yolk
+[includeIf "gitdir:~/yolk/code/"]
+	path = ~/.gitconfig-yolk
