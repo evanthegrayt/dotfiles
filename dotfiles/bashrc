@@ -1,11 +1,7 @@
 # bashrc
 [[ -n $HOSTNAME ]] && current_host=$HOSTNAME || current_host=$HOST
 
-case $current_host in
-    homestead) Color='\e[0;92m' ;;
-    ofa)       Color='\e[0;91m' ;;
-    *)         Color='\e[0;94m' ;;
-esac
+Color='\e[0;94m'
 Color2='\e[1;90m'
 Color3='\e[4;90m'
 Reset='\e[0m'
@@ -16,7 +12,7 @@ if [[ -d $HOME/.bash_it ]]; then
 fi
 
 export PS1=" \[$Color\](\[$Color2\]\u\[$Color\]@\[$Color2\]${current_host%%.*}"\
-"\[$Color|${Color2}bash\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e "\
+"\[$Color\]|\[$Color2\]bash\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e "\
 "'s/* \(.*\)/\[$Color\]|\[$Color3\]\1/')\[$Reset\]\[$Color\])\[$Reset\] "\
 "\[$Color3\]\w\[$Reset\]\n \[$Color\](\[$Color2\]\A\[$Color\])=>\[$Reset\]"\
 '${PS2c##*[$((PS2c=0))-9]} '
@@ -39,4 +35,3 @@ shopt -s histappend histverify
 
 [[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local
-

@@ -1,6 +1,0 @@
-# vi: set ft=sh :
-
-PATH=$PATH:\
-~/workflow/vagrant-ique/src/selection-CLUs/bash:\
-~/workflow/vagrant-ique/src/selection-CLUs/ruby
-

@@ -47,7 +47,7 @@ EIGHTBIT 1
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 NORMAL 00     # global default, although everything should be something.
 FILE 00       # normal file
-DIR 04;01;38;5;74 # directory
+DIR 04;01;34 # directory
 LINK 01;36    # symbolic link
 FIFO 40;33    # pipe
 SOCK 01;35    # socket
@@ -136,6 +136,16 @@ EXEC 01;38;5;151
 .IDX 01;38;5;131
 .tex 01;33 # tex files (yellow)
 .TEX 01;33 # tex files (yellow)
+.md 01;38;5;187 # markdown files (pastel yellow)
+.MD 01;38;5;187
+.markdown 01;38;5;187
+.MARKDOWN 01;38;5;187
+.js 01;38;5;187 # javascript files (pastel yellow)
+.JS 01;38;5;187
+.mjs 01;38;5;187
+.MJS 01;38;5;187
+.cjs 01;38;5;187
+.CJS 01;38;5;187
 .txt 00
 .TXT 00
 .fig 00 # xfig files and html file

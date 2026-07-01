@@ -3,27 +3,20 @@
 
 _evanthegrayt_OS="$( uname -s )"
 
-alias vzrc="vim $HOME/.zshrc"
-alias vbrc="vim $HOME/.bashrc"
-alias val="vim $HOME/.aliases"
-alias vsrc="vim $HOME/.shellrc"
-alias vvrc="vim $HOME/.vim/vimrc"
-alias reset_vpn='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
-
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
-alias grep='grep -i --color=tty'
-if which colordiff > /dev/null; then
+alias grep='grep -i --color=auto'
+if command -v colordiff > /dev/null 2>&1; then
     alias diff='colordiff'
 fi
 
-if which ag &> /dev/null; then
+if command -v ag > /dev/null 2>&1; then
     alias ag="ag --color-line-number='07;01;38;5;131' \
         --color-match='07;38;5;74' --color-path='07;01;38;5;131'"
 fi
 
-if which eza > /dev/null; then # exa is deprecated. Use eza.
+if command -v eza > /dev/null 2>&1; then # exa is deprecated. Use eza.
     alias ls='eza'
     if [[ $_evanthegrayt_OS == 'Linux' ]]; then
         alias lrt='eza -la -snew' # --git didn't work on the Ubuntu distro!

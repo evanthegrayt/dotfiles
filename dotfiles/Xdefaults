@@ -8,7 +8,7 @@ xfterm4*boldfont:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
 Xterm*saveLines:32767
 XTerm*charClass: 33:48,36-38:48,43-47:48,58:48,61:48,63-64:48,126:48
 !XTerm*faceName: Dejavu Sans Mono:size=11
-xterm*faceName: Bitstream Vera Sans Mono::size=10
+xterm*faceName: Bitstream Vera Sans Mono:size=10
 XTerm*boldFont: Dejavu Sans Mono:style=Bold:size=10
 !XTerm*font:-misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-2
 !XTerm*font:-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-15
@@ -452,4 +452,3 @@ ratmen.font: -schumacher-clean-medium-r-normal--10-*-*-*-*-*-*-*
 ratmen.mouse: false
 ratmen.scrollOffset: 5
 ratmen.unfocusExit: false
-
