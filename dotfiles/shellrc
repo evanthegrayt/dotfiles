@@ -60,12 +60,13 @@ $HOME/Documents/code:\
 $HOME/.vim/pack/evanthegrayt/start:\
 $HOME/.vim/pack/public-strategies/opt
 export CDC_IGNORE=training:hold:save
-export CDC_AUTO_PUSH=true
-export CDC_REPOS_ONLY=true
-export CDC_COLOR=true
-export CDC_SUCCESS_COLOR='\033[0;92m'
-export CDC_WARNING_COLOR='\033[0;93m'
-export CDC_ERROR_COLOR='\033[0;91m'
+CDC_AUTO_PUSH=true
+CDC_REPOS_ONLY=true
+CDC_IGNORE_DUPS=true
+CDC_COLOR=true
+CDC_SUCCESS_COLOR='\033[0;92m'
+CDC_WARNING_COLOR='\033[0;93m'
+CDC_ERROR_COLOR='\033[0;91m'
 
 export GOPATH="$HOME/go"
 export EDITOR='vim'
