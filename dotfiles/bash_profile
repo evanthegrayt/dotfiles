@@ -1,4 +1,15 @@
 # vi:set ft=sh:
-[[ -e "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 
-[[ -f $HOME/.bash_profile.local ]] && source $HOME/.bash_profile.local
+[[ -f "$HOME/.profile" ]] && source "$HOME/.profile"
+
+if [[ $( uname -s ) == "Linux" && -f "$HOME/.bashrc" ]]; then
+    case "$-" in
+        *i*) [[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc" ;;
+    esac
+fi
+
+if command -v rbenv > /dev/null 2>&1; then
+    export PATH="$HOME/.rbenv/shims:$PATH"
+fi
+
+[[ -f "$HOME/.bash_profile.local" ]] && source "$HOME/.bash_profile.local"

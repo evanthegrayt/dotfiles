@@ -97,10 +97,6 @@ $HOME/bin/ruby:\
 $HOME/scripts/bin:\
 $PATH
 
-if command -v rbenv > /dev/null 2>&1; then
-    eval "$( rbenv init - )"
-fi
-
 source_config_files() {
     local file
 
