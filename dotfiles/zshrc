@@ -36,7 +36,7 @@ else
     export ZSH_COMPDUMP=$HOME/.cache/zsh/zcompdump-$ZSH_VERSION
 fi
 
-[[ -d $HOME/bin/lib/zsh ]] && fpath=($HOME/bin/lib/zsh $fpath)
+[[ -d $ZSH_CUSTOM/completions ]] && fpath=($ZSH_CUSTOM/completions $fpath)
 
 () {
     local file

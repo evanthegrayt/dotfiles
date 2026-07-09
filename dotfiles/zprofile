@@ -3,3 +3,6 @@
 if command -v rbenv > /dev/null 2>&1; then
   export PATH="$HOME/.rbenv/shims:$PATH"
 fi
+if [[ -d "$HOME/.nvm/versions/node/v14.17.3/bin" ]]; then
+  export PATH="$HOME/.nvm/versions/node/v14.17.3/bin:$PATH"
+fi
