@@ -4,6 +4,31 @@
 # You can copy this file to .dir_colors in your $HOME directory to override
 # the system defaults.
 
+# ANSI SGR (Select Graphic Rendition) reference:
+#
+#   attr              e.g. 01           (bold/intensity)
+#   fg                e.g. 34           (8/16-color foreground)
+#   bg                e.g. 44           (8/16-color background)
+#   38;5;<n>          256-color foreground (0-255)
+#   48;5;<n>          256-color background (0-255)
+#   38;2;<r>;<g>;<b>  24-bit RGB foreground
+#   48;2;<r>;<g>;<b>  24-bit RGB background
+#
+# Common attributes:
+#   00 reset/normal   01 bold   02 dim   03 italic   04 underline
+#   05 blink          07 inverse 08 hidden 09 strikethrough
+#
+# Standard colors:
+#   30-37 fg          40-47 bg
+#   90-97 bright fg   100-107 bright bg
+#
+# Examples:
+#   01;34             bold blue
+#   38;5;132          256-color #132
+#   01;38;5;132       bold 256-color #132
+#   48;5;236;37       white on 256-color background #236
+#   38;2;255;128;0    RGB foreground (255,128,0)
+
 # COLOR needs one of these arguments: 'tty' colorizes output to ttys, but not
 # pipes. 'all' adds color characters to all output. 'none' shuts colorization
 # off.
@@ -166,6 +191,10 @@ EXEC 01;38;5;151
 .XLSM 01;38;5;140
 .csv 01;38;5;132
 .CSV 01;38;5;132
+.tsv 01;38;5;132
+.TSV 01;38;5;132
+.psv 01;38;5;132
+.PSV 01;38;5;132
 .ods  01;38;5;140
 .ODS  01;38;5;140
 .odt  01;38;5;140
