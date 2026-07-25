@@ -101,6 +101,7 @@ export SIMPLE_BACKUP_SUFFIX='.sav'
 export IRC_CLIENT='irssi'
 export SCM_CHECK=true
 export PAGER='less'
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 path_prepend \
 . \
 /opt/homebrew/bin \

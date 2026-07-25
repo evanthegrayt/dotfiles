@@ -1,47 +1,93 @@
 [http]
-	sslVerify = false
+    sslVerify = false
 [user]
-	name = Evan Gray
-	email = evanthe"grayt@vi"val"di.ne"t
+    name = Evan Gray
+    email = evanthe"grayt@vi"val"di.ne"t
 [core]
-	pager = "sh -c 'if command -v diff-so-fancy >/dev/null 2>&1; then diff-so-fancy | less --tabs=4 -nRFX; else less --tabs=4 -nRFX; fi'"
-	excludesfile = ~/.cvsignore
-	editor = vim
+    pager = delta
+    excludesfile = ~/.cvsignore
+    editor = vim
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false
 [alias]
-	d = difftool
-	tree = log --graph --decorate --oneline
-	purge = "!f() { base=${1:-$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)}; if [ -z \"$base\" ]; then if git show-ref --verify --quiet refs/heads/main; then base=main; elif git show-ref --verify --quiet refs/heads/master; then base=master; else echo \"git purge: could not determine main branch; pass one explicitly\" >&2; return 1; fi; fi; protected=${base#origin/}; current=$(git branch --show-current 2>/dev/null); git branch --format='%(refname:short)' --merged \"$base\" | while IFS= read -r branch; do [ -n \"$branch\" ] || continue; [ \"$branch\" = \"$protected\" ] && continue; [ \"$branch\" = \"$current\" ] && continue; case \"$branch\" in main|master|staging|development|beta) continue ;; esac; git branch -D \"$branch\"; done; }; f"
-	reauthor = commit --amend --reset-author -CHEAD
-	squash = commit --no-edit --amend
-	upsub = submodule update --recursive --remote
-	uncommit = reset --soft HEAD~1
-	unstage = restore --staged .
+    tree = log --graph --decorate --oneline
+    purge = "!f() { base=${1:-$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)}; if [ -z \"$base\" ]; then if git show-ref --verify --quiet refs/heads/main; then base=main; elif git show-ref --verify --quiet refs/heads/master; then base=master; else echo \"git purge: could not determine main branch; pass one explicitly\" >&2; return 1; fi; fi; protected=${base#origin/}; current=$(git branch --show-current 2>/dev/null); git branch --format='%(refname:short)' --merged \"$base\" | while IFS= read -r branch; do [ -n \"$branch\" ] || continue; [ \"$branch\" = \"$protected\" ] && continue; [ \"$branch\" = \"$current\" ] && continue; case \"$branch\" in main|master|staging|development|beta) continue ;; esac; git branch -D \"$branch\"; done; }; f"
+    reauthor = commit --amend --reset-author -CHEAD
+    squash = commit --no-edit --amend
+    upsub = submodule update --recursive --remote
+    uncommit = reset --soft HEAD~1
+    unstage = restore --staged .
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 [color]
-	ui = true
+    ui = true
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [pull]
-	rebase = false
+    rebase = false
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
 [includeIf "gitdir:~/yolk/code/"]
-	path = ~/.gitconfig-yolk
+    path = ~/.gitconfig-yolk
+[delta]
+    commit-style = raw
+    file-style = bold white
+    hunk-header-style = bold cyan
+    minus-style = syntax "#3f0001"
+    minus-non-emph-style = syntax "#3f0001"
+    minus-emph-style = syntax "#901011"
+    minus-empty-line-marker-style = normal "#3f0001"
+    zero-style = syntax
+    plus-style = syntax "#002800"
+    plus-non-emph-style = syntax "#002800"
+    plus-emph-style = syntax "#006000"
+    plus-empty-line-marker-style = normal "#002800"
+    grep-file-style = purple
+    grep-line-number-style = green
+    whitespace-error-style = reverse red
+    blame-palette = "#000000" "#222222" "#444444"
+    true-color = always
+    file-added-label = "added:"
+    file-modified-label = Δ
+    file-removed-label = "removed:"
+    file-renamed-label = "renamed:"
+    right-arrow = "⟶  "
+    hyperlinks = false
+    inspect-raw-lines = true
+    keep-plus-minus-markers = false
+    line-numbers = true
+    line-numbers-minus-style = 88
+    line-numbers-zero-style = "#444444"
+    line-numbers-plus-style = 28
+    line-numbers-left-style = blue
+    line-numbers-right-style = blue
+    line-numbers-left-format = "│{nm:^4}│"
+    line-numbers-right-format = "│{np:^4}│"
+    max-line-distance = 0.6
+    max-line-length = 3000
+    diff-stat-align-width = 48
+    line-fill-method = ansi
+    navigate = true
+    navigate-regex = "^(commit|added:|removed:|renamed:|Δ|•)"
+    pager = less
+    paging = auto
+    side-by-side = true
+    syntax-theme = Monokai Extended
+    width = 214
+    tabs = 8
+    word-diff-regex = \\w+
