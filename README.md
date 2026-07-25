@@ -41,7 +41,7 @@ for your `.bashrc`. Files that support a "local" version are as follows.
 - `.inputrc`
 - `.aliases` (shared by both `.zshrc` and `.bashrc`)
 
-## Brew
+## Homebrew
 Not really a dotfile, but I've started including my `Brewfile` in here for easy
 installation. To install the programs in this file on MacOS, run the following
 from the directory where the file is located.
