@@ -9,7 +9,10 @@ if [[ $( uname -s ) == "Linux" && -f "$HOME/.bashrc" ]]; then
 fi
 
 if command -v rbenv > /dev/null 2>&1; then
-    export PATH="$HOME/.rbenv/shims:$PATH"
+    case ":$PATH:" in
+        *":$HOME/.rbenv/shims:"*) ;;
+        *) export PATH="$HOME/.rbenv/shims:$PATH" ;;
+    esac
 fi
 
 [[ -f "$HOME/.bash_profile.local" ]] && source "$HOME/.bash_profile.local"

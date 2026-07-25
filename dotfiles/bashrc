@@ -33,9 +33,10 @@ shopt -s histappend histverify
 [[ -f $HOME/workflow/cdc/cdc.plugin.bash ]] && \
     source $HOME/workflow/cdc/cdc.plugin.bash
 
+[[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
+
 if command -v rbenv > /dev/null 2>&1; then
     eval "$( rbenv init - bash )"
 fi
 
-[[ -f $HOME/.shellrc ]] && source $HOME/.shellrc
 [[ -f $HOME/.bashrc.local ]] && source $HOME/.bashrc.local

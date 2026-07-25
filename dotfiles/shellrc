@@ -21,6 +21,29 @@ if [[ $( uname -s ) == 'Darwin' ]]; then
     export LSCOLORS='ExGxFxdaCxDaDaCxCxExExxx'
 fi
 
+path_contains() {
+    case ":$PATH:" in
+        *":$1:"*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+path_prepend() {
+    local dir
+    local new_path=''
+
+    for dir in "$@"; do
+        [[ -z $dir ]] && continue
+        path_contains "$dir" && continue
+        case ":$new_path:" in
+            *":$dir:"*) ;;
+            *) new_path="${new_path:+$new_path:}$dir" ;;
+        esac
+    done
+
+    [[ -n $new_path ]] && export PATH="$new_path${PATH:+:$PATH}"
+}
+
 configure_ls_colors() {
     local candidate
     local dircolors_command=''
@@ -46,10 +69,6 @@ configure_ls_colors() {
 }
 configure_ls_colors
 unset -f configure_ls_colors
-
-if [[ -x /opt/homebrew/bin/brew ]]; then
-    eval "$( /opt/homebrew/bin/brew shellenv )"
-fi
 
 # cdc plugin config.
 export CDC_DIRS=\
@@ -82,20 +101,23 @@ export SIMPLE_BACKUP_SUFFIX='.sav'
 export IRC_CLIENT='irssi'
 export SCM_CHECK=true
 export PAGER='less'
-export PATH=\
-.:\
-/opt/homebrew/bin:\
-/usr/local/bin:\
-/usr/bin:\
-/bin:\
-/usr/sbin:\
-/sbin:\
-/opt/X11/bin:\
-$HOME/bin:\
-$GOPATH/bin:\
-$HOME/bin/ruby:\
-$HOME/scripts/bin:\
-$PATH
+path_prepend \
+. \
+/opt/homebrew/bin \
+/usr/local/bin \
+/usr/bin \
+/bin \
+/usr/sbin \
+/sbin \
+/opt/X11/bin \
+"$HOME/bin" \
+"$GOPATH/bin" \
+"$HOME/bin/ruby" \
+"$HOME/scripts/bin"
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$( /opt/homebrew/bin/brew shellenv )"
+fi
 
 source_config_files() {
     local file
@@ -142,9 +164,14 @@ if [[ -f $HOME/.ghcup/env ]]; then
     source "$HOME/.ghcup/env"
 fi
 
-[[ -d $HOME/.nvm ]] && export NVM_DIR="$HOME/.nvm"
-[[ -s $NVM_DIR/nvm.sh ]] && source "$NVM_DIR/nvm.sh"
-[[ -s "/opt/homebrew/opt/nvm/nvm.sh" ]] && \
-    source "/opt/homebrew/opt/nvm/nvm.sh"
-[[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]] && \
+if ! command -v nvm > /dev/null 2>&1; then
+    [[ -d $HOME/.nvm ]] && export NVM_DIR="$HOME/.nvm"
+    if [[ -s $NVM_DIR/nvm.sh ]]; then
+        source "$NVM_DIR/nvm.sh"
+    elif [[ -s "/opt/homebrew/opt/nvm/nvm.sh" ]]; then
+        source "/opt/homebrew/opt/nvm/nvm.sh"
+    fi
+fi
+
+[[ -n ${BASH_VERSION:-} && -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]] && \
     source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
