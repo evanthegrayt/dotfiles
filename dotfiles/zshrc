@@ -15,6 +15,7 @@ autoload -U zmv
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
     plugins=(
       vb
+      exed
       cdc
       sudo
       zsh-autosuggestions

@@ -8,6 +8,7 @@ Reset='\e[0m'
 
 if [[ -d $HOME/.bash_it ]]; then
     export BASH_IT="$HOME/.bash_it"
+    export SCM_CHECK=true
     source "$BASH_IT"/bash_it.sh
 fi
 

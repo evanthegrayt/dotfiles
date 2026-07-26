@@ -86,7 +86,7 @@
     navigate-regex = "^(commit|added:|removed:|renamed:|Δ|•)"
     pager = less
     paging = auto
-    side-by-side = true
+    side-by-side = false
     syntax-theme = Monokai Extended
     width = 214
     tabs = 8
