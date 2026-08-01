@@ -1,65 +1,72 @@
 # My Dotfiles
 These are my personal configuration files. Here be dragons.
 
+## About
+I admit that I'm a customization fanatic, so when I find a new tool that's fun
+to customize, I tend to go wild. I've spent over two decades accumulating
+settings for Zsh, Bash, and even Csh on both macOS and Linux. I've done a lot
+of work to keep this repo as consistent as possible across operating systems
+and shells, but I make no guarantees.
+
+Some files I haven't touched in years; others were probably edited yesterday.
+If you find a setting you like, I can't promise it won't change tomorrow.
+
+My current development environment is running Zsh on macOS with Vim and iTerm2.
+I love programming with Ruby, and I write Bash scripts for portability. Files
+related to those tools are the most likely to be modern, but also the most
+likely to frequently change.
+
+## Rationale
+I keep these files public because I am regularly asked about my configuration.
+Ideally, you wouldn't install them directly; just copy the lines you want into
+your own files. However, I know some people like to try out an entire config, so
+if that's you, read on for further info.
+
 ## Installation
-These are my personal configuration files, and I've taken a lot of steps to make
-sure these work on both Linux and BSD, with either `zsh` or `bash` (and `csh`,
-although I don't have much set up for it). I doubt you'd want to clone this
-entire repository just for my files, but if you do, feel free to do so.
-Otherwise, just copy the lines you want and paste them into your dotfiles.
+The files live in `dotfiles/` without a leading dot so they stay visible and
+easy to browse in the repository. When using them directly, symlink or copy the
+files you want into your home directory with the leading dot added. For example,
+`dotfiles/zshrc` maps to `~/.zshrc`. See [the "Related" section](#related) for
+help with automation.
 
-Clone the repository and link the files in your home directory. There exists an
-installation script in `bin/`, but all it does is try to link the files in your
-home directory. If the file already exists, this won't succeed. A list will
-print of what installed and what didn't.
+Nested directories follow the same idea:
 
-```sh
-git clone https://github.com/evanthegrayt/dotfiles.git
-cd dotfiles
-bash bin/install
-```
+- `dotfiles/config/psysh/config.php` maps to `~/.config/psysh/config.php`
+- `dotfiles/ctags.d/` maps to `~/.ctags.d/`
 
-### "Local" Config Files
-Something I did that people might find interesting: There are settings I have
-that are specifically for work that I didn't want to publicly commit, so I have
-added a feature to deal with this issue. If a file exists in your home directory
-with the same name, but has a `.local` extension, that file will be sourced
-*after* the file from the repository is loaded. This allows for overriding
-settings from the files in the repository. You can keep these locally, or store
-them in a private repository, which is what I've done. Currently, only one
-"local" counterpart is supported for each dotfile; that is, one `.bashrc.local`
-for your `.bashrc`. Files that support a "local" version are as follows.
+## Local Files
+Some dotfiles source a matching `.local` file after loading the repository
+version. This keeps machine-specific or private settings out of the public
+repo, while still letting the shared file define the default behavior.
 
-- `.zshrc`
-- `.bashrc`
+For example, `dotfiles/zshrc` will source `~/.zshrc.local` if it exists.
+
+Files with local override support:
+
+- `.aliases`
 - `.bash_profile`
-- `.shellrc` (shared by both `.zshrc` and `.bashrc`)
-- `.profile`
+- `.bashrc`
 - `.cshrc`
-- `.irbrc`
-- `.pryrc`
 - `.inputrc`
-- `.aliases` (shared by both `.zshrc` and `.bashrc`)
+- `.irbrc`
+- `.profile`
+- `.pryrc`
+- `.shellrc`
+- `.zshrc`
 
-## Homebrew
-Not really a dotfile, but I've started including my `Brewfile` in here for easy
-installation. To install the programs in this file on MacOS, run the following
-from the directory where the file is located.
+## Shells
+Most of the shell setup is shared through `shellrc`, which is sourced by both
+`bashrc` and `zshrc`. Shell-specific startup files stay separate where the
+shells expect them.
 
-```sh
-brew bundle install
-```
+The `cshrc`, `logout`, `zlogin`, and `zlogout` files are still here for systems
+where I end up needing compatibility with older environments or shell-specific
+login/logout hooks.
 
-## FAQ
-#### Where's your vimrc?
-Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
-have a separate repository for all my `vim` files. You can see them
-[here](https://github.com/evanthegrayt/vimfiles).
+## Vim
+There is no `vimrc` here. Vim supports keeping its config inside `~/.vim`, and I
+keep that setup in a [separate repository](https://github.com/evanthegrayt/vimfiles).
 
-## Support this project
-I love knowing when people find my work useful. Any kind of support is very much
-appreciated!
-
-- ⭐️ Like the project? Star [the repository](https://github.com/evanthegrayt/dotfiles)!
-- ❤️ Love the project? Follow me [on GitHub](https://github.com/evanthegrayt)!
-- 💸 *Really* love it? Consider [buying me a tea](https://paypal.me/evanrgray)!
+## Related
+Automated installation and further system bootstrapping lives in
+[yadem](https://github.com/evanthegrayt/yadem).

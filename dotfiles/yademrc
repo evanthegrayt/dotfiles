@@ -1,81 +1,30 @@
-# You can copy this file as `~/.yademrc`, and change the values.
-# That file will override this one.
+# Personal yadem settings. This file is meant to be linked as ~/.yademrc.
 
-# DOTFILE_DIR: Directory where actual dotfiles are.
-DOTFILE_DIR="$HOME/workflow/dotfiles/dotfiles"
+YADEM_REPO_DIR="$HOME/workflow"
+YADEM_DOTFILES_REPO="https://github.com/evanthegrayt/dotfiles"
+YADEM_DOTFILES_DIR="$YADEM_REPO_DIR/dotfiles/dotfiles"
 
-# VIM_REPO: The `vim` repository to install.
-VIM_REPO='https://github.com/evanthegrayt/vimfiles.git'
+YADEM_VIM_REPO="https://github.com/evanthegrayt/vimfiles.git"
+YADEM_ZSH_CUSTOM_REPO="https://github.com/evanthegrayt/oh-my-zsh-custom.git"
+YADEM_BASH_CUSTOM_REPO="https://github.com/evanthegrayt/bash-it-custom.git"
 
-# ZSH_CUSTOM_REPO: The `custom` directory repository for `oh-my-zsh`.
-ZSH_CUSTOM_REPO='https://github.com/evanthegrayt/oh-my-zsh-custom.git'
+YADEM_SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+YADEM_LOCALIZE_EXISTING=false
+YADEM_REPO_AUTO_RUN_BUILD=false
 
-# BASH_CUSTOM_REPO: The `custom` directory repository for `bash_it`.
-BASH_CUSTOM_REPO='https://github.com/evanthegrayt/bash-it-custom.git'
-
-# REPO_DIR: Directory to clone git repos into.
-REPO_DIR="$HOME/workflow"
-
-# SCREENSHOT_DIR: On mac, where you'd like screenshots to be placed.
-SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
-
-# LOGFILE_TIMESTAMP: Timestamp used by log() function when adding messages.
-LOGFILE_TIMESTAMP="$( date "+%Y-%m-%d %H:%M:%S" )"
-
-# LOGFILE_DATESTAMP: Datestamp that will be used for log file names.
-LOGFILE_DATESTAMP="$( date "+%Y-%m-%d" )"
-
-# Programs to install using `brew install`.
-BREW_TAPS=(
-php
+YADEM_ALL_TARGETS=(
+homebrew
+brew
+repos
+gems
+vim
 zsh
 bash
-vim
-git
-git-lfs
-the_silver_searcher
-readline
-gnupg
-tree
-'--HEAD universal-ctags/universal-ctags/universal-ctags'
-evince
-most
-diff-so-fancy
-python
-ipython
+italics
+dotfiles
 )
 
-# Programs to install using `brew cask install`.
-BREW_CASKS=(
-slack
-virtualbox
-vagrant
-iterm2
-firefox
-alfred
-mattermost
-macvim
-)
-
-# Ruby gems to install.
-RUBY_GEMS=(
-rails
-bundler
-rake
-rspec
-ripper-tags
-rubocop
-rdoc
-rubylexer
-vim
-pry
-pry-theme
-pry-coolline
-pry-editline
-)
-
-# Files that support sourcing a `[FILE].local`.
-LOCAL_FILES=(
+YADEM_LOCAL_FILES=(
 inputrc
 bashrc
 shellrc
@@ -88,15 +37,13 @@ cshrc
 bash_profile
 )
 
-# Files to not install as a dotfile.
-IGNORE=(
+YADEM_DOTFILES_IGNORE=(
 README.md
 LICENSE
 xterm-256color.terminfo
 )
 
-# Git repos to clone.
-GIT_REPOS=(
+YADEM_REPOS=(
 https://github.com/evanthegrayt/dotfiles
 https://github.com/evanthegrayt/list-and-grep
 https://github.com/evanthegrayt/list-and-count
@@ -110,4 +57,3 @@ https://github.com/evanthegrayt/grayt-FSyH-theme
 )
 
 # vi: set ft=sh :
-
