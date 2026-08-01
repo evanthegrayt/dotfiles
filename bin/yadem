@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+readonly SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+readonly TARGET_DIR="$SCRIPT_DIR/yadem.d"
+readonly LIB_PATH="$SCRIPT_DIR/lib/install.sh"
+
+. "$LIB_PATH"
+
+usage() {
+    cat <<USAGE
+USAGE: ${0##*/} [OPTIONS] TARGET [TARGET...]
+       ${0##*/} TARGET --help
+
+Options:
+  -t, --test    Show what would happen without installing
+  -a, --all     Run the configured target sequence
+  -l, --list    List available install targets
+  -h, --help    Display this help and exit
+
+Targets:
+$(list_targets | sed 's/^/  /')
+USAGE
+}
+
+run_target() {
+    local target="$1"
+    local command="$2"
+    local target_path="$TARGET_DIR/$target"
+
+    if [[ "$target" == */* || "$target" == .* || ! -f "$target_path" ]]; then
+        echo "Unknown install target: $target" >&2
+        echo "Run ${0##*/} --list to see available targets." >&2
+        return 1
+    fi
+
+    (
+        set -eo pipefail
+
+        INSTALL_TARGET="$target"
+        DRY_RUN="$dry_run"
+
+        . "$LIB_PATH"
+        . "$target_path"
+
+        if ! declare -F "$command" >/dev/null 2>&1; then
+            echo "Target '$target' does not implement $command()" >&2
+            exit 1
+        fi
+
+        "$command"
+    )
+}
+
+dry_run=false
+list=false
+target_help=false
+all=false
+targets=()
+
+while (($#)); do
+    case "$1" in
+        -t|--test)
+            dry_run=true
+            ;;
+        -a|--all)
+            all=true
+            ;;
+        -l|--list)
+            list=true
+            ;;
+        -h|--help)
+            if ((${#targets[@]})); then
+                target_help=true
+            else
+                usage
+                exit
+            fi
+            ;;
+        --)
+            shift
+            while (($#)); do
+                targets+=("$1")
+                shift
+            done
+            break
+            ;;
+        -*)
+            echo "Invalid option: $1" >&2
+            usage >&2
+            exit 1
+            ;;
+        *)
+            targets+=("$1")
+            ;;
+    esac
+    shift
+done
+
+if [[ "$list" == true ]]; then
+    list_targets
+    exit
+fi
+
+if [[ "$all" == true ]]; then
+    targets=(all)
+fi
+
+if [[ "$target_help" == true ]]; then
+    if ((${#targets[@]} != 1)); then
+        echo "Target help can only be shown for one target at a time." >&2
+        exit 1
+    fi
+
+    run_target "${targets[0]}" help
+    exit
+fi
+
+if ((${#targets[@]} == 0)); then
+    echo "Must pass at least one install target." >&2
+    usage >&2
+    exit 1
+fi
+
+command=install
+if [[ "$dry_run" == true ]]; then
+    command=dry_run
+fi
+
+for target in "${targets[@]}"; do
+    run_target "$target" "$command"
+done

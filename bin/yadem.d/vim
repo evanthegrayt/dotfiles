@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+install() {
+    load_yadem_config
+
+    if [[ -d "$HOME/.vim/.git" || -d "$HOME/.vim" ]]; then
+        say_and_log present "Vim files already exist: $HOME/.vim"
+        return
+    fi
+
+    if [[ "$DRY_RUN" == true ]]; then
+        say_and_log would-clone "Would clone $YADEM_VIM_REPO to $HOME/.vim"
+        return
+    fi
+
+    require_command git || return
+    say_and_log cloning "Cloning $YADEM_VIM_REPO to $HOME/.vim"
+    git clone --recursive "$YADEM_VIM_REPO" "$HOME/.vim"
+}
+
+dry_run() {
+    DRY_RUN=true
+    install
+}
+
+help() {
+    cat <<HELP
+USAGE: yadem [OPTIONS] vim
+
+Clone YADEM_VIM_REPO into ~/.vim.
+HELP
+}

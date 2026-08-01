@@ -1,65 +1,154 @@
-# My Dotfiles
-These are my personal configuration files. Here be dragons.
+# yadem
 
-## Installation
-These are my personal configuration files, and I've taken a lot of steps to make
-sure these work on both Linux and BSD, with either `zsh` or `bash` (and `csh`,
-although I don't have much set up for it). I doubt you'd want to clone this
-entire repository just for my files, but if you do, feel free to do so.
-Otherwise, just copy the lines you want and paste them into your dotfiles.
+Yet Another Dotfile and Environment Manager.
 
-Clone the repository and link the files in your home directory. There exists an
-installation script in `bin/`, but all it does is try to link the files in your
-home directory. If the file already exists, this won't succeed. A list will
-print of what installed and what didn't.
+`yadem` is a small target dispatcher for setting up a personal development
+environment. The command stays thin; each setup concern lives in its own target
+script under `bin/yadem.d/`.
 
-```sh
-git clone https://github.com/evanthegrayt/dotfiles.git
-cd dotfiles
-bash bin/install
-```
+This branch still contains dotfiles while the installer is being rebuilt. The
+intended end state is:
 
-### "Local" Config Files
-Something I did that people might find interesting: There are settings I have
-that are specifically for work that I didn't want to publicly commit, so I have
-added a feature to deal with this issue. If a file exists in your home directory
-with the same name, but has a `.local` extension, that file will be sourced
-*after* the file from the repository is loaded. This allows for overriding
-settings from the files in the repository. You can keep these locally, or store
-them in a private repository, which is what I've done. Currently, only one
-"local" counterpart is supported for each dotfile; that is, one `.bashrc.local`
-for your `.bashrc`. Files that support a "local" version are as follows.
+- `yadem`: installer framework, targets, config, tests, docs
+- `dotfiles`: personal dotfiles consumed by the `dotfiles` target
 
-- `.zshrc`
-- `.bashrc`
-- `.bash_profile`
-- `.shellrc` (shared by both `.zshrc` and `.bashrc`)
-- `.profile`
-- `.cshrc`
-- `.irbrc`
-- `.pryrc`
-- `.inputrc`
-- `.aliases` (shared by both `.zshrc` and `.bashrc`)
+## Bootstrap
 
-## Homebrew
-Not really a dotfile, but I've started including my `Brewfile` in here for easy
-installation. To install the programs in this file on MacOS, run the following
-from the directory where the file is located.
+There is no way around the first few machine-level prerequisites: you need a
+shell, `git`, and usually `curl` before `yadem` can clone itself or install
+Homebrew. Those first steps belong in the README because they have to happen
+before this command exists locally.
 
 ```sh
-brew bundle install
+git clone https://github.com/evanthegrayt/yadem.git
+cd yadem
+bin/yadem --list
 ```
 
-## FAQ
-#### Where's your vimrc?
-Vim supports keeping your `vimrc` within your `.vim` directory itself, and I
-have a separate repository for all my `vim` files. You can see them
-[here](https://github.com/evanthegrayt/vimfiles).
+Once cloned, run individual targets:
 
-## Support this project
-I love knowing when people find my work useful. Any kind of support is very much
-appreciated!
+```sh
+bin/yadem dotfiles
+bin/yadem homebrew
+bin/yadem brew
+```
 
-- ⭐️ Like the project? Star [the repository](https://github.com/evanthegrayt/dotfiles)!
-- ❤️ Love the project? Follow me [on GitHub](https://github.com/evanthegrayt)!
-- 💸 *Really* love it? Consider [buying me a tea](https://paypal.me/evanrgray)!
+Preview work without changing the system:
+
+```sh
+bin/yadem --test dotfiles
+bin/yadem --test brew gems
+```
+
+Run the configured setup sequence:
+
+```sh
+bin/yadem --all
+```
+
+Show target-specific help:
+
+```sh
+bin/yadem dotfiles --help
+```
+
+## Target Contract
+
+Each executable file in `bin/yadem.d/` is a target. A target must implement:
+
+- `install`: perform the work
+- `dry_run`: print what would happen without doing it
+- `help`: print target-specific usage
+
+The dispatcher sets these variables for every target:
+
+- `INSTALL_PATH`: repository root
+- `INSTALL_BIN_DIR`: `bin/`
+- `INSTALL_TARGET_DIR`: `bin/yadem.d/`
+- `INSTALL_CACHE_DIR`: cache and backup directory
+- `INSTALL_LOG`: log file path
+- `INSTALL_TARGET`: current target name
+- `DRY_RUN`: `true` or `false`
+
+Shared helpers live in `bin/lib/install.sh`.
+
+## Targets
+
+Current targets:
+
+- `all`: run the configured `YADEM_ALL_TARGETS` sequence
+- `bash`: clone bash-it and optional custom files
+- `brew`: install packages from `Brewfile`
+- `dotfiles`: symlink dotfiles into `$HOME`
+- `gems`: install configured Ruby gems
+- `homebrew`: install Homebrew if missing
+- `italics`: compile `xterm-256color.terminfo`
+- `macos`: apply macOS-specific setup
+- `repos`: clone configured git repositories
+- `shell`: change the login shell
+- `vim`: clone vimfiles into `~/.vim`
+- `zsh`: clone oh-my-zsh and optional custom files
+
+`macos` and `shell` are intentionally not in the default `--all` sequence.
+
+## Configuration
+
+Defaults live in `config/yademrc`. Copy it to `~/.yademrc` or set
+`YADEM_CONFIG=/path/to/yademrc` for local overrides.
+
+Notable settings:
+
+- `YADEM_ALL_TARGETS`: ordered targets for `bin/yadem --all`
+- `YADEM_DOTFILES_DIR`: source directory for the `dotfiles` target
+- `YADEM_DOTFILES_IGNORE`: dotfile source names to skip
+- `YADEM_LOCALIZE_EXISTING`: link supported backups back as `~/.name.local`
+- `YADEM_LOCAL_FILES`: dotfiles eligible for `.local` preservation
+- `YADEM_REPO_DIR`: clone destination for `repos`
+- `YADEM_REPOS`: git repositories to clone
+- `YADEM_REPO_AUTO_RUN_BUILD`: opt into running `rake`/`make` after clone
+- `YADEM_GEMS`: Ruby gems to install
+- `YADEM_LOGIN_SHELL`: shell name for the `shell` target
+
+Installer output is written to:
+
+```sh
+${XDG_CACHE_HOME:-$HOME/.cache}/yadem/install.log
+```
+
+Set `YADEM_LOG` to override the log path.
+
+## Dotfiles
+
+The `dotfiles` target links files from `YADEM_DOTFILES_DIR` into `$HOME` with a
+leading dot added. For example, `zshrc` becomes `~/.zshrc`.
+
+Existing symlinks are replaced. Existing regular files are moved to
+`$INSTALL_CACHE_DIR/<name>.<YYYY-MM-DD>` before the new symlink is created.
+Existing directories are skipped.
+
+If `YADEM_LOCALIZE_EXISTING=true`, supported existing files are backed up and
+linked back as `~/.<name>.local`, preserving the old `yadem` local override
+workflow.
+
+## Completions
+
+Completion scripts are available in `completions/`:
+
+- `completions/yadem.bash`
+- `completions/yadem.zsh`
+
+## Tests
+
+The installer has a Bats test suite. Install `bats-core`, then run:
+
+```sh
+bats test
+```
+
+## Migration Notes
+
+This work started in the dotfiles repository because the new installer shape was
+already here: target scripts, tests, completions, and `Brewfile` support. Once
+the command surface is stable, the installer should move into the real `yadem`
+repository and this repository can return to being only dotfiles and related
+documentation.

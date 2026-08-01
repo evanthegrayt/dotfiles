@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+install() {
+    local target
+    local args=()
+
+    load_yadem_config
+
+    if [[ "$DRY_RUN" == true ]]; then
+        args+=(--test)
+    fi
+
+    for target in "${YADEM_ALL_TARGETS[@]}"; do
+        if [[ "$target" == all ]]; then
+            say_and_log skipped "Skipping recursive all target"
+            continue
+        fi
+
+        say_and_log running-target "Running target: $target"
+        "$INSTALL_BIN_DIR/yadem" "${args[@]}" "$target"
+    done
+}
+
+dry_run() {
+    DRY_RUN=true
+    install
+}
+
+help() {
+    cat <<HELP
+USAGE: yadem [OPTIONS] all
+
+Run the targets listed in YADEM_ALL_TARGETS.
+HELP
+}

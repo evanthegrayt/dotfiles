@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+install() {
+    load_yadem_config
+
+    if [[ "$(uname -s)" != Darwin ]]; then
+        say_and_log skipped "macos target only runs on Darwin"
+        return
+    fi
+
+    if [[ -n "$YADEM_SCREENSHOT_DIR" ]]; then
+        if [[ "$DRY_RUN" == true ]]; then
+            say_and_log would-configure "Would set screenshot directory to $YADEM_SCREENSHOT_DIR"
+        else
+            mkdir -p "$YADEM_SCREENSHOT_DIR"
+            defaults write com.apple.screencapture location "$YADEM_SCREENSHOT_DIR"
+            killall SystemUIServer >/dev/null 2>&1 || true
+            say_and_log configured "Set screenshot directory to $YADEM_SCREENSHOT_DIR"
+        fi
+    fi
+
+    if [[ "$DRY_RUN" == true ]]; then
+        say_and_log would-run "Would run xcode-select --install"
+        return
+    fi
+
+    say_and_log installing "Opening Xcode Command Line Tools installer"
+    xcode-select --install
+}
+
+dry_run() {
+    DRY_RUN=true
+    install
+}
+
+help() {
+    cat <<HELP
+USAGE: yadem [OPTIONS] macos
+
+Apply macOS-specific setup. This target is intentionally not included in the
+default YADEM_ALL_TARGETS sequence.
+HELP
+}

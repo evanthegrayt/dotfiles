@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+install() {
+    local file
+    local filename
+    local target
+    local backup
+    local local_target
+
+    load_yadem_config
+
+    if [[ ! -d "$YADEM_DOTFILES_DIR" ]]; then
+        say_and_log missing-dotfiles-dir "Dotfiles directory not found: $YADEM_DOTFILES_DIR"
+        return 1
+    fi
+
+    for file in "$YADEM_DOTFILES_DIR"/*; do
+        [[ -e "$file" || -L "$file" ]] || continue
+
+        filename="${file##*/}"
+        target="$HOME/.$filename"
+
+        if array_contains "$filename" "${YADEM_DOTFILES_IGNORE[@]}"; then
+            say_and_log skipped-ignored "Skipped ignored dotfile: $filename"
+            continue
+        fi
+
+        if [[ -L "$target" ]]; then
+            if [[ "$DRY_RUN" == true ]]; then
+                say_and_log would-replace-link "Would replace symlink: $target -> $file"
+            else
+                rm -- "$target"
+                ln -s "$file" "$target"
+                say_and_log replaced-link "Replaced symlink: $target -> $file"
+            fi
+            continue
+        fi
+
+        if [[ -e "$target" ]]; then
+            if [[ -d "$target" ]]; then
+                say_and_log skipped-directory "Skipped existing directory: $target"
+                continue
+            fi
+
+            if [[ -f "$target" ]]; then
+                backup="$(backup_path_for "$target")"
+                local_target="$HOME/.$filename.local"
+
+                if [[ "$DRY_RUN" == true ]]; then
+                    say_and_log would-back-up "Would back up $target to $backup"
+                    if [[ "$YADEM_LOCALIZE_EXISTING" == true ]] &&
+                        array_contains "$filename" "${YADEM_LOCAL_FILES[@]}" &&
+                        [[ ! -e "$local_target" && ! -L "$local_target" ]]; then
+                        say_and_log would-link-local "Would link $local_target -> $backup"
+                    fi
+                    say_and_log would-link "Would link $target -> $file"
+                else
+                    mkdir -p "$INSTALL_CACHE_DIR"
+                    mv -- "$target" "$backup"
+                    if [[ "$YADEM_LOCALIZE_EXISTING" == true ]] &&
+                        array_contains "$filename" "${YADEM_LOCAL_FILES[@]}" &&
+                        [[ ! -e "$local_target" && ! -L "$local_target" ]]; then
+                        ln -s "$backup" "$local_target"
+                        say_and_log linked-local "Linked $local_target -> $backup"
+                    fi
+                    ln -s "$file" "$target"
+                    say_and_log backed-up "Backed up $target to $backup"
+                    say_and_log linked "Linked $target -> $file"
+                fi
+
+                continue
+            fi
+
+            say_and_log skipped-existing "Skipped existing path: $target"
+            continue
+        fi
+
+        if [[ "$DRY_RUN" == true ]]; then
+            say_and_log would-link "Would link $target -> $file"
+        else
+            ln -s "$file" "$target"
+            say_and_log linked "Linked $target -> $file"
+        fi
+    done
+
+    if [[ "$DRY_RUN" == true ]]; then
+        say "Dry run complete. $(log_status_message)"
+    else
+        say "Done. $(log_status_message)"
+    fi
+}
+
+dry_run() {
+    DRY_RUN=true
+    install
+}
+
+help() {
+    cat <<HELP
+USAGE: yadem [OPTIONS] dotfiles
+
+Symlink files from YADEM_DOTFILES_DIR into \$HOME.
+
+Existing symlinks are replaced. Existing regular files are moved to:
+  $INSTALL_CACHE_DIR/<name>.<YYYY-MM-DD>
+
+Set YADEM_LOCALIZE_EXISTING=true to link supported backups back as
+~/.<name>.local.
+
+Existing directories are skipped.
+HELP
+}

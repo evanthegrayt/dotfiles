@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+repo_name_for() {
+    local repo="$1"
+
+    repo="${repo%.git}"
+    printf "%s\n" "${repo##*/}"
+}
+
+run_repo_builds() {
+    local repo_path="$1"
+
+    if [[ "$YADEM_REPO_AUTO_RUN_BUILD" != true ]]; then
+        return
+    fi
+
+    if [[ -f "$repo_path/Rakefile" ]]; then
+        say_and_log running-rake "Running rake in $repo_path"
+        (cd "$repo_path" && rake)
+    fi
+
+    if [[ -f "$repo_path/Makefile" ]]; then
+        say_and_log running-make "Running make in $repo_path"
+        (cd "$repo_path" && make)
+    fi
+}
+
+install() {
+    local repo
+    local repo_name
+    local repo_path
+    local clone_url
+
+    load_yadem_config
+
+    if ((${#YADEM_REPOS[@]} == 0)); then
+        say_and_log skipped "No git repositories configured"
+        return
+    fi
+
+    if [[ "$DRY_RUN" != true ]]; then
+        require_command git || return
+        mkdir -p "$YADEM_REPO_DIR"
+    fi
+
+    for repo in "${YADEM_REPOS[@]}"; do
+        repo_name="$(repo_name_for "$repo")"
+        repo_path="$YADEM_REPO_DIR/$repo_name"
+        clone_url="$repo"
+
+        if [[ "$clone_url" != *.git ]]; then
+            clone_url="$clone_url.git"
+        fi
+
+        if [[ -d "$repo_path/.git" ]]; then
+            say_and_log present "Repository already cloned: $repo_path"
+            continue
+        fi
+
+        if [[ "$DRY_RUN" == true ]]; then
+            say_and_log would-clone "Would clone $clone_url to $repo_path"
+            continue
+        fi
+
+        say_and_log cloning "Cloning $clone_url to $repo_path"
+        git clone "$clone_url" "$repo_path"
+        run_repo_builds "$repo_path"
+    done
+}
+
+dry_run() {
+    DRY_RUN=true
+    install
+}
+
+help() {
+    cat <<HELP
+USAGE: yadem [OPTIONS] repos
+
+Clone git repositories listed in YADEM_REPOS into YADEM_REPO_DIR.
+
+Set YADEM_REPO_AUTO_RUN_BUILD=true to run rake/make after cloning repositories
+that include a Rakefile or Makefile.
+HELP
+}
