@@ -14,7 +14,7 @@ autoload -U zmv
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
     REF_FRESH_ENABLE=1
-    REF_FRESH_LATENCY=0.5
+    REF_FRESH_LATENCY=2
     plugins=(
       vb
       exed
