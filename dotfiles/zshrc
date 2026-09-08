@@ -13,6 +13,8 @@ setopt CSHNULLGLOB
 autoload -U zmv
 
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
+    REF_FRESH_ENABLE=1
+    REF_FRESH_LATENCY=0.5
     plugins=(
       vb
       exed
@@ -24,6 +26,7 @@ if [[ -d "$HOME/.oh-my-zsh" ]]; then
       fast-syntax-highlighting
       zsh-completions
       history-search-multi-word
+      zsh-ref-fresh
     )
     export ZSH="$HOME/.oh-my-zsh"
     export GRAYT_PROMPT_COLOR='blue'
